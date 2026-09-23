@@ -28,9 +28,7 @@ All photography used across the XpmindGlobal corporate portal is curated from Un
 | `/images/contact-office.jpg` | Corporate Headquarters Architecture | [Sean Pollock](https://unsplash.com/@seanpollock) | [Unsplash Photo](https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80) | Unsplash License (Free for commercial use) |
 
 ### Dedicated High-Resolution Background Imagery
-| Image File | Section / Page | Description | Photographer | Source URL | License |
-|---|---|---|---|---|---|
-| `/images/backgrounds/bg-hero-network.jpg` | Home Hero | Night city skyline with dynamic highway light trails | [Denys Nevozhai](https://unsplash.com/@dnevozhai) | [Unsplash Photo](https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/sap.jpeg` (and `sap-hero.webp`, `sap-hero-mobile.webp`) | Home Hero Background | Futuristic SAP Cloud ERP Enterprise Cityscape & Telemetry | Provided by Site Owner | User-Provided | Proprietary / Owner Authorized |
 | `/images/backgrounds/bg-about-collaboration.jpg` | About Page Hero | Collaborative executive team around digital strategy display | [Annie Spratt](https://unsplash.com/@anniespratt) | [Unsplash Photo](https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
 | `/images/backgrounds/bg-services-abstract.jpg` | Services Page Hero | Global cloud connections and digital infrastructure network | [NASA](https://unsplash.com/@nasa) | [Unsplash Photo](https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
 | `/images/backgrounds/bg-projects-analytics.jpg` | Projects Page Hero | Enterprise telemetry and financial dashboard monitors | [Luke Chesser](https://unsplash.com/@lukethewebguy) | [Unsplash Photo](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80) | Unsplash License |

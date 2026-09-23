@@ -16,7 +16,7 @@ export function HeroSection() {
       {/* Multi-layered cinematic navy-indigo background */}
       <SectionBackground
         variant="hero"
-        image="/images/backgrounds/bg-hero-network.jpg"
+        image="/images/backgrounds/sap-hero.webp"
         priority
       />
 

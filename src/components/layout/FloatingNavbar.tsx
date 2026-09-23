@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -27,15 +27,15 @@ import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { cn } from "@/lib/utils";
 
 const serviceIcons: Record<string, React.ReactNode> = {
-  "sap-cloud-saas-solutions": <Cloud className="w-4 h-4 text-cyan-500" />,
-  "sap-analytics-reporting": <BarChart3 className="w-4 h-4 text-blue-500" />,
-  "sap-integration-services": <Network className="w-4 h-4 text-indigo-500" />,
-  "sap-grc-security-compliance": <ShieldCheck className="w-4 h-4 text-emerald-500" />,
-  "sap-training-enablement": <GraduationCap className="w-4 h-4 text-amber-500" />,
-  "s4hana-upgrade-migration": <RefreshCw className="w-4 h-4 text-cyan-500" />,
-  "sap-implementation-rollout": <Layers className="w-4 h-4 text-violet-500" />,
-  "application-management-services-ams": <Headphones className="w-4 h-4 text-blue-500" />,
-  "sap-centre-of-excellence-coe": <Award className="w-4 h-4 text-amber-500" />,
+  "sap-cloud-saas-solutions": <Cloud className="w-5 h-5 text-cyan-500" />,
+  "sap-analytics-reporting": <BarChart3 className="w-5 h-5 text-blue-500" />,
+  "sap-integration-services": <Network className="w-5 h-5 text-indigo-500" />,
+  "sap-grc-security-compliance": <ShieldCheck className="w-5 h-5 text-emerald-500" />,
+  "sap-training-enablement": <GraduationCap className="w-5 h-5 text-amber-500" />,
+  "s4hana-upgrade-migration": <RefreshCw className="w-5 h-5 text-cyan-500" />,
+  "sap-implementation-rollout": <Layers className="w-5 h-5 text-violet-500" />,
+  "application-management-services-ams": <Headphones className="w-5 h-5 text-blue-500" />,
+  "sap-centre-of-excellence-coe": <Award className="w-5 h-5 text-amber-500" />,
 };
 
 export function FloatingNavbar() {
@@ -48,12 +48,35 @@ export function FloatingNavbar() {
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
 
+  // Close dropdown and menu on route change
+  useEffect(() => {
+    setIsServicesDropdownOpen(false);
+    setIsMenuOverlayOpen(false);
+  }, [pathname]);
+
+  // Keyboard navigation & ESC close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isServicesDropdownOpen) {
+        setIsServicesDropdownOpen(false);
+        const trigger = document.getElementById("services-dropdown-trigger");
+        trigger?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isServicesDropdownOpen]);
+
+  // Timed hover handlers (120ms enter delay, 200ms leave delay)
   const handleDropdownEnter = () => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setIsServicesDropdownOpen(true);
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setIsServicesDropdownOpen(true);
+    }, 120);
   };
 
   const handleDropdownLeave = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
     dropdownTimeoutRef.current = setTimeout(() => {
       setIsServicesDropdownOpen(false);
     }, 200);
@@ -79,7 +102,16 @@ export function FloatingNavbar() {
     <>
       <ScrollProgress />
 
-      {/* Unified Infosys-style Floating Navbar (ONE Glass Bar) */}
+      {/* Full-viewport Scrim when Services dropdown is open */}
+      {isServicesDropdownOpen && (
+        <div
+          aria-hidden="true"
+          onClick={() => setIsServicesDropdownOpen(false)}
+          className="fixed inset-0 z-[65] pointer-events-auto bg-[rgba(6,10,40,0.45)] backdrop-blur-[3px] transition-opacity duration-200 animate-in fade-in"
+        />
+      )}
+
+      {/* Header Fixed Wrapper (Siblings: The Bar + Dropdown Panel) */}
       <header
         role="banner"
         aria-hidden={shouldHide}
@@ -90,12 +122,14 @@ export function FloatingNavbar() {
           }
         }}
         className={cn(
-          "fixed top-3 inset-x-3 sm:top-5 sm:inset-x-6 lg:inset-x-9 z-50 pointer-events-none",
-          "transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          shouldHide ? "-translate-y-[150%] opacity-0" : "translate-y-0 opacity-100"
+          "fixed top-3 inset-x-3 sm:top-5 sm:inset-x-6 lg:inset-x-9 z-[60] pointer-events-none",
+          "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          shouldHide ? "-translate-y-[150%]" : "translate-y-0"
         )}
       >
-        <div className="max-w-[1720px] mx-auto pointer-events-auto">
+        <div className="max-w-[1720px] mx-auto pointer-events-auto relative">
+          
+          {/* Sibling 1: The Unified Infosys Frosted Glass Bar */}
           <div
             className={cn(
               "infosys-navbar-bar h-[66px] sm:h-[74px] lg:h-[82px] rounded-full px-3 sm:px-4 lg:px-6",
@@ -147,90 +181,58 @@ export function FloatingNavbar() {
                     return (
                       <div
                         key={link.href}
-                        className="relative"
+                        className="relative flex items-center rounded-full"
                         onMouseEnter={handleDropdownEnter}
                         onMouseLeave={handleDropdownLeave}
                       >
+                        {/* Real Link for clicking the label */}
                         <Link
                           href={link.href}
+                          onClick={() => setIsServicesDropdownOpen(false)}
                           className={cn(
-                            "px-4 lg:px-5 py-2 rounded-full text-[16px] font-medium transition-colors duration-200 flex items-center gap-1.5",
+                            "pl-4 lg:pl-5 pr-1.5 py-2 rounded-l-full text-[16px] font-medium transition-colors duration-200",
                             isActive
                               ? "bg-[#E8EEFF] text-[#1B3FD1] font-semibold"
                               : "text-[#14163F] hover:text-[#1B3FD1] hover:bg-slate-50"
                           )}
-                          aria-expanded={isServicesDropdownOpen}
                         >
-                          <span>{link.label}</span>
+                          {link.label}
+                        </Link>
+
+                        {/* Separate Chevron Button for toggling dropdown */}
+                        <button
+                          type="button"
+                          id="services-dropdown-trigger"
+                          aria-label="Toggle Services menu"
+                          aria-expanded={isServicesDropdownOpen}
+                          aria-controls="services-dropdown-panel"
+                          onClick={() => setIsServicesDropdownOpen((prev) => !prev)}
+                          onKeyDown={(e) => {
+                            if (e.key === "ArrowDown" || e.key === "Enter") {
+                              e.preventDefault();
+                              setIsServicesDropdownOpen(true);
+                              setTimeout(() => {
+                                const firstItem = document.querySelector<HTMLAnchorElement>(
+                                  "#services-dropdown-panel a"
+                                );
+                                firstItem?.focus();
+                              }, 50);
+                            }
+                          }}
+                          className={cn(
+                            "pr-3 lg:pr-4 pl-1 py-2.5 rounded-r-full text-[16px] transition-colors duration-200 cursor-pointer flex items-center justify-center",
+                            isActive
+                              ? "bg-[#E8EEFF] text-[#1B3FD1]"
+                              : "text-[#14163F] hover:text-[#1B3FD1] hover:bg-slate-50"
+                          )}
+                        >
                           <ChevronDown
                             className={cn(
                               "w-4 h-4 text-[#14163F]/75 transition-transform duration-200",
                               isServicesDropdownOpen ? "rotate-180" : ""
                             )}
                           />
-                        </Link>
-
-                        {/* 3-Column Glass Dropdown for Services */}
-                        {isServicesDropdownOpen && (
-                          <div
-                            className="absolute top-full left-1/2 -translate-x-1/2 mt-3.5 w-[780px] p-6 rounded-3xl bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-2xl shadow-blue-900/15 animate-in fade-in slide-in-from-top-2 duration-200 z-50 text-slate-900"
-                          >
-                            <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
-                              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                                Enterprise SAP® Capabilities
-                              </span>
-                              <Link
-                                href="/services"
-                                className="text-xs font-semibold text-brand-blue hover:text-blue-700 flex items-center gap-1"
-                              >
-                                <span>Explore All Services</span>
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </Link>
-                            </div>
-
-                            {/* 3 Columns of Services */}
-                            <div className="grid grid-cols-3 gap-3">
-                              {servicesData.map((svc) => (
-                                <Link
-                                  key={svc.slug}
-                                  href={`/services/${svc.slug}`}
-                                  className="p-3 rounded-2xl hover:bg-slate-50 border border-transparent hover:border-slate-200/80 transition-all flex items-start gap-2.5 group"
-                                >
-                                  <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                                    {serviceIcons[svc.slug] || <Sparkles className="w-4 h-4 text-brand-blue" />}
-                                  </div>
-                                  <div>
-                                    <div className="text-xs font-bold text-slate-900 group-hover:text-brand-blue transition-colors line-clamp-1">
-                                      {svc.title}
-                                    </div>
-                                    <div className="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-snug">
-                                      {svc.shortDescription}
-                                    </div>
-                                  </div>
-                                </Link>
-                              ))}
-                            </div>
-
-                            {/* Highlighted S/4HANA Migration Banner inside dropdown */}
-                            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between px-2">
-                              <div className="flex items-center gap-2">
-                                <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800">
-                                  2027 ECC Deadline
-                                </span>
-                                <span className="text-xs font-medium text-slate-700">
-                                  ECC to S/4HANA Brownfield in 16 Weeks*
-                                </span>
-                              </div>
-                              <Link
-                                href="/s4hana-migration"
-                                className="text-xs font-bold text-brand-blue hover:underline flex items-center gap-1"
-                              >
-                                <span>Learn More</span>
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </Link>
-                            </div>
-                          </div>
-                        )}
+                        </button>
                       </div>
                     );
                   }
@@ -271,10 +273,88 @@ export function FloatingNavbar() {
               </div>
             </div>
           </div>
+
+          {/* Sibling 2: Rebuilt Services Dropdown Panel (Sibling outside the frosted bar to avoid nested filter bug) */}
+          {isServicesDropdownOpen && (
+            <div
+              id="services-dropdown-panel"
+              role="region"
+              aria-label="Enterprise SAP Services"
+              onMouseEnter={handleDropdownEnter}
+              onMouseLeave={handleDropdownLeave}
+              className={cn(
+                "services-dropdown-panel absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2",
+                "w-[min(940px,calc(100vw-72px))] max-h-[calc(100svh-140px)] overflow-y-auto",
+                "rounded-[28px] p-6 lg:p-7 z-[70] pointer-events-auto text-slate-900",
+                "animate-in fade-in slide-in-from-top-2 duration-200"
+              )}
+            >
+              {/* Header row */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6488]">
+                  Enterprise SAP® Capabilities
+                </span>
+                <Link
+                  href="/services"
+                  onClick={() => setIsServicesDropdownOpen(false)}
+                  className="text-xs font-semibold text-[#1B3FD1] hover:text-blue-800 flex items-center gap-1 group"
+                >
+                  <span>Explore All Services</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+
+              {/* 3 Columns x 3 Rows Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 my-4">
+                {servicesData.map((svc) => (
+                  <Link
+                    key={svc.slug}
+                    href={`/services/${svc.slug}`}
+                    onClick={() => setIsServicesDropdownOpen(false)}
+                    className="p-3 rounded-2xl hover:bg-[#EEF2FF] border border-transparent hover:border-blue-200/80 transition-all flex items-start gap-3 group"
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-blue-50/90 border border-blue-100 flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-hover:bg-white transition-all shadow-sm">
+                      {serviceIcons[svc.slug] || <Sparkles className="w-5 h-5 text-[#1B3FD1]" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[13px] font-bold text-[#14163F] group-hover:text-[#1B3FD1] transition-colors leading-snug">
+                        {svc.title}
+                      </div>
+                      <div className="text-[11px] text-slate-600 line-clamp-1 mt-0.5 leading-normal">
+                        {svc.shortDescription}
+                      </div>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#1B3FD1] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all self-center flex-shrink-0" />
+                  </Link>
+                ))}
+              </div>
+
+              {/* Bottom S/4HANA Migration Row */}
+              <div className="pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 tracking-wider">
+                    2027 ECC Deadline
+                  </span>
+                  <span className="text-xs font-semibold text-[#14163F]">
+                    ECC to S/4HANA Brownfield Migration in 16 Weeks*
+                  </span>
+                </div>
+                <Link
+                  href="/s4hana-migration"
+                  onClick={() => setIsServicesDropdownOpen(false)}
+                  className="text-xs font-bold text-[#1B3FD1] hover:underline flex items-center gap-1 group"
+                >
+                  <span>Learn More</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          )}
+
         </div>
       </header>
 
-      {/* Fullscreen Menu Overlay (Still uses white logo on dark overlay) */}
+      {/* Fullscreen Menu Overlay */}
       <MenuOverlay
         isOpen={isMenuOverlayOpen}
         onClose={() => setIsMenuOverlayOpen(false)}

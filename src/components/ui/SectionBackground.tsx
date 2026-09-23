@@ -113,9 +113,12 @@ export function SectionBackground({
   // 5. HERO & PAGE HERO VARIANTS (Multi-layered rich background)
   const isHomeHero = variant === "hero";
   const defaultPhoto = isHomeHero
-    ? "/images/backgrounds/bg-hero-network.jpg"
+    ? "/images/backgrounds/sap-hero.webp"
     : "/images/backgrounds/bg-about-collaboration.jpg";
   const bgPhoto = image || defaultPhoto;
+
+  const homeBlurDataURL =
+    "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAADQAwCdASoUAAsAPzmGuVOvKSWisAgB4CcJbAC06CFxroQKDZ1pEgAA/iWUA6eBNqBj0kobAyMS0scTa9D+dxU5BTPFyFo2dndtwwdR139Hx7+cA7rQEkdLo1aOTyqhJrnn0E49rLkaXmjiY8zWxHbVRX75HMZmoBAgAA==";
 
   return (
     <div
@@ -128,29 +131,62 @@ export function SectionBackground({
       {/* Layer 1: Rich base gradient (navy-deep -> mid -> royal) */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0A1030] via-[#101B4D] to-[#1B2E7A]" />
 
-      {/* Layer 2: High-quality photo with luminosity blend & vibrant visibility */}
-      <div className="absolute inset-0 mix-blend-luminosity opacity-55">
-        <Image
-          src={bgPhoto}
-          alt={imageAlt}
-          fill
-          priority={priority || isHomeHero}
-          sizes="100vw"
-          className="object-cover object-center scale-105"
-        />
-      </div>
-
-      {/* Layer 2b: Blue/Indigo colorizing duotone scrim */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0A1030]/65 via-[#101B4D]/60 to-[#0A1030]/90" />
+      {/* Layer 2: Photo layer (Art-directed for Desktop and Mobile) */}
+      {isHomeHero ? (
+        <div className="absolute inset-0 opacity-[0.82]">
+          {/* Desktop WebP with subtle cinematic slow-zoom */}
+          <div className="hidden md:block absolute inset-0">
+            <Image
+              src="/images/backgrounds/sap-hero.webp"
+              alt={imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL={homeBlurDataURL}
+              className="object-cover object-[center_38%] animate-slow-zoom"
+            />
+          </div>
+          {/* Mobile WebP tuned crop around focal point */}
+          <div className="md:hidden absolute inset-0">
+            <Image
+              src="/images/backgrounds/sap-hero-mobile.webp"
+              alt={imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              placeholder="blur"
+              blurDataURL={homeBlurDataURL}
+              className="object-cover object-[center_38%]"
+            />
+          </div>
+          {/* Subtle blue tint overlay */}
+          <div className="absolute inset-0 bg-[#1B2E7A]/22 mix-blend-soft-light" />
+        </div>
+      ) : (
+        <>
+          <div className="absolute inset-0 mix-blend-luminosity opacity-55">
+            <Image
+              src={bgPhoto}
+              alt={imageAlt}
+              fill
+              priority={priority}
+              sizes="100vw"
+              className="object-cover object-center scale-105"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A1030]/65 via-[#101B4D]/60 to-[#0A1030]/90" />
+        </>
+      )}
 
       {/* Layer 3: Readability overlay */}
       {isHomeHero ? (
-        // Centered Hero Vignette
+        // Centered Hero Vignette tuned to sap-hero image: >= 7:1 text contrast in center, brighter edges
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 90% 70% at center, rgba(10,16,48,0.35) 0%, rgba(10,16,48,0.85) 100%)",
+              "radial-gradient(ellipse at center, rgba(10,16,48,0.58) 0%, rgba(10,16,48,0.86) 100%)",
           }}
         />
       ) : (
@@ -164,63 +200,28 @@ export function SectionBackground({
         />
       )}
 
-      {/* Layer 4: 3-4 Large blurred glow orbs with slow drift animations */}
+      {/* Layer 4: Soft ambient glow orbs with slow drift animations */}
       {/* Orb 1: Royal Blue Top-Left */}
-      <div className="absolute -top-32 -left-20 w-[600px] h-[600px] rounded-full bg-blue-600/40 blur-[130px] animate-drift-1 pointer-events-none" />
+      <div className="absolute -top-32 -left-20 w-[580px] h-[580px] rounded-full bg-blue-600/30 blur-[130px] animate-drift-1 pointer-events-none" />
 
       {/* Orb 2: Violet Top-Right */}
-      <div className="absolute -top-24 right-0 w-[550px] h-[550px] rounded-full bg-violet-600/35 blur-[125px] animate-drift-2 pointer-events-none" />
+      <div className="absolute -top-24 right-0 w-[540px] h-[540px] rounded-full bg-violet-600/25 blur-[125px] animate-drift-2 pointer-events-none" />
 
       {/* Orb 3: Cyan Bottom-Center */}
-      <div className="absolute bottom-12 left-1/3 w-[520px] h-[520px] rounded-full bg-cyan-400/30 blur-[120px] animate-drift-3 pointer-events-none" />
+      <div className="absolute bottom-12 left-1/3 w-[500px] h-[500px] rounded-full bg-cyan-400/25 blur-[120px] animate-drift-3 pointer-events-none" />
 
-      {/* Orb 4: Subtle Gold Accent (Small) */}
-      <div className="absolute top-1/2 right-1/4 w-[280px] h-[280px] rounded-full bg-amber-500/15 blur-[95px] pointer-events-none" />
-
-      {/* Layer 5: Subtle grid pattern masked with a radial fade */}
+      {/* Layer 5: Subtle grid pattern (masked) */}
       <div
-        className="absolute inset-0 opacity-25 [mask-image:radial-gradient(ellipse_80%_60%_at_center,black_40%,transparent_85%)]"
+        className="absolute inset-0 opacity-[0.04] [mask-image:radial-gradient(ellipse_80%_60%_at_center,black_40%,transparent_85%)]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(59,130,246,0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.14) 1px, transparent 1px)",
+            "linear-gradient(rgba(59,130,246,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.2) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
 
-      {/* Layer 6: Decorative SVG constellation / globe in corner */}
-      <div className="absolute top-16 right-8 w-80 h-80 opacity-20 pointer-events-none hidden lg:block">
-        <svg
-          viewBox="0 0 320 320"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full text-brand-cyan"
-        >
-          {/* Orbital circles */}
-          <circle cx="160" cy="160" r="140" stroke="currentColor" strokeWidth="0.8" strokeDasharray="4 6" />
-          <circle cx="160" cy="160" r="95" stroke="currentColor" strokeWidth="0.8" opacity="0.6" />
-          <circle cx="160" cy="160" r="50" stroke="currentColor" strokeWidth="0.8" strokeDasharray="3 5" opacity="0.4" />
-          
-          {/* Interconnecting constellation lines */}
-          <line x1="160" y1="20" x2="230" y2="95" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-          <line x1="230" y1="95" x2="210" y2="190" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-          <line x1="210" y1="190" x2="110" y2="210" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-          <line x1="110" y1="210" x2="90" y2="125" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-          <line x1="90" y1="125" x2="160" y2="20" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-          <line x1="160" y1="20" x2="160" y2="160" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
-          <line x1="230" y1="95" x2="160" y2="160" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
-
-          {/* Node dots with pulses */}
-          <circle cx="160" cy="20" r="3.5" fill="#22D3EE" className="animate-pulse" />
-          <circle cx="230" cy="95" r="4" fill="#3B82F6" />
-          <circle cx="210" cy="190" r="3" fill="#7C5CFF" className="animate-pulse" />
-          <circle cx="110" cy="210" r="3.5" fill="#22D3EE" />
-          <circle cx="90" cy="125" r="4" fill="#F59E0B" className="animate-pulse" />
-          <circle cx="160" cy="160" r="4.5" fill="#FFFFFF" />
-        </svg>
-      </div>
-
-      {/* Layer 7: 120px bottom fade into the next section */}
-      <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#0A1030] via-[#0A1030]/60 to-transparent pointer-events-none" />
+      {/* Layer 6: 140px bottom fade into the next section */}
+      <div className="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#0A1030] via-[#0A1030]/70 to-transparent pointer-events-none" />
     </div>
   );
 }
