@@ -5,6 +5,7 @@ import { WhyUsSection } from "@/components/sections/WhyUsSection";
 import { ServicesPreviewGrid } from "@/components/sections/ServicesPreviewGrid";
 import { IndustryRail } from "@/components/sections/IndustryRail";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
+import { FaqSection } from "@/components/sections/FaqSection";
 import { HomeCtaBand } from "@/components/sections/HomeCtaBand";
 
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <ServicesPreviewGrid />
       <IndustryRail />
       <FeaturedProjects />
+      <FaqSection />
       <HomeCtaBand />
     </>
   );

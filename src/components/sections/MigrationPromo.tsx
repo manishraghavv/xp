@@ -1,115 +1,96 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { ArrowRight, Database, Code, Users, Clock, Zap, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck, Database, Code, Users, Clock } from "lucide-react";
+import { PillButton } from "@/components/ui/PillButton";
+import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
 import { homeData } from "@/content/home";
-import { GlassButton } from "@/components/ui/GlassButton";
-import { GetInTouchModal } from "@/components/layout/GetInTouchModal";
+
+const iconMap: Record<string, React.ReactNode> = {
+  Database: <Database className="w-5 h-5 text-blue-400" />,
+  Code: <Code className="w-5 h-5 text-brand-cyan" />,
+  Users: <Users className="w-5 h-5 text-emerald-400" />,
+  Clock: <Clock className="w-5 h-5 text-amber-400" />,
+};
 
 export function MigrationPromo() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const data = homeData.migrationPromo;
-
-  const iconMap: Record<string, React.ReactNode> = {
-    Database: <Database className="w-5 h-5 text-brand-cyan" />,
-    Code: <Code className="w-5 h-5 text-brand-cyan" />,
-    Users: <Users className="w-5 h-5 text-brand-cyan" />,
-    Clock: <Clock className="w-5 h-5 text-brand-cyan" />,
-  };
+  const { urgencyBadge, headline, description, stats, features, ctaPrimary, urgencyStrip } =
+    homeData.migrationPromo;
 
   return (
-    <section className="py-24 dark-mesh-bg text-white border-y border-slate-800/80 relative overflow-hidden">
-      {/* Background radial glow */}
-      <div
-        className="absolute top-0 right-1/4 w-96 h-96 bg-brand-cyan/10 rounded-full blur-[140px] pointer-events-none"
-        aria-hidden="true"
-      />
-
+    <section data-theme="dark" className="dark-mesh-bg text-white py-24 sm:py-32 border-b border-slate-800/80 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Column (6 cols) */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
-              <span>{data.urgencyBadge}</span>
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-brand-cyan bg-cyan-950/60 px-4 py-1.5 rounded-full border border-cyan-500/30 mb-4">
+            {urgencyBadge}
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+            {headline}
+          </h2>
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+        {/* 3 Core Impact Stats */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-14">
+          {stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-xl text-center shadow-xl"
+            >
+              <div className="text-3xl sm:text-4xl font-extrabold font-display text-white mb-1">
+                {stat.val}
+              </div>
+              <div className="text-sm font-bold text-brand-cyan mb-1">{stat.lbl}</div>
+              <div className="text-xs text-slate-400">Guaranteed Benchmark</div>
             </div>
+          ))}
+        </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.1]">
-              {data.headline}
-            </h2>
+        {/* Animated Conversion Diagram (D3) */}
+        <div className="mb-14">
+          <D3_ConversionDiagram />
+        </div>
 
-            <p className="text-base text-slate-300 leading-relaxed">
-              {data.description}
-            </p>
-
-            {/* Quick 3 metrics strip */}
-            <div className="p-6 rounded-2xl bg-navy-900/60 border border-slate-800 backdrop-blur-md grid grid-cols-3 gap-4">
-              {data.stats.map((s, idx) => (
-                <div key={idx} className="space-y-1">
-                  <div className="font-display text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-300">
-                    {s.val}
-                  </div>
-                  <div className="text-xs text-slate-400 font-semibold uppercase tracking-wider">
-                    {s.lbl}
-                  </div>
+        {/* 4 Benefit Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {features.map((card, idx) => (
+            <div
+              key={idx}
+              className="p-6 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-brand-cyan/40 transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                  {iconMap[card.icon] || <ShieldCheck className="w-5 h-5 text-brand-cyan" />}
                 </div>
-              ))}
+                <h3 className="text-base font-bold text-white mb-2">{card.title}</h3>
+                <p className="text-xs text-slate-400 leading-relaxed mb-4">{card.desc}</p>
+              </div>
+              <div className="pt-3 border-t border-white/5 text-[11px] font-semibold text-brand-cyan">
+                ✓ Verified Migration Protocol
+              </div>
             </div>
+          ))}
+        </div>
 
-            {/* Action buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <GlassButton
-                href={data.ctaPrimary.href}
-                size="md"
-                variant="primary"
-                icon={<ArrowRight className="w-4 h-4" />}
-              >
-                {data.ctaPrimary.label}
-              </GlassButton>
-
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="px-6 py-3 rounded-lg border border-slate-700 bg-navy-800/40 text-slate-200 hover:border-brand-cyan hover:text-brand-cyan transition-colors text-sm font-medium"
-              >
-                {data.ctaSecondary.label}
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: 4 Benefit Cards + Urgency Strip */}
-          <div className="lg:col-span-6 space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {data.features.map((feat, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 rounded-2xl glass-card-dark border border-slate-800/80 hover:border-cyan-500/30 transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    {iconMap[feat.icon] || <ShieldCheck className="w-5 h-5 text-brand-cyan" />}
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors">
-                    {feat.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                    {feat.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Urgency Highlight Banner */}
-            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2">
-              <span>{data.urgencyStrip}</span>
-            </div>
+        {/* CTA and Footnote */}
+        <div className="text-center space-y-3">
+          <PillButton
+            href={ctaPrimary.href}
+            variant="primary"
+            size="lg"
+            icon={<ArrowRight className="w-4 h-4" />}
+          >
+            {ctaPrimary.label}
+          </PillButton>
+          <div className="text-xs text-slate-400 max-w-lg mx-auto">
+            {urgencyStrip}
           </div>
         </div>
       </div>
-
-      <GetInTouchModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        defaultService="S/4HANA Upgrade & Migration"
-      />
     </section>
   );
 }
