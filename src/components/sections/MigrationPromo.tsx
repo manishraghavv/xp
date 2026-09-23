@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, ShieldCheck, Database, Code, Users, Clock } from "lucide-react";
 import { PillButton } from "@/components/ui/PillButton";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 import { homeData } from "@/content/home";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -19,11 +20,16 @@ export function MigrationPromo() {
     homeData.migrationPromo;
 
   return (
-    <section data-theme="dark" className="dark-mesh-bg text-white py-24 sm:py-32 border-b border-slate-800/80 relative overflow-hidden">
+    <section
+      data-theme="dark"
+      className="text-white py-24 sm:py-32 border-b border-slate-800/80 relative overflow-hidden"
+    >
+      <SectionBackground variant="cta" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-block text-xs font-bold uppercase tracking-widest text-brand-cyan bg-cyan-950/60 px-4 py-1.5 rounded-full border border-cyan-500/30 mb-4">
+          <span className="inline-block text-xs font-bold uppercase tracking-widest text-brand-cyan bg-cyan-950/70 px-4 py-1.5 rounded-full border border-cyan-500/35 mb-4 shadow-lg shadow-cyan-950/50">
             {urgencyBadge}
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
@@ -39,13 +45,13 @@ export function MigrationPromo() {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-xl text-center shadow-xl"
+              className="p-6 rounded-3xl bg-white/[0.05] border border-white/15 backdrop-blur-xl text-center shadow-xl hover:border-cyan-400/40 transition-all"
             >
               <div className="text-3xl sm:text-4xl font-extrabold font-display text-white mb-1">
                 {stat.val}
               </div>
               <div className="text-sm font-bold text-brand-cyan mb-1">{stat.lbl}</div>
-              <div className="text-xs text-slate-400">Guaranteed Benchmark</div>
+              <div className="text-xs text-slate-300">Guaranteed Benchmark</div>
             </div>
           ))}
         </div>
@@ -60,24 +66,31 @@ export function MigrationPromo() {
           {features.map((card, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-brand-cyan/40 transition-all flex flex-col justify-between"
+              className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-md space-y-3 hover:border-brand-blue/50 hover:bg-white/[0.07] transition-all"
             >
-              <div>
-                <div className="w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-                  {iconMap[card.icon] || <ShieldCheck className="w-5 h-5 text-brand-cyan" />}
-                </div>
-                <h3 className="text-base font-bold text-white mb-2">{card.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-4">{card.desc}</p>
+              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                {iconMap[card.icon] || <ShieldCheck className="w-5 h-5 text-brand-cyan" />}
               </div>
-              <div className="pt-3 border-t border-white/5 text-[11px] font-semibold text-brand-cyan">
-                ✓ Verified Migration Protocol
-              </div>
+              <h4 className="text-base font-bold text-white">{card.title}</h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                {card.desc}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* CTA and Footnote */}
-        <div className="text-center space-y-3">
+        {/* Urgency Strip and CTA Button */}
+        <div className="p-8 rounded-3xl bg-white/[0.05] border border-white/15 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+          <div className="space-y-1 text-center md:text-left">
+            <div className="text-sm font-bold text-amber-300 flex items-center justify-center md:justify-start gap-2">
+              <span>⚠️</span>
+              <span>{urgencyStrip}</span>
+            </div>
+            <div className="text-xs sm:text-sm text-slate-300">
+              Preserve all historical records, eliminate custom code debt, and lock in guaranteed timelines.
+            </div>
+          </div>
+
           <PillButton
             href={ctaPrimary.href}
             variant="primary"
@@ -86,9 +99,6 @@ export function MigrationPromo() {
           >
             {ctaPrimary.label}
           </PillButton>
-          <div className="text-xs text-slate-400 max-w-lg mx-auto">
-            {urgencyStrip}
-          </div>
         </div>
       </div>
     </section>

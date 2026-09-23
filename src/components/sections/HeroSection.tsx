@@ -1,56 +1,54 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import { Sparkles, CheckCircle2, ShieldCheck, Award, Users } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { PromptBox } from "@/components/ui/PromptBox";
 import { D1_HeroDashboard } from "@/components/visuals/D1_HeroDashboard";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 import { homeData } from "@/content/home";
 
 export function HeroSection() {
   return (
     <section
       data-theme="dark"
-      className="relative text-white pt-32 sm:pt-36 pb-20 overflow-hidden border-b border-slate-800/80"
+      className="relative text-white overflow-hidden border-b border-slate-800/80"
     >
-      {/* Cinematic Enterprise Photo Background with Navy Gradient Scrim */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/hero-enterprise.jpg"
-          alt="Enterprise SAP Datacenter Architecture"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center brightness-[0.35] contrast-125"
-        />
-        {/* Navy duotone gradient overlay (60-75% opacity) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/75 to-navy-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/30 via-transparent to-transparent pointer-events-none" />
-      </div>
+      {/* Multi-layered cinematic navy-indigo background */}
+      <SectionBackground
+        variant="hero"
+        image="/images/backgrounds/bg-hero-network.jpg"
+        priority
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Centered Benefit-Led Headline & Eyebrow */}
-        <div className="text-center max-w-4xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.08] border border-white/15 backdrop-blur-md text-xs sm:text-sm font-semibold text-brand-cyan mb-6 shadow-xl shadow-cyan-950/40">
-            <Sparkles className="w-4 h-4 text-brand-cyan" />
-            <span>{homeData.hero.badge}</span>
+      {/* 1. Above-The-Fold Viewport (100svh framing for 1366x768 & 1440x900) */}
+      <div className="min-h-[100svh] flex flex-col justify-center pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-14 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          {/* Centered Benefit-Led Headline & Eyebrow */}
+          <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.08] border border-white/15 backdrop-blur-md text-xs sm:text-sm font-semibold text-brand-cyan mb-4 sm:mb-5 shadow-xl shadow-cyan-950/40">
+              <Sparkles className="w-4 h-4 text-brand-cyan" />
+              <span>{homeData.hero.badge}</span>
+            </div>
+
+            <h1 className="font-display text-[clamp(2.2rem,4.5vw,4.25rem)] font-extrabold tracking-tight leading-[1.08] mb-4 sm:mb-5">
+              Enterprise SAP® Solutions That{" "}
+              <span className="gradient-heading-accent">Drive Real Growth.</span>
+            </h1>
+
+            <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-[60ch] mx-auto leading-relaxed">
+              {homeData.hero.subheadline}
+            </p>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] mb-6">
-            Enterprise SAP® Solutions That{" "}
-            <span className="gradient-heading-accent">Drive Real Growth.</span>
-          </h1>
-
-          <p className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            {homeData.hero.subheadline}
-          </p>
+          {/* Hostinger-style Interactive Prompt Input Box & Suggestion Chips */}
+          <div className="w-full">
+            <PromptBox />
+          </div>
         </div>
+      </div>
 
-        {/* Hostinger-style Interactive Prompt Input Box */}
-        <div className="mb-14">
-          <PromptBox />
-        </div>
-
+      {/* 2. Below-The-Fold Telemetry & Stats Flow */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pb-20 pt-4">
         {/* Live Product Telemetry Visual (D1) */}
         <div className="mb-16">
           <D1_HeroDashboard />
@@ -64,7 +62,7 @@ export function HeroSection() {
             { value: "9", label: "Specialist Practices", sub: "S/4HANA, Cloud, GRC, AMS" },
             { value: "100%", label: "S/4HANA Certified", sub: "Zero Historical Data Loss" },
           ].map((stat, idx) => (
-            <div key={idx} className="p-4 rounded-2xl bg-white/[0.03] border border-white/5">
+            <div key={idx} className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-sm">
               <div className="text-3xl sm:text-4xl font-extrabold font-display text-white tracking-tight">
                 {stat.value}
               </div>

@@ -12,6 +12,7 @@ import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { MigrationComparison } from "@/components/sections/MigrationComparison";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
 import { D4_RoadmapGantt } from "@/components/visuals/D4_RoadmapGantt";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 import {
   Banknote,
   ShieldAlert,
@@ -86,7 +87,7 @@ export default function S4HanaMigrationPage() {
   };
 
   return (
-    <div className="pt-24 sm:pt-28">
+    <div>
       {/* Inject FAQPage Schema */}
       <script
         type="application/ld+json"
@@ -96,12 +97,13 @@ export default function S4HanaMigrationPage() {
       {/* Hero Section (Dark navy mesh) */}
       <section
         data-theme="dark"
-        className="dark-mesh-bg text-white pt-12 pb-24 relative overflow-hidden border-b border-slate-800/80"
+        className="relative text-white pt-32 sm:pt-36 md:pt-40 pb-24 overflow-hidden border-b border-slate-800/80"
       >
-        {/* Glow */}
-        <div
-          className="absolute top-1/3 -right-32 w-[35rem] h-[35rem] bg-brand-cyan/15 rounded-full blur-[140px] pointer-events-none"
-          aria-hidden="true"
+        <SectionBackground
+          variant="pageHero"
+          image="/images/backgrounds/bg-migration-datacenter.jpg"
+          imageAlt="ECC to S/4HANA Migration"
+          priority
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

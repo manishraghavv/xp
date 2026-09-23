@@ -4,8 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { projectsData } from "@/content/projects";
-import { CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
+import { SectionBackground } from "@/components/ui/SectionBackground";
+import { Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Case Studies & Client Impact | Proven SAP® Results",
@@ -26,23 +27,18 @@ const caseStudyPhotos: Record<string, string> = {
 
 export default function ProjectsPage() {
   return (
-    <div className="pt-24 sm:pt-28">
+    <div>
       {/* Hero Section (Dark navy mesh with photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-12 pb-24 overflow-hidden border-b border-slate-800/80"
+        className="relative text-white pt-32 sm:pt-36 md:pt-40 pb-24 overflow-hidden border-b border-slate-800/80"
       >
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/case-fund-management.jpg"
-            alt="Client Success Stories & Enterprise SAP Implementations"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center brightness-[0.25] contrast-125"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/80 to-navy-950" />
-        </div>
+        <SectionBackground
+          variant="pageHero"
+          image="/images/backgrounds/bg-projects-analytics.jpg"
+          imageAlt="Client Success Stories & Enterprise SAP Implementations"
+          priority
+        />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumbs items={[{ label: "Projects" }]} theme="dark" className="mb-8" />

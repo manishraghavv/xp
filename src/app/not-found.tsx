@@ -1,11 +1,17 @@
 import React from "react";
 import { Home, Compass, PhoneCall } from "lucide-react";
 import { PillButton } from "@/components/ui/PillButton";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export default function NotFound() {
   return (
-    <div data-theme="dark" className="min-h-[85vh] flex items-center justify-center pt-32 pb-20 dark-mesh-bg text-white px-4">
-      <div className="max-w-2xl w-full p-8 sm:p-12 rounded-[32px] glass-card-dark text-center space-y-6 border border-slate-700/80 shadow-2xl relative">
+    <div
+      data-theme="dark"
+      className="min-h-screen flex items-center justify-center pt-32 pb-20 text-white px-4 relative overflow-hidden"
+    >
+      <SectionBackground variant="dark" />
+
+      <div className="max-w-2xl w-full p-8 sm:p-12 rounded-[32px] glass-card-dark text-center space-y-6 border border-white/15 shadow-2xl relative z-10">
         <div className="inline-block text-xs font-bold uppercase tracking-widest text-brand-cyan bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/25">
           Error 404 · Page Not Found
         </div>

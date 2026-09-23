@@ -12,6 +12,7 @@ import { D5_IntegrationDiagram } from "@/components/visuals/D5_IntegrationDiagra
 import { D8_GrcShieldMatrix } from "@/components/visuals/D8_GrcShieldMatrix";
 import { D6_ModuleConstellation } from "@/components/visuals/D6_ModuleConstellation";
 import { D1_HeroDashboard } from "@/components/visuals/D1_HeroDashboard";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -81,23 +82,18 @@ export default async function ProjectDetailPage({
   };
 
   return (
-    <div className="pt-24 sm:pt-28">
+    <div>
       {/* Hero Section (Dark navy mesh with photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-12 pb-24 overflow-hidden border-b border-slate-800/80"
+        className="relative text-white pt-32 sm:pt-36 md:pt-40 pb-24 overflow-hidden border-b border-slate-800/80"
       >
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={caseStudyPhotos[slug] || "/images/case-fund-management.jpg"}
-            alt={project.title}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center brightness-[0.25] contrast-125"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/80 to-navy-950" />
-        </div>
+        <SectionBackground
+          variant="pageHero"
+          image={caseStudyPhotos[slug] || "/images/backgrounds/bg-projects-analytics.jpg"}
+          imageAlt={project.title}
+          priority
+        />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumbs

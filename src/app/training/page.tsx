@@ -24,6 +24,7 @@ import {
   Clock,
   BookOpen,
 } from "lucide-react";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export default function TrainingPage() {
   const [selectedProgramme, setSelectedProgramme] = useState("");
@@ -53,23 +54,18 @@ export default function TrainingPage() {
   };
 
   return (
-    <div className="pt-24 sm:pt-28">
+    <div>
       {/* Hero Section (Dark navy mesh with training photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-12 pb-24 overflow-hidden border-b border-slate-800/80"
+        className="relative text-white pt-32 sm:pt-36 md:pt-40 pb-24 overflow-hidden border-b border-slate-800/80"
       >
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/training-hero.jpg"
-            alt="Corporate Training & Practitioner Enablement"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center brightness-[0.25] contrast-125"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/80 to-navy-950" />
-        </div>
+        <SectionBackground
+          variant="pageHero"
+          image="/images/backgrounds/bg-training-learning.jpg"
+          imageAlt="Corporate Training & Practitioner Enablement"
+          priority
+        />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumbs items={[{ label: "Training" }]} theme="dark" className="mb-8" />

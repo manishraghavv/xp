@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { GetInTouchModal } from "@/components/layout/GetInTouchModal";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 interface ContactCtaBandProps {
   eyebrow?: string;
@@ -23,9 +24,14 @@ export function ContactCtaBand({
 
   return (
     <>
-      <section data-theme="dark" className="py-20 dark-mesh-bg text-white relative overflow-hidden border-t border-slate-800/80">
+      <section
+        data-theme="dark"
+        className="py-20 text-white relative overflow-hidden border-t border-slate-800/80"
+      >
+        <SectionBackground variant="cta" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="p-8 sm:p-12 rounded-4xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/15 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div className="p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-white/[0.09] to-white/[0.03] border border-white/20 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-brand-cyan">
                 <Sparkles className="w-3.5 h-3.5" />
@@ -43,7 +49,7 @@ export function ContactCtaBand({
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="btn-pill-gradient px-8 py-4 rounded-full text-white text-sm sm:text-base font-semibold flex items-center gap-2 flex-shrink-0 cursor-pointer"
+              className="btn-pill-gradient px-8 py-4 rounded-full text-white text-sm sm:text-base font-semibold flex items-center gap-2 flex-shrink-0 cursor-pointer shadow-xl hover:scale-105 active:scale-95 transition-all"
             >
               <span>{buttonText}</span>
               <ArrowRight className="w-4 h-4" />
