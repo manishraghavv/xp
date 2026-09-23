@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
-  Menu,
   ChevronDown,
   Sparkles,
   MessageSquareText,
@@ -24,6 +23,7 @@ import { servicesData } from "@/content/services";
 import { MenuOverlay } from "./MenuOverlay";
 import { GetInTouchModal } from "./GetInTouchModal";
 import { ScrollProgress } from "./ScrollProgress";
+import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { cn } from "@/lib/utils";
 
 const serviceIcons: Record<string, React.ReactNode> = {
@@ -35,34 +35,35 @@ const serviceIcons: Record<string, React.ReactNode> = {
   "s4hana-upgrade-migration": <RefreshCw className="w-4 h-4 text-cyan-500" />,
   "sap-implementation-rollout": <Layers className="w-4 h-4 text-violet-500" />,
   "application-management-services-ams": <Headphones className="w-4 h-4 text-blue-500" />,
-  "sap-centre-of-excellence-coe": <Award className="w-4 h-4 text-gold-500" />,
+  "sap-centre-of-excellence-coe": <Award className="w-4 h-4 text-amber-500" />,
 };
 
 export function FloatingNavbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const { isVisible, isScrolled } = useScrollDirection();
   const [isMenuOverlayOpen, setIsMenuOverlayOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalService, setModalService] = useState("S/4HANA Upgrade & Migration");
   const [isOverLightSection, setIsOverLightSection] = useState(false);
+  const [isFocusedWithin, setIsFocusedWithin] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
 
-  // Scroll detection & Light/Dark section observer
+  // Light/Dark section observer for subtle middle pill adaptation
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    // Observe all sections with data-theme="light"
     const lightSections = document.querySelectorAll('[data-theme="light"]');
+    if (!lightSections.length) {
+      setIsOverLightSection(false);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
-        // Check if any light section is currently intersecting the top viewport area
         const anyLightIntersecting = entries.some(
-          (entry) => entry.isIntersecting && entry.boundingClientRect.top <= 80 && entry.boundingClientRect.bottom >= 20
+          (entry) =>
+            entry.isIntersecting &&
+            entry.boundingClientRect.top <= 80 &&
+            entry.boundingClientRect.bottom >= 20
         );
         setIsOverLightSection(anyLightIntersecting);
       },
@@ -75,7 +76,6 @@ export function FloatingNavbar() {
     lightSections.forEach((el) => observer.observe(el));
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       observer.disconnect();
     };
   }, [pathname]);
@@ -90,6 +90,14 @@ export function FloatingNavbar() {
       setIsServicesDropdownOpen(false);
     }, 200);
   };
+
+  // Keep navbar visible if dropdown, menu, modal or keyboard focus is active
+  const shouldHide =
+    !isVisible &&
+    !isServicesDropdownOpen &&
+    !isMenuOverlayOpen &&
+    !isModalOpen &&
+    !isFocusedWithin;
 
   const navLinks = [
     { label: "About", href: "/about" },
@@ -106,18 +114,28 @@ export function FloatingNavbar() {
       {/* Floating 3-part header wrapper */}
       <header
         role="banner"
-        className="fixed top-0 inset-x-0 z-40 pointer-events-none px-4 sm:px-8 py-4 sm:py-5 transition-all duration-300"
+        aria-hidden={shouldHide}
+        onFocus={() => setIsFocusedWithin(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            setIsFocusedWithin(false);
+          }
+        }}
+        className={cn(
+          "fixed top-0 inset-x-0 z-40 pointer-events-none px-4 sm:px-8 py-4 sm:py-5",
+          "transition-[transform,opacity] duration-320 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          shouldHide ? "-translate-y-[130%] opacity-0" : "translate-y-0 opacity-100"
+        )}
       >
         <div className="max-w-[1720px] mx-auto grid grid-cols-2 lg:grid-cols-[1fr_auto_1fr] items-center justify-between">
           
-          {/* 1. LEFT GROUP: Hamburger + Logo */}
+          {/* 1. LEFT GROUP: Hamburger + Logo (ALWAYS Solid Dark Navy Glass for Crisp Contrast) */}
           <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto justify-self-start">
             <div
               className={cn(
                 "flex items-center gap-3 sm:gap-4 p-1 rounded-full transition-all duration-300",
-                isOverLightSection
-                  ? "bg-navy-950/85 backdrop-blur-xl border border-slate-700/80 pr-4 sm:pr-5 shadow-2xl"
-                  : "bg-navy-950/40 backdrop-blur-md border border-white/10 pr-3 sm:pr-4"
+                "bg-[rgba(10,16,48,0.88)] backdrop-blur-xl border border-white/[0.14] pr-4 sm:pr-5 shadow-2xl",
+                isScrolled ? "shadow-navy-950/80" : ""
               )}
             >
               {/* Round White Hamburger Button */}
@@ -157,8 +175,10 @@ export function FloatingNavbar() {
             <div
               className={cn(
                 "h-[58px] px-3 rounded-full flex items-center gap-1 transition-all duration-300",
-                "bg-[#CDD2E0]/75 backdrop-blur-2xl border border-white/40 shadow-glass-lavender",
-                isScrolled ? "bg-[#CDD2E0]/90 shadow-xl" : ""
+                isOverLightSection
+                  ? "bg-[#BCC2D4]/90 backdrop-blur-2xl border border-white/60 shadow-xl"
+                  : "bg-[#CDD2E0]/78 backdrop-blur-2xl border border-white/45 shadow-glass-lavender",
+                isScrolled ? "shadow-2xl" : ""
               )}
             >
               {navLinks.map((link) => {
@@ -247,7 +267,7 @@ export function FloatingNavbar() {
                               className="text-xs font-bold text-brand-blue hover:underline flex items-center gap-1"
                             >
                               <span>Learn More</span>
-                              <ArrowRight className="w-3 h-3" />
+                              <ArrowRight className="w-3.5 h-3.5" />
                             </Link>
                           </div>
                         </div>
@@ -282,7 +302,7 @@ export function FloatingNavbar() {
                 setModalService("S/4HANA Upgrade & Migration");
                 setIsModalOpen(true);
               }}
-              className="h-[52px] sm:h-[56px] px-6 sm:px-7 rounded-full bg-navy-950/85 backdrop-blur-xl text-white border border-white/20 shadow-xl hover:bg-navy-900 hover:border-brand-cyan/40 transition-all flex items-center gap-2.5 font-medium text-sm sm:text-[17px] active:scale-95 group cursor-pointer"
+              className="h-[52px] sm:h-[56px] px-6 sm:px-7 rounded-full bg-[rgba(10,16,48,0.88)] backdrop-blur-xl text-white border border-white/[0.16] shadow-xl hover:bg-navy-900 hover:border-brand-cyan/40 transition-all flex items-center gap-2.5 font-medium text-sm sm:text-[17px] active:scale-95 group cursor-pointer"
             >
               <MessageSquareText className="w-4 h-4 sm:w-5 sm:h-5 text-brand-cyan transition-transform group-hover:scale-110" />
               <span className="hidden sm:inline">Get in Touch</span>
