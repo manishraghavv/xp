@@ -2,10 +2,16 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { servicesData } from "@/content/services";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { CheckCircle2, ArrowRight, Sparkles, ChevronRight } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
+import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
+import { D5_IntegrationDiagram } from "@/components/visuals/D5_IntegrationDiagram";
+import { D6_ModuleConstellation } from "@/components/visuals/D6_ModuleConstellation";
+import { D8_GrcShieldMatrix } from "@/components/visuals/D8_GrcShieldMatrix";
+import { D2_FioriTileGrid } from "@/components/visuals/D2_FioriTileGrid";
 
 interface ServiceDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -36,6 +42,18 @@ export async function generateMetadata({
   };
 }
 
+const serviceImageMap: Record<string, string> = {
+  "sap-cloud-saas-solutions": "/images/service-cloud.jpg",
+  "sap-analytics-reporting": "/images/service-analytics.jpg",
+  "sap-integration-services": "/images/service-integration.jpg",
+  "sap-grc-security-compliance": "/images/service-grc.jpg",
+  "sap-training-enablement": "/images/service-training.jpg",
+  "s4hana-upgrade-migration": "/images/service-migration.jpg",
+  "sap-implementation-rollout": "/images/service-implementation.jpg",
+  "application-management-services-ams": "/images/service-ams.jpg",
+  "sap-centre-of-excellence-coe": "/images/service-coe.jpg",
+};
+
 export default async function ServiceDetailPage({
   params,
 }: ServiceDetailPageProps) {
@@ -49,10 +67,47 @@ export default async function ServiceDetailPage({
   // Related services (other services)
   const relatedServices = servicesData.filter((s) => s.slug !== slug).slice(0, 3);
 
+  // Contextual visual selector
+  const renderVisual = () => {
+    switch (slug) {
+      case "sap-integration-services":
+      case "sap-cloud-saas-solutions":
+        return <D5_IntegrationDiagram />;
+      case "sap-grc-security-compliance":
+        return <D8_GrcShieldMatrix />;
+      case "s4hana-upgrade-migration":
+        return <D3_ConversionDiagram />;
+      case "sap-implementation-rollout":
+      case "sap-centre-of-excellence-coe":
+        return <D6_ModuleConstellation />;
+      case "sap-analytics-reporting":
+      case "application-management-services-ams":
+      case "sap-training-enablement":
+        return <D2_FioriTileGrid />;
+      default:
+        return <D6_ModuleConstellation />;
+    }
+  };
+
   return (
     <div className="pt-24 sm:pt-28">
-      {/* Hero Section (Dark navy mesh) */}
-      <section className="dark-mesh-bg text-white pt-12 pb-20 relative overflow-hidden border-b border-slate-800/80">
+      {/* Hero Section (Dark navy mesh with photo) */}
+      <section
+        data-theme="dark"
+        className="relative text-white pt-12 pb-24 overflow-hidden border-b border-slate-800/80"
+      >
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={serviceImageMap[slug] || "/images/service-cloud.jpg"}
+            alt={service.title}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center brightness-[0.28] contrast-125"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/80 to-navy-950" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Breadcrumbs
             items={[
@@ -60,24 +115,24 @@ export default async function ServiceDetailPage({
               { label: service.title },
             ]}
             theme="dark"
-            className="mb-6"
+            className="mb-8"
           />
 
           <div className="max-w-4xl space-y-6">
             <div className="flex items-center gap-3">
-              <span className="text-sm font-display font-black text-brand-cyan px-2.5 py-1 rounded bg-cyan-500/10 border border-cyan-500/25">
-                Service {service.number}
+              <span className="text-sm font-display font-black text-brand-cyan px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25">
+                Practice {service.number}
               </span>
               <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">
                 {service.tag}
               </span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05]">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">
               {service.title}
             </h1>
 
-            <p className="text-lg text-slate-300 leading-relaxed font-normal">
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
               {service.overview}
             </p>
           </div>
@@ -85,12 +140,12 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* Main Content Details (Light Section) */}
-      <section className="py-20 bg-canvas-subtle light-mesh-bg border-b border-slate-200/80">
+      <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Column: Scope & Deliverables (7 cols) */}
             <div className="lg:col-span-7 space-y-8">
-              <div className="p-8 sm:p-10 rounded-3xl glass-card-light space-y-6">
+              <div className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-6">
                 <h2 className="text-2xl font-display font-bold text-slate-900 border-b border-slate-100 pb-4">
                   Core Scope & Capabilities
                 </h2>
@@ -98,25 +153,18 @@ export default async function ServiceDetailPage({
                 <div className="space-y-4">
                   {service.bullets.map((bullet, idx) => (
                     <div key={idx} className="flex items-start gap-3.5 text-slate-700">
-                      <CheckCircle2 className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
-                      <span className="text-base leading-relaxed">{bullet}</span>
+                      <div className="w-5 h-5 rounded-full bg-blue-100 text-brand-blue flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      </div>
+                      <span className="text-sm sm:text-base leading-relaxed">{bullet}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Engagement Assurance Card */}
-              <div className="p-8 rounded-3xl bg-blue-50/60 border border-blue-100 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-blue">
-                  <Sparkles className="w-4 h-4 text-brand-blue" />
-                  <span>The XpmindGlobal Assurance</span>
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">
-                  Fixed-Scope Commitment & Senior Architecture Oversight
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Every project is supervised directly by our senior leadership team of Chartered Accountants and certified SAP® transformation specialists. We do not pass your requirements down to junior developers.
-                </p>
+              {/* Contextual Code-Built SAP Visual Component */}
+              <div className="pt-4">
+                {renderVisual()}
               </div>
             </div>
 
@@ -125,18 +173,21 @@ export default async function ServiceDetailPage({
               {service.sideCards.map((side, idx) => (
                 <div
                   key={idx}
-                  className="p-8 rounded-3xl glass-card-light space-y-4"
+                  className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-4"
                 >
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-brand-blue border-b border-slate-100 pb-3">
-                    {side.title}
-                  </h3>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-brand-blue" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-brand-blue">
+                      {side.title}
+                    </h3>
+                  </div>
 
                   {side.chips && side.chips.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 pt-2">
                       {side.chips.map((chip, cIdx) => (
                         <span
                           key={cIdx}
-                          className="px-3.5 py-1.5 rounded-lg bg-white border border-slate-200/90 text-xs font-semibold text-slate-800 shadow-sm"
+                          className="px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700"
                         >
                           {chip}
                         </span>
@@ -145,59 +196,83 @@ export default async function ServiceDetailPage({
                   )}
 
                   {side.text && (
-                    <p className="text-sm text-slate-700 leading-relaxed">
+                    <p className="text-sm text-slate-600 leading-relaxed font-normal pt-1">
                       {side.text}
                     </p>
                   )}
                 </div>
               ))}
+
+              {/* Quick Scoping Box */}
+              <div className="p-8 sm:p-10 rounded-4xl bg-navy-950 text-white shadow-2xl border border-slate-800 space-y-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-cyan">
+                  Need a Scoping Call?
+                </span>
+                <h4 className="text-xl font-bold font-display text-white">
+                  Discuss your {service.title.replace("SAP® ", "")} requirements.
+                </h4>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Our Chartered Accountants and SAP® leads evaluate your current landscape and deliver a fixed-scope assessment.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/contact"
+                    className="btn-pill-gradient text-xs px-6 py-3 rounded-full inline-flex items-center gap-2 font-semibold"
+                  >
+                    <span>Request Practice Consultation</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Related Services (Light Section) */}
-      <section className="py-20 bg-white border-b border-slate-200/80">
+      {/* Related Services Section (Light Section) */}
+      <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                Explore More
-              </div>
-              <h3 className="text-2xl font-display font-bold text-slate-900">
-                Related Service Lines
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-blue">
+                Complementary Capabilities
+              </span>
+              <h3 className="text-2xl font-bold font-display text-slate-900 mt-1">
+                Other Specialised SAP® Practice Lines
               </h3>
             </div>
             <Link
               href="/services"
-              className="text-sm font-bold text-brand-blue hover:text-cyan-600 flex items-center gap-1"
+              className="text-xs font-bold text-brand-blue hover:text-blue-700 flex items-center gap-1"
             >
-              <span>View All 9 Services</span>
-              <ChevronRight className="w-4 h-4" />
+              <span>All 9 Services</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedServices.map((rel) => (
               <Link
-                key={rel.id}
+                key={rel.slug}
                 href={`/services/${rel.slug}`}
-                className="p-6 rounded-2xl glass-card-light group hover:border-brand-blue/30 transition-all flex flex-col justify-between"
+                className="p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-brand-blue/30 transition-all flex flex-col justify-between group"
               >
                 <div>
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-brand-cyan mb-2">
-                    {rel.tag}
+                  <div className="flex items-center justify-between text-xs mb-3">
+                    <span className="font-mono font-bold text-slate-400">{rel.number}</span>
+                    <span className="font-semibold text-brand-blue">{rel.tag}</span>
                   </div>
                   <h4 className="text-lg font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-2">
                     {rel.title}
                   </h4>
-                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                    {rel.overview}
+                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                    {rel.shortDescription}
                   </p>
                 </div>
-                <div className="pt-4 mt-4 border-t border-slate-100 text-xs font-bold text-brand-blue flex items-center gap-1">
-                  <span>Learn more</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+
+                <div className="pt-4 border-t border-slate-200/80 mt-6 flex items-center justify-between text-xs font-bold text-brand-blue">
+                  <span>Explore practice</span>
+                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             ))}
@@ -205,12 +280,12 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      {/* Scoping CTA */}
+      {/* CTA Band */}
       <ContactCtaBand
-        eyebrow="Get Started"
-        headline={`Ready to scope your ${service.title.replace("SAP® ", "")} project?`}
-        subtitle="Schedule a free 90-minute architecture review with our senior practice leads."
-        buttonText="Book Free Assessment →"
+        eyebrow="Specialist Delivery"
+        headline={`Ready to scope your ${service.title.replace("SAP® ", "")} engagement?`}
+        subtitle="Speak directly with our senior delivery architects and Chartered Accountants."
+        buttonText="Schedule Practice Call →"
         defaultService={service.title}
       />
     </div>
