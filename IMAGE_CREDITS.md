@@ -2,6 +2,7 @@
 
 All photography used across the XpmindGlobal corporate portal is curated from Unsplash and licensed under the free-for-commercial-use Unsplash License.
 
+### Content & Card Photography
 | Image File | Title / Context | Photographer | Source URL | License |
 |---|---|---|---|---|
 | `/images/hero-enterprise.jpg` | Modern Enterprise Data Center | [Taylor Vick](https://unsplash.com/@tvick) | [Unsplash Photo](https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80) | Unsplash License (Free for commercial use) |
@@ -25,3 +26,14 @@ All photography used across the XpmindGlobal corporate portal is curated from Un
 | `/images/about-team.jpg` | Enterprise Consulting Collaboration & Advisory | [Annie Spratt](https://unsplash.com/@anniespratt) | [Unsplash Photo](https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80) | Unsplash License (Free for commercial use) |
 | `/images/training-hero.jpg` | Professional Learning & Technical Development | [John Schnobrich](https://unsplash.com/@johnschnobrich) | [Unsplash Photo](https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80) | Unsplash License (Free for commercial use) |
 | `/images/contact-office.jpg` | Corporate Headquarters Architecture | [Sean Pollock](https://unsplash.com/@seanpollock) | [Unsplash Photo](https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80) | Unsplash License (Free for commercial use) |
+
+### Dedicated High-Resolution Background Imagery
+| Image File | Section / Page | Description | Photographer | Source URL | License |
+|---|---|---|---|---|---|
+| `/images/backgrounds/bg-hero-network.jpg` | Home Hero | Night city skyline with dynamic highway light trails | [Denys Nevozhai](https://unsplash.com/@dnevozhai) | [Unsplash Photo](https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/bg-about-collaboration.jpg` | About Page Hero | Collaborative executive team around digital strategy display | [Annie Spratt](https://unsplash.com/@anniespratt) | [Unsplash Photo](https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/bg-services-abstract.jpg` | Services Page Hero | Global cloud connections and digital infrastructure network | [NASA](https://unsplash.com/@nasa) | [Unsplash Photo](https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/bg-projects-analytics.jpg` | Projects Page Hero | Enterprise telemetry and financial dashboard monitors | [Luke Chesser](https://unsplash.com/@lukethewebguy) | [Unsplash Photo](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/bg-training-learning.jpg` | Training Page Hero | Modern technical workstation and continuous education | [John Schnobrich](https://unsplash.com/@johnschnobrich) | [Unsplash Photo](https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/bg-migration-datacenter.jpg` | S/4HANA Migration Hero | Hyperscale server rack corridor with high-speed data lights | [Taylor Vick](https://unsplash.com/@tvick) | [Unsplash Photo](https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
+| `/images/backgrounds/bg-contact-skyline.jpg` | Contact Page Hero | Modern architectural glass headquarters at dusk | [Sean Pollock](https://unsplash.com/@seanpollock) | [Unsplash Photo](https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80) | Unsplash License |
