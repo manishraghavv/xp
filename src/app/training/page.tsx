@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { trainingData } from "@/content/training";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { TrainingForm } from "@/components/sections/TrainingForm";
+import { PillButton } from "@/components/ui/PillButton";
 import {
   Sparkles,
   PlayCircle,
@@ -52,42 +54,62 @@ export default function TrainingPage() {
 
   return (
     <div className="pt-24 sm:pt-28">
-      {/* Hero Section (Dark navy mesh) */}
-      <section className="dark-mesh-bg text-white pt-12 pb-20 relative overflow-hidden border-b border-slate-800/80">
+      {/* Hero Section (Dark navy mesh with training photo) */}
+      <section
+        data-theme="dark"
+        className="relative text-white pt-12 pb-24 overflow-hidden border-b border-slate-800/80"
+      >
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/training-hero.jpg"
+            alt="Corporate Training & Practitioner Enablement"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center brightness-[0.25] contrast-125"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-950/90 via-navy-950/80 to-navy-950" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "Training" }]} theme="dark" className="mb-6" />
+          <Breadcrumbs items={[{ label: "Training" }]} theme="dark" className="mb-8" />
 
           <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>{trainingData.hero.eyebrow}</span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.05]">
-              {trainingData.hero.title}
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">
+              {trainingData.hero.title.replace("Real Expertise", "")}{" "}
+              <span className="gradient-heading-accent">Real Expertise.</span>
             </h1>
 
-            <p className="text-lg text-slate-300 leading-relaxed font-normal max-w-2xl">
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal max-w-2xl">
               {trainingData.hero.subtitle}
             </p>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a
+              <PillButton
                 href="#tracks"
-                className="px-6 py-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/30 hover:shadow-brand-blue/50 transition-all"
+                variant="primary"
+                size="md"
+                icon={<ArrowRight className="w-4 h-4" />}
               >
-                Browse Programmes →
-              </a>
+                Browse Programmes
+              </PillButton>
 
-              <a
+              <PillButton
                 href="#register-interest"
-                className="px-6 py-3 rounded-lg border border-slate-700 bg-navy-800/50 text-slate-200 hover:text-brand-cyan hover:border-brand-cyan transition-colors text-sm font-medium"
+                variant="secondary"
+                size="md"
               >
                 Register Your Interest
-              </a>
+              </PillButton>
             </div>
 
             {/* Key Metrics Strip */}
-            <div className="pt-8 border-t border-slate-800/80 grid grid-cols-3 gap-6 max-w-lg">
+            <div className="pt-8 border-t border-white/10 grid grid-cols-3 gap-6 max-w-lg">
               {trainingData.hero.stats.map((stat, idx) => (
                 <StatCounter
                   key={idx}
@@ -99,11 +121,11 @@ export default function TrainingPage() {
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-4 flex flex-wrap items-center gap-4">
+            <div className="pt-4 flex flex-wrap items-center gap-3">
               {trainingData.trustBadges.map((badge, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-navy-900/60 border border-slate-800 text-xs text-slate-300 font-medium"
+                  className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-medium backdrop-blur-sm"
                 >
                   {trustIconMap[badge.icon]}
                   <span>{badge.label}</span>
@@ -115,12 +137,14 @@ export default function TrainingPage() {
       </section>
 
       {/* Professional Learning Tracks (Light Section) */}
-      <section id="tracks" className="py-24 bg-canvas-subtle light-mesh-bg border-b border-slate-200/80">
+      <section id="tracks" data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Professional Learning Tracks"
-            title="Structured paths for every career stage."
+            title="Structured Paths for Every Career Stage"
+            highlight="Structured Paths"
             subtitle="Each track is built around how SAP® impacts real business decisions — not just system navigation. Coming Soon."
+            align="center"
             theme="light"
           />
 
@@ -128,14 +152,14 @@ export default function TrainingPage() {
             {trainingData.tracks.map((track, idx) => (
               <div
                 key={track.id}
-                className="p-8 rounded-3xl glass-card-light flex flex-col justify-between group hover:border-brand-blue/30 transition-all duration-300"
+                className="p-8 rounded-4xl bg-white border border-slate-200/90 shadow-xl flex flex-col justify-between group hover:border-brand-blue/30 transition-all duration-300"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded-full border border-cyan-100">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-brand-blue bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
                       {track.tag}
                     </span>
-                    <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                    <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-0.5 rounded-full border border-amber-200">
                       Coming Soon
                     </span>
                   </div>
@@ -144,7 +168,7 @@ export default function TrainingPage() {
                     {track.title}
                   </h3>
 
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-xs text-slate-700 font-medium mb-4">
+                  <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium mb-4">
                     <span className="font-bold text-brand-blue">🎯 Ideal for: </span>
                     {track.idealFor}
                   </div>
@@ -156,7 +180,7 @@ export default function TrainingPage() {
                   <div className="space-y-2.5 mb-8">
                     {track.bullets.map((bullet, bIdx) => (
                       <div key={bIdx} className="flex items-start gap-2.5 text-xs text-slate-700">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-brand-cyan flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-brand-blue flex-shrink-0 mt-0.5" />
                         <span>{bullet}</span>
                       </div>
                     ))}
@@ -174,7 +198,7 @@ export default function TrainingPage() {
                           : "Track 03 — Business Readiness (Fresh CAs, New Joiners)";
                       handleNotifyClick(progName);
                     }}
-                    className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-brand-blue hover:text-white text-brand-blue text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                    className="w-full btn-pill-gradient py-3 rounded-full text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
                   >
                     <span>Notify Me When Live</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -187,12 +211,14 @@ export default function TrainingPage() {
       </section>
 
       {/* Technical Courses (Light Section) */}
-      <section className="py-24 bg-white border-b border-slate-200/80">
+      <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Technical SAP® Courses"
-            title="Deep-dive courses for practitioners."
+            title="Deep-Dive Courses for Practitioners"
+            highlight="Deep-Dive Courses"
             subtitle="Comprehensive module-level courses for consultants, implementers, and power users. All coming soon — register your interest below."
+            align="center"
             theme="light"
           />
 
@@ -200,10 +226,10 @@ export default function TrainingPage() {
             {trainingData.courses.map((course, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl glass-card-light flex flex-col justify-between group hover:border-brand-blue/30 transition-all"
+                className="p-8 rounded-4xl bg-[#F6F7FB] border border-slate-200/90 shadow-md flex flex-col justify-between group hover:shadow-2xl hover:border-brand-blue/30 transition-all"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
                     {courseIconMap[course.icon] || <BookOpen className="w-6 h-6 text-brand-blue" />}
                   </div>
 
@@ -216,11 +242,11 @@ export default function TrainingPage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span className="font-semibold text-brand-blue bg-blue-50 px-2.5 py-1 rounded-md">
+                <div className="pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-600">
+                  <span className="font-bold text-brand-blue bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
                     {course.level}
                   </span>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 font-mono font-medium">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
                       {course.hours}
@@ -238,7 +264,7 @@ export default function TrainingPage() {
       </section>
 
       {/* Registration Form Section */}
-      <section className="py-20 bg-canvas-subtle light-mesh-bg">
+      <section id="register-interest" data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <TrainingForm
             selectedProgramme={selectedProgramme}
