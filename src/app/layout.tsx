@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
+import { FloatingNavbar } from "@/components/layout/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingActions } from "@/components/layout/FloatingActions";
+import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpmindglobal.com"),
@@ -137,7 +138,7 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <Header />
+        <FloatingNavbar />
 
         <main id="main-content" className="flex-grow">
           {children}
@@ -145,6 +146,7 @@ export default function RootLayout({
 
         <Footer />
         <FloatingActions />
+        <MobileBottomBar />
       </body>
     </html>
   );

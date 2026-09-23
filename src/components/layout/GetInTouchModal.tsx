@@ -11,12 +11,14 @@ interface GetInTouchModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultService?: string;
+  defaultMessage?: string;
 }
 
 export function GetInTouchModal({
   isOpen,
   onClose,
   defaultService = "",
+  defaultMessage = "",
 }: GetInTouchModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,7 +38,7 @@ export function GetInTouchModal({
       phone: "",
       company: "",
       service: defaultService,
-      message: "",
+      message: defaultMessage,
       website_bot_trap: "",
     },
   });
@@ -45,7 +47,10 @@ export function GetInTouchModal({
     if (defaultService) {
       setValue("service", defaultService);
     }
-  }, [defaultService, setValue]);
+    if (defaultMessage) {
+      setValue("message", defaultMessage);
+    }
+  }, [defaultService, defaultMessage, setValue]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
