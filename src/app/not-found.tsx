@@ -1,12 +1,12 @@
 import React from "react";
-import Link from "next/link";
-import { ArrowLeft, Home, Compass, PhoneCall } from "lucide-react";
+import { Home, Compass, PhoneCall } from "lucide-react";
+import { PillButton } from "@/components/ui/PillButton";
 
 export default function NotFound() {
   return (
-    <div className="min-h-[85vh] flex items-center justify-center pt-32 pb-20 dark-mesh-bg text-white px-4">
-      <div className="max-w-2xl w-full p-8 sm:p-12 rounded-3xl glass-card-dark text-center space-y-6 border border-slate-700/80 shadow-2xl relative">
-        <div className="inline-block text-xs font-bold uppercase tracking-widest text-brand-cyan bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/25">
+    <div data-theme="dark" className="min-h-[85vh] flex items-center justify-center pt-32 pb-20 dark-mesh-bg text-white px-4">
+      <div className="max-w-2xl w-full p-8 sm:p-12 rounded-[32px] glass-card-dark text-center space-y-6 border border-slate-700/80 shadow-2xl relative">
+        <div className="inline-block text-xs font-bold uppercase tracking-widest text-brand-cyan bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/25">
           Error 404 · Page Not Found
         </div>
 
@@ -23,29 +23,35 @@ export default function NotFound() {
         </p>
 
         <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-          <Link
+          <PillButton
             href="/"
-            className="px-6 py-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/30 hover:shadow-brand-blue/50 transition-all flex items-center gap-2"
+            variant="primary"
+            size="md"
+            icon={<Home className="w-4 h-4" />}
+            iconPosition="left"
           >
-            <Home className="w-4 h-4" />
-            <span>Return Home</span>
-          </Link>
+            Return Home
+          </PillButton>
 
-          <Link
+          <PillButton
             href="/services"
-            className="px-6 py-3 rounded-lg border border-slate-700 bg-navy-800/60 text-slate-200 hover:text-brand-cyan hover:border-brand-cyan transition-colors text-sm font-medium flex items-center gap-2"
+            variant="glass"
+            size="md"
+            icon={<Compass className="w-4 h-4" />}
+            iconPosition="left"
           >
-            <Compass className="w-4 h-4" />
-            <span>Browse Services</span>
-          </Link>
+            Browse Services
+          </PillButton>
 
-          <Link
+          <PillButton
             href="/contact"
-            className="px-6 py-3 rounded-lg border border-slate-700 bg-navy-800/60 text-slate-200 hover:text-brand-cyan hover:border-brand-cyan transition-colors text-sm font-medium flex items-center gap-2"
+            variant="secondary"
+            size="md"
+            icon={<PhoneCall className="w-4 h-4" />}
+            iconPosition="left"
           >
-            <PhoneCall className="w-4 h-4" />
-            <span>Contact Support</span>
-          </Link>
+            Contact Support
+          </PillButton>
         </div>
       </div>
     </div>
