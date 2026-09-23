@@ -34,7 +34,7 @@ export function PromptBox({ className = "" }: PromptBoxProps) {
 
   return (
     <>
-      <div className={`w-full max-w-3xl mx-auto ${className}`}>
+      <div id="hero-prompt-box" className={`w-full max-w-3xl mx-auto ${className}`}>
         {/* Main Prompt Card */}
         <form
           onSubmit={handleSubmit}

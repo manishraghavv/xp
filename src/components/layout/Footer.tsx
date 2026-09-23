@@ -1,21 +1,28 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { companyData } from "@/content/company";
 import { navigationData } from "@/content/navigation";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="dark-mesh-bg text-white border-t border-slate-800/80 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer
+      id="site-footer"
+      data-theme="dark"
+      className="relative text-white pt-20 pb-28 sm:pb-32 overflow-hidden border-t border-slate-800/80"
+    >
+      <SectionBackground variant="footer" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 mb-16">
           {/* Company Info Column (2 cols wide on desktop) */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block group">
-              <div className="p-2 px-3.5 rounded-lg bg-navy-900/60 border border-slate-700/60 inline-block">
+              <div className="p-2 px-3.5 rounded-2xl bg-navy-950/80 border border-white/15 inline-block shadow-lg">
                 <Image
                   src="/xp.png"
                   alt="XpmindGlobal"
@@ -26,7 +33,7 @@ export function Footer() {
               </div>
             </Link>
 
-            <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
               {companyData.description}
             </p>
 
@@ -60,7 +67,7 @@ export function Footer() {
 
               <div className="flex items-start gap-2 pt-1">
                 <MapPin className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" />
-                <span className="text-slate-400 leading-relaxed">
+                <span className="text-slate-300 leading-relaxed">
                   {companyData.headquarters.fullAddress}
                 </span>
               </div>
@@ -70,7 +77,7 @@ export function Footer() {
           {/* Footer Navigation Columns */}
           {navigationData.footerGroups.map((group, idx) => (
             <div key={idx} className="space-y-4">
-              <h4 className="text-xs font-bold tracking-widest uppercase text-slate-400 border-b border-slate-800 pb-2">
+              <h4 className="text-xs font-bold tracking-widest uppercase text-slate-300 border-b border-slate-700/60 pb-2">
                 {group.title}
               </h4>
               <ul className="space-y-2.5">
@@ -104,7 +111,7 @@ export function Footer() {
         </div>
 
         {/* Legal Trademark Disclaimer */}
-        <div className="mt-6 pt-4 border-t border-slate-800/40 text-[11px] text-slate-500 leading-relaxed text-center sm:text-left">
+        <div className="mt-6 pt-4 border-t border-slate-800/40 text-[11px] text-slate-400 leading-relaxed text-center sm:text-left">
           SAP®, SAP S/4HANA®, SAP BTP®, SAP Fiori®, SAP Ariba®, Rise with SAP®, and other SAP products and services mentioned herein as well as their respective logos are trademarks or registered trademarks of SAP SE in Germany and in several other countries. XpmindGlobal is an independent enterprise consulting firm and is not affiliated with, sponsored by, or endorsed by SAP SE.
         </div>
       </div>
