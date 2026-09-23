@@ -97,7 +97,7 @@ export default function S4HanaMigrationPage() {
       {/* Hero Section (Dark navy mesh) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-32 sm:pt-36 md:pt-40 pb-24 overflow-hidden border-b border-slate-800/80"
+        className="relative text-white pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden"
       >
         <SectionBackground
           variant="pageHero"

@@ -36,7 +36,7 @@ export default function ServicesPage() {
       {/* Hero Section (Dark navy mesh with cloud photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-32 sm:pt-36 md:pt-40 pb-24 overflow-hidden border-b border-slate-800/80"
+        className="relative text-white pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden"
       >
         <SectionBackground
           variant="pageHero"
@@ -68,16 +68,16 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Sticky In-Page Navigation / Table of Contents */}
-      <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm py-3.5 hidden md:block">
+      {/* In-Page Navigation / Table of Contents */}
+      <div className="bg-canvas-subtle py-4 hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-auto">
-          <div className="flex items-center gap-6 text-xs font-semibold whitespace-nowrap">
-            <span className="text-slate-400 uppercase tracking-wider">Jump to Practice:</span>
+          <div className="flex items-center gap-4 text-xs font-semibold whitespace-nowrap">
+            <span className="text-slate-500 uppercase tracking-wider">Jump to Practice:</span>
             {servicesData.map((svc) => (
               <a
                 key={svc.id}
                 href={`#${svc.slug}`}
-                className="text-slate-600 hover:text-brand-blue transition-colors"
+                className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-brand-blue hover:border-brand-blue/40 shadow-xs transition-colors"
               >
                 {svc.number}. {svc.title.replace("SAP® ", "")}
               </a>

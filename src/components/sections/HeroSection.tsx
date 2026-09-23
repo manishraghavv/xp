@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <section
       data-theme="dark"
-      className="relative text-white overflow-hidden border-b border-slate-800/80"
+      className="relative text-white overflow-hidden"
     >
       {/* Multi-layered cinematic navy-indigo background */}
       <SectionBackground
@@ -21,7 +21,7 @@ export function HeroSection() {
       />
 
       {/* 1. Above-The-Fold Viewport (100svh framing for 1366x768 & 1440x900) */}
-      <div className="min-h-[100svh] flex flex-col justify-center pt-28 sm:pt-32 md:pt-36 pb-10 sm:pb-14 relative z-10">
+      <div className="min-h-[100svh] flex flex-col justify-center pt-36 sm:pt-40 md:pt-44 pb-10 sm:pb-14 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           {/* Centered Benefit-Led Headline & Eyebrow */}
           <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8">
