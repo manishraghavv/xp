@@ -27,7 +27,7 @@ export default function TrainingPage() {
       {/* Hero Section (Dark navy mesh with training photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden"
+        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
       >
         <SectionBackground
           variant="pageHero"
@@ -44,7 +44,7 @@ export default function TrainingPage() {
               <span>{trainingData.hero.eyebrow}</span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">
+            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1]">
               {trainingData.hero.title.replace("Real Expertise", "")}{" "}
               <span className="gradient-heading-accent">Real Expertise.</span>
             </h1>
@@ -100,7 +100,7 @@ export default function TrainingPage() {
       </section>
 
       {/* Professional Learning Tracks (Light Section) */}
-      <section id="tracks" data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+      <section id="tracks" data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Professional Learning Tracks"
@@ -174,7 +174,7 @@ export default function TrainingPage() {
       </section>
 
       {/* Technical Courses (Light Section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Technical SAP® Courses"
@@ -221,7 +221,7 @@ export default function TrainingPage() {
       </section>
 
       {/* Registration Form Section */}
-      <section id="register-interest" data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB]">
+      <section id="register-interest" data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <TrainingForm
             selectedProgramme={selectedProgramme}

@@ -15,7 +15,7 @@ export function MigrationPromo() {
   return (
     <section
       data-theme="dark"
-      className="text-white py-24 sm:py-32 border-b border-slate-800/80 relative overflow-hidden"
+      className="text-white py-16 sm:py-24 lg:py-32 border-b border-slate-800/80 relative overflow-hidden"
     >
       <SectionBackground variant="cta" />
 

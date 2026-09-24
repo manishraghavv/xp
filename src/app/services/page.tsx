@@ -36,7 +36,7 @@ export default function ServicesPage() {
       {/* Hero Section (Dark navy mesh with cloud photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden"
+        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
       >
         <SectionBackground
           variant="pageHero"
@@ -53,7 +53,7 @@ export default function ServicesPage() {
               <span>Full Lifecycle SAP® Services</span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] mb-6">
+            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
               Nine service lines.{" "}
               <span className="gradient-heading-accent">
                 One trusted partner.
@@ -86,7 +86,7 @@ export default function ServicesPage() {
       </div>
 
       {/* Services Detailed List (Light Section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           {servicesData.map((service, idx) => {
             const isAlt = idx % 2 === 1;
@@ -190,7 +190,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Delivery Methodology (Light Section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Delivery Methodology"

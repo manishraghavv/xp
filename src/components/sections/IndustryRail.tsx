@@ -41,7 +41,7 @@ export function IndustryRail() {
   const items: IndustryItem[] = homeData.industries;
 
   return (
-    <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+    <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Industries We Serve"
@@ -57,7 +57,7 @@ export function IndustryRail() {
           {items.map((item: IndustryItem, idx: number) => (
             <div
               key={idx}
-              className="flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300"
+              className="flex-shrink-0 w-[min(84vw,320px)] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300"
             >
               {/* Photo Cover */}
               <div className="relative h-52 w-full overflow-hidden bg-navy-950">

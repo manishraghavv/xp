@@ -16,7 +16,7 @@ export function HomeCtaBand() {
   return (
     <section
       data-theme="dark"
-      className="py-24 sm:py-32 text-white relative overflow-hidden border-t border-slate-800/80"
+      className="py-16 sm:py-24 lg:py-32 text-white relative overflow-hidden border-t border-slate-800/80"
     >
       <SectionBackground variant="cta" />
 

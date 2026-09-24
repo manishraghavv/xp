@@ -1,27 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  X,
-  ArrowRight,
-  Phone,
-  Mail,
-  MapPin,
-  Sparkles,
-  Cloud,
-  BarChart3,
-  Network,
-  ShieldCheck,
-  GraduationCap,
-  RefreshCw,
-  Layers,
-  Headphones,
-  Award,
-} from "lucide-react";
+import { ArrowRight, Phone, Mail, MapPin, ChevronDown } from "lucide-react";
 import { servicesData } from "@/content/services";
 import { companyData } from "@/content/company";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
+import { cn } from "@/lib/utils";
 
 interface MenuOverlayProps {
   isOpen: boolean;
@@ -29,226 +15,359 @@ interface MenuOverlayProps {
   onOpenModal: () => void;
 }
 
-const serviceIcons: Record<string, React.ReactNode> = {
-  "sap-cloud-saas-solutions": <Cloud className="w-4 h-4 text-cyan-400" />,
-  "sap-analytics-reporting": <BarChart3 className="w-4 h-4 text-blue-400" />,
-  "sap-integration-services": <Network className="w-4 h-4 text-indigo-400" />,
-  "sap-grc-security-compliance": <ShieldCheck className="w-4 h-4 text-emerald-400" />,
-  "sap-training-enablement": <GraduationCap className="w-4 h-4 text-amber-400" />,
-  "s4hana-upgrade-migration": <RefreshCw className="w-4 h-4 text-cyan-400" />,
-  "sap-implementation-rollout": <Layers className="w-4 h-4 text-violet-400" />,
-  "application-management-services-ams": <Headphones className="w-4 h-4 text-blue-400" />,
-  "sap-centre-of-excellence-coe": <Award className="w-4 h-4 text-amber-400" />,
-};
+const QUICK_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "About XpmindGlobal", href: "/about" },
+  { label: "SAP® Services", href: "/services" },
+  { label: "Projects & Case Studies", href: "/projects" },
+  { label: "XPMIND Learning Cell", href: "/training" },
+  { label: "16-Week S/4HANA Migration", href: "/s4hana-migration" },
+  { label: "Contact Us", href: "/contact" },
+];
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+/**
+ * Navigation panel.
+ *
+ * Deliberately *not* a full-screen sheet: the floating bar stays visible and its
+ * hamburger becomes an "X", so there is never a second close button or a
+ * duplicated logo. The panel hangs below the bar with a blurred scrim behind it
+ * and scrolls internally, so every item — including the very last one and the
+ * "Get in Touch" button — is always reachable.
+ */
 export function MenuOverlay({ isOpen, onClose, onOpenModal }: MenuOverlayProps) {
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
+  const [openService, setOpenService] = useState<string | null>(null);
 
+  useBodyScrollLock(isOpen);
+
+  const prevIsOpen = useRef(false);
+
+  // Reset scroll to top ONLY on initial open transition
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    if (isOpen && !prevIsOpen.current) {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = 0;
+      }
+      setOpenService(null);
     }
+    prevIsOpen.current = isOpen;
+  }, [isOpen]);
+
+  // ── ESC closes · Tab is trapped inside the panel ──────────────────────────
+  useEffect(() => {
+    if (!isOpen) return;
+
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === "Escape") {
+        e.preventDefault();
         onClose();
+        return;
+      }
+
+      if (e.key !== "Tab" || !panelRef.current) return;
+
+      const nodes = Array.from(
+        panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
+      ).filter(
+        (el) =>
+          (el.offsetParent !== null || el === document.activeElement) &&
+          !el.classList.contains("menu-scroll")
+      );
+
+      if (nodes.length === 0) return;
+
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Move focus into the first link once it has rendered, without triggering scroll jump.
+    const raf = requestAnimationFrame(() => {
+      const firstLink = panelRef.current?.querySelector<HTMLElement>("a[href]");
+      firstLink?.focus({ preventScroll: true });
+    });
+
     return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
+      cancelAnimationFrame(raf);
+      previouslyFocused.current?.focus?.();
     };
   }, [isOpen, onClose]);
+
+  const handleModal = useCallback(() => {
+    onClose();
+    onOpenModal();
+  }, [onClose, onOpenModal]);
 
   if (!isOpen) return null;
 
   return (
-    <div
-      ref={overlayRef}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Navigation Menu"
-      className="fixed inset-0 z-[75] overflow-y-auto [scrollbar-gutter:stable] menu-overlay-surface text-white animate-in fade-in duration-200"
-    >
-      {/* Background ambient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/12 rounded-full blur-[140px] pointer-events-none" />
+    <div className="fixed inset-0 z-[59]" role="presentation">
+      {/* Blurred scrim — clicking it closes the panel. The bar stays above it. */}
+      <div
+        aria-hidden="true"
+        onClick={onClose}
+        className="absolute inset-0 bg-[rgba(4,8,15,0.55)] backdrop-blur-[3px] animate-in fade-in duration-200"
+      />
 
-      {/* Main Centered Content Container */}
-      <div className="w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-6 sm:py-8 min-h-screen flex flex-col justify-between relative z-10">
-        
-        {/* Top bar inside overlay */}
-        <div className="flex items-center justify-between pb-6 border-b border-white/10">
-          <Link href="/" onClick={onClose} className="inline-block group" aria-label="XpmindGlobal Home">
-            <div className="py-2 px-4 rounded-full bg-[rgba(10,16,48,0.85)] border border-white/15 shadow-xl flex items-center transition-transform group-hover:scale-[1.02]">
-              <Image
-                src="/xp.png"
-                alt="XpmindGlobal Logo"
-                width={150}
-                height={32}
-                priority
-                className="h-8 w-auto object-contain"
-              />
-            </div>
-          </Link>
-
-          {/* Unified round white button */}
-          <button
-            onClick={onClose}
-            aria-label="Close menu"
-            className="w-11 h-11 sm:w-12 sm:h-12 lg:w-[52px] lg:h-[52px] rounded-full bg-white text-[#0B1440] hover:bg-slate-100 flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
-          >
-            <X className="w-6 h-6 stroke-[2.2]" />
-          </button>
+      {/* Panel — hangs below the floating bar, flex column with exactly ONE scroll region */}
+      <div
+        ref={panelRef}
+        id="navigation-menu-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        className={cn(
+          "menu-panel z-[59] rounded-[28px] border border-white/12 shadow-2xl",
+          "left-3 right-3 sm:left-6 sm:right-6 lg:left-9 lg:right-9 bottom-6",
+          "menu-overlay-surface text-white",
+          "animate-in fade-in slide-in-from-top-2 duration-200"
+        )}
+      >
+        {/* Ambient background: hero image at low opacity + soft glow */}
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none z-0">
+          <Image
+            src="/images/backgrounds/sap-hero.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-center opacity-[0.12]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0A1030]/85 via-[#101B4D]/80 to-[#1B2E7A]/85" />
+          <div className="absolute -top-24 -left-16 w-[26rem] h-[26rem] bg-blue-600/20 rounded-full blur-[110px]" />
+          <div className="absolute -bottom-24 right-0 w-[26rem] h-[26rem] bg-cyan-500/15 rounded-full blur-[110px]" />
         </div>
 
-        {/* 3-Column Content Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-8 sm:py-10 my-auto">
-          
-          {/* Column 1: Quick Navigation (Top-aligned) */}
-          <div className="lg:col-span-4 flex flex-col space-y-5">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-cyan">
-              Quick Navigation
-            </span>
-            <nav className="flex flex-col space-y-3">
-              {[
-                { label: "Home", href: "/" },
-                { label: "About XpmindGlobal", href: "/about" },
-                { label: "SAP® Services", href: "/services" },
-                { label: "Projects & Case Studies", href: "/projects" },
-                { label: "XPMIND Learning Cell", href: "/training" },
-                { label: "16-Week S/4HANA Migration", href: "/s4hana-migration" },
-                { label: "Contact Us", href: "/contact" },
-              ].map((item, idx) => (
-                <Link
-                  key={idx}
-                  href={item.href}
-                  onClick={onClose}
-                  className="text-xl sm:text-2xl font-display font-bold text-slate-100 hover:text-brand-cyan transition-colors flex items-center justify-between group py-1"
-                >
-                  <span>{item.label}</span>
-                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-cyan" />
-                </Link>
-              ))}
-            </nav>
-          </div>
+        {/* Exactly ONE scroll region */}
+        <div
+          ref={scrollRef}
+          className="menu-scroll relative z-[1] outline-none"
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
+          tabIndex={0}
+          aria-label="Scrollable menu content"
+          onKeyDown={(e) => {
+            const scroller = scrollRef.current;
+            if (!scroller) return;
 
-          {/* Column 2: 9 Specialist Services (Full text, no truncated descriptions) */}
-          <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-10">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-slate-300">
-                Specialist Service Lines
-              </span>
-              <Link
-                href="/services"
-                onClick={onClose}
-                className="text-xs font-semibold text-brand-cyan hover:underline"
-              >
-                View all →
-              </Link>
-            </div>
+            switch (e.key) {
+              case "PageDown":
+                e.preventDefault();
+                scroller.scrollTop = Math.min(
+                  scroller.scrollHeight - scroller.clientHeight,
+                  scroller.scrollTop + scroller.clientHeight * 0.8
+                );
+                break;
+              case "PageUp":
+                e.preventDefault();
+                scroller.scrollTop = Math.max(0, scroller.scrollTop - scroller.clientHeight * 0.8);
+                break;
+              case "Home":
+                e.preventDefault();
+                scroller.scrollTop = 0;
+                break;
+              case "End":
+                e.preventDefault();
+                scroller.scrollTop = scroller.scrollHeight - scroller.clientHeight;
+                break;
+              case "ArrowDown":
+                e.preventDefault();
+                scroller.scrollTop = Math.min(
+                  scroller.scrollHeight - scroller.clientHeight,
+                  scroller.scrollTop + 60
+                );
+                break;
+              case "ArrowUp":
+                e.preventDefault();
+                scroller.scrollTop = Math.max(0, scroller.scrollTop - 60);
+                break;
+              case " ":
+                e.preventDefault();
+                scroller.scrollTop = Math.min(
+                  scroller.scrollHeight - scroller.clientHeight,
+                  scroller.scrollTop + (e.shiftKey ? -scroller.clientHeight * 0.8 : scroller.clientHeight * 0.8)
+                );
+                break;
+            }
+          }}
+        >
+          <div className="menu-inner">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.3fr_0.9fr] gap-8 lg:gap-10 items-start">
+              {/* ── Column 1 — Quick navigation ── */}
+              <nav aria-label="Quick navigation">
+                <span className="block text-[11px] font-bold uppercase tracking-widest text-brand-cyan mb-3">
+                  Quick Navigation
+                </span>
+                <ul className="space-y-0.5">
+                  {QUICK_LINKS.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={onClose}
+                        className="group flex items-center justify-between gap-3 py-2.5 min-h-[44px] text-lg font-display font-bold text-slate-100 hover:text-brand-cyan transition-colors"
+                      >
+                        <span>{item.label}</span>
+                        <ArrowRight className="w-4 h-4 flex-shrink-0 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-brand-cyan" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-            <div className="space-y-2">
-              {servicesData.map((svc) => (
-                <Link
-                  key={svc.slug}
-                  href={`/services/${svc.slug}`}
-                  onClick={onClose}
-                  className="flex items-start gap-3 p-2 rounded-xl hover:bg-white/[0.08] border border-transparent hover:border-white/10 transition-all group"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-[#0A1030] border border-white/15 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:border-brand-cyan/50">
-                    {serviceIcons[svc.slug] || <Sparkles className="w-4 h-4 text-brand-cyan" />}
+              {/* ── Column 2 — All 9 service lines (text only) ── */}
+              <div className="border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-10">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-300">
+                    Specialist Service Lines
+                  </span>
+                  <Link
+                    href="/services"
+                    onClick={onClose}
+                    className="text-xs font-semibold text-brand-cyan hover:underline flex-shrink-0"
+                  >
+                    View all
+                  </Link>
+                </div>
+
+                <ul>
+                  {servicesData.map((svc) => {
+                    const isExpanded = openService === svc.slug;
+                    return (
+                      <li key={svc.slug} className="border-b border-white/[0.08] last:border-b-0">
+                        <div className="flex items-start justify-between gap-3">
+                          <Link
+                            href={`/services/${svc.slug}`}
+                            onClick={onClose}
+                            className="flex-1 py-2.5 min-h-[44px] flex items-center text-sm font-semibold text-slate-200 hover:text-white transition-colors"
+                          >
+                            {svc.title}
+                          </Link>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setOpenService((prev) => (prev === svc.slug ? null : svc.slug))
+                            }
+                            aria-expanded={isExpanded}
+                            aria-label={`${isExpanded ? "Hide" : "Show"} description for ${svc.title}`}
+                            className="lg:hidden w-11 h-11 -mr-2 flex items-center justify-center text-slate-400 hover:text-brand-cyan transition-colors flex-shrink-0"
+                          >
+                            <ChevronDown
+                              className={cn(
+                                "w-4 h-4 transition-transform duration-200",
+                                isExpanded && "rotate-180"
+                              )}
+                            />
+                          </button>
+                        </div>
+
+                        <p
+                          className={cn(
+                            "text-xs text-slate-400 leading-relaxed pb-3 lg:block",
+                            isExpanded ? "block" : "hidden"
+                          )}
+                        >
+                          {svc.shortDescription}
+                        </p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              {/* ── Column 3 — Migration highlight + direct contact ── */}
+              <div className="border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-10 flex flex-col gap-6">
+                <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-brand-blue/20 via-[#101B4D]/90 to-brand-cyan/15 border border-brand-cyan/30 shadow-xl">
+                  <span className="inline-block text-[10px] font-extrabold uppercase tracking-wider text-brand-cyan bg-cyan-950/70 px-2.5 py-0.5 rounded-full border border-cyan-500/30 mb-3">
+                    Mandatory ECC Deadline
+                  </span>
+                  <h4 className="text-base font-bold text-white mb-2 leading-snug">
+                    ECC to S/4HANA Brownfield Migration in 16 Weeks*
+                  </h4>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                    Preserve 100% of historical data and custom ABAP code with zero business
+                    disruption and ~40% cost efficiency.
+                  </p>
+                  <Link
+                    href="/s4hana-migration"
+                    onClick={onClose}
+                    className="btn-pill-gradient text-xs px-5 py-3 min-h-[44px] rounded-full inline-flex items-center gap-1.5 font-semibold"
+                  >
+                    <span>Explore Migration Roadmap</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+
+                <div className="space-y-3 text-xs text-slate-300">
+                  <span className="block text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                    Direct Contact
+                  </span>
+                  <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <Phone className="w-4 h-4 text-brand-cyan flex-shrink-0" />
+                    <a href={companyData.phones[0].href} className="hover:text-cyan-400 transition-colors">
+                      {companyData.phones[0].number}
+                    </a>
+                    <span className="text-slate-600">|</span>
+                    <a href={companyData.phones[1].href} className="hover:text-cyan-400 transition-colors">
+                      {companyData.phones[1].number}
+                    </a>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs sm:text-sm font-bold text-slate-200 group-hover:text-white transition-colors leading-tight">
-                      {svc.title}
-                    </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5 leading-snug">
-                      {svc.shortDescription}
-                    </div>
+                  <div className="flex items-center gap-2.5">
+                    <Mail className="w-4 h-4 text-brand-cyan flex-shrink-0" />
+                    <a
+                      href={`mailto:${companyData.email}`}
+                      className="hover:text-cyan-400 transition-colors break-all"
+                    >
+                      {companyData.email}
+                    </a>
                   </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 3: Featured S/4HANA Migration Card & Direct Contact */}
-          <div className="lg:col-span-4 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-10 flex flex-col justify-between space-y-6">
-            
-            {/* Featured Migration Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-brand-blue/20 via-[#101B4D]/90 to-brand-cyan/15 border border-brand-cyan/30 shadow-xl backdrop-blur-xl relative overflow-hidden group">
-              <span className="inline-block text-[10px] font-extrabold uppercase tracking-wider text-brand-cyan bg-cyan-950/70 px-2.5 py-0.5 rounded-full border border-cyan-500/30 mb-2.5">
-                Mandatory ECC Deadline
-              </span>
-              <h4 className="text-base font-bold text-white mb-2 leading-snug">
-                ECC to S/4HANA Brownfield Migration in 16 Weeks*
-              </h4>
-              <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                Preserve 100% of historical data and custom ABAP code with zero business disruption and ~40% cost efficiency.
-              </p>
-              <Link
-                href="/s4hana-migration"
-                onClick={onClose}
-                className="btn-pill-gradient text-xs px-5 py-2.5 rounded-full inline-flex items-center gap-1.5 font-semibold"
-              >
-                <span>Explore Migration Roadmap</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
-            {/* Direct Coordinates with comfortable breathing room */}
-            <div className="space-y-3 text-xs text-slate-300">
-              <span className="block text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                Direct Contact
-              </span>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-brand-cyan flex-shrink-0" />
-                <a href={companyData.phones[0].href} className="hover:text-cyan-400 transition-colors">
-                  {companyData.phones[0].number}
-                </a>
-                <span>|</span>
-                <a href={companyData.phones[1].href} className="hover:text-cyan-400 transition-colors">
-                  {companyData.phones[1].number}
-                </a>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-brand-cyan flex-shrink-0" />
-                <a href={`mailto:${companyData.email}`} className="hover:text-cyan-400 transition-colors">
-                  {companyData.email}
-                </a>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" />
-                <span className="text-slate-300 leading-relaxed">{companyData.headquarters.fullAddress}</span>
+                  <div className="flex items-start gap-2.5">
+                    <MapPin className="w-4 h-4 text-brand-cyan flex-shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{companyData.headquarters.fullAddress}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Consultation Trigger Button */}
-            <div>
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenModal();
-                }}
-                className="w-full py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95"
-              >
-                <Sparkles className="w-4 h-4 text-brand-cyan" />
-                <span>Open Consultation Modal</span>
-              </button>
+            {/* Legal row */}
+            <div className="mt-8 pt-5 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400">
+              <div>
+                © {new Date().getFullYear()} XpmindGlobal. All rights reserved. Registered in India.
+              </div>
+              <div className="text-slate-500">
+                SAP® is a registered trademark of SAP SE in Germany and other countries.
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Footer legal row */}
-        <div className="pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
-          <div>© {new Date().getFullYear()} XpmindGlobal. All rights reserved. Registered in India.</div>
-          <div className="text-slate-500 text-[11px]">
-            SAP® is a registered trademark of SAP SE in Germany and other countries.
+        {/* Sticky consultation CTA — a normal non-scrolling flex sibling below the scroll area */}
+        <div className="menu-cta relative z-[1]">
+          <div className="mx-auto w-full max-w-[78rem]">
+            <button
+              type="button"
+              onClick={handleModal}
+              className="w-full min-h-[48px] py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm transition-all active:scale-[0.98] cursor-pointer"
+            >
+              Get in Touch
+            </button>
           </div>
         </div>
       </div>

@@ -62,7 +62,7 @@ export function ContactForm() {
   };
 
   return (
-    <div className="p-8 sm:p-10 rounded-3xl glass-card-light shadow-xl border border-slate-200/90">
+    <div className="p-5 sm:p-10 rounded-3xl glass-card-light shadow-xl border border-slate-200/90">
       <div className="mb-6">
         <h3 className="text-2xl font-display font-bold text-slate-900">
           Send Us an Enquiry
@@ -119,7 +119,7 @@ export function ContactForm() {
             <input
               type="text"
               placeholder="e.g. Rajesh"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
               {...register("firstName")}
             />
             {errors.firstName && (
@@ -134,7 +134,7 @@ export function ContactForm() {
             <input
               type="text"
               placeholder="e.g. Gupta"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
               {...register("lastName")}
             />
             {errors.lastName && (
@@ -152,7 +152,7 @@ export function ContactForm() {
             <input
               type="email"
               placeholder="you@company.com"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
               {...register("email")}
             />
             {errors.email && (
@@ -167,7 +167,7 @@ export function ContactForm() {
             <input
               type="tel"
               placeholder="+91 98XX XXX XXX"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
               {...register("phone")}
             />
           </div>
@@ -181,7 +181,7 @@ export function ContactForm() {
           <input
             type="text"
             placeholder="Your organisation name"
-            className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+            className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
             {...register("company")}
           />
           {errors.company && (
@@ -195,7 +195,7 @@ export function ContactForm() {
             Service of Interest *
           </label>
           <select
-            className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+            className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
             {...register("service")}
           >
             <option value="" disabled>
@@ -218,7 +218,7 @@ export function ContactForm() {
             Current SAP® Landscape
           </label>
           <select
-            className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+            className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
             {...register("landscape")}
           >
             <option value="">Select current landscape status...</option>
@@ -238,7 +238,7 @@ export function ContactForm() {
           <textarea
             rows={4}
             placeholder="Describe your current SAP® challenge, project scope, or timeline..."
-            className="w-full px-4 py-2.5 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue resize-vertical"
+            className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue resize-vertical"
             {...register("message")}
           />
         </div>
@@ -251,7 +251,7 @@ export function ContactForm() {
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full sm:w-auto px-8 py-3.5 min-h-[48px] rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <span>{status === "loading" ? "Sending..." : "Send Message →"}</span>
           </button>

@@ -167,6 +167,10 @@ export function FloatingNavbar() {
     setIsMenuOverlayOpen(true);
   }, [closeDropdown]);
 
+  const closeMenu = useCallback(() => {
+    setIsMenuOverlayOpen(false);
+  }, []);
+
   const openModal = useCallback((service: string) => {
     closeDropdown();
     setModalService(service);
@@ -215,34 +219,51 @@ export function FloatingNavbar() {
           }
         }}
         className={cn(
-          "fixed top-3 inset-x-3 sm:top-5 sm:inset-x-6 lg:inset-x-9 z-[60]",
+          "fixed top-3 inset-x-3 sm:top-5 sm:inset-x-6 lg:inset-x-9 z-[60] pointer-events-none",
           "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
           shouldHide ? "-translate-y-[150%]" : "translate-y-0"
         )}
       >
-        <div className="max-w-[1720px] mx-auto relative">
+        <div className="max-w-[1720px] mx-auto relative pointer-events-none">
 
           {/* ──── The Unified Infosys Frosted Glass Bar ──── */}
           <div
             className={cn(
-              "infosys-navbar-bar h-[66px] sm:h-[74px] lg:h-[82px] rounded-full px-3 sm:px-4 lg:px-6",
+              "infosys-navbar-bar pointer-events-auto h-16 sm:h-[74px] lg:h-[82px] rounded-full px-2.5 sm:px-4 lg:px-6",
               "flex items-center justify-between gap-2 sm:gap-4 relative transition-shadow duration-300",
               isScrolled ? "shadow-2xl" : ""
             )}
           >
             {/* 1. LEFT: Round White Hamburger + xp-dark Logo */}
             <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+              {/* The hamburger morphs into an X — there is no second close button. */}
               <button
                 type="button"
-                onClick={openHamburger}
-                aria-label="Open navigation menu"
+                onClick={isMenuOverlayOpen ? () => setIsMenuOverlayOpen(false) : openHamburger}
+                aria-label={isMenuOverlayOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={isMenuOverlayOpen}
+                aria-controls="navigation-menu-panel"
                 className="w-11 h-11 sm:w-12 sm:h-12 lg:w-[52px] lg:h-[52px] rounded-full bg-white text-[#0B1440] hover:bg-slate-50 flex items-center justify-center shadow-[0_2px_8px_rgba(10,16,48,0.12)] hover:scale-105 active:scale-95 transition-transform duration-200 cursor-pointer flex-shrink-0"
               >
                 <div className="w-5 h-3.5 flex flex-col justify-between">
-                  <span className="w-full h-0.5 bg-[#0B1440] rounded-full" />
-                  <span className="w-3/4 h-0.5 bg-[#0B1440] rounded-full" />
-                  <span className="w-full h-0.5 bg-[#0B1440] rounded-full" />
+                  <span
+                    className={cn(
+                      "w-full h-0.5 bg-[#0B1440] rounded-full origin-center transition-transform duration-200",
+                      isMenuOverlayOpen && "translate-y-[6px] rotate-45"
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      "w-3/4 h-0.5 bg-[#0B1440] rounded-full transition-opacity duration-200",
+                      isMenuOverlayOpen && "opacity-0"
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      "w-full h-0.5 bg-[#0B1440] rounded-full origin-center transition-transform duration-200",
+                      isMenuOverlayOpen && "-translate-y-[6px] -rotate-45"
+                    )}
+                  />
                 </div>
               </button>
 
@@ -423,7 +444,7 @@ export function FloatingNavbar() {
       {/* Fullscreen Menu Overlay */}
       <MenuOverlay
         isOpen={isMenuOverlayOpen}
-        onClose={() => setIsMenuOverlayOpen(false)}
+        onClose={closeMenu}
         onOpenModal={() => openModal("S/4HANA Upgrade & Migration")}
       />
 

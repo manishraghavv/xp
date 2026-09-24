@@ -1,9 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { FloatingNavbar } from "@/components/layout/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // `viewport-fit=cover` lets the floating bar and sticky CTA respect notches
+  // via env(safe-area-inset-*).
+  viewportFit: "cover",
+  themeColor: "#0A1030",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xpmindglobal.com"),
@@ -129,7 +138,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#0A1030] text-slate-900 antialiased selection:bg-brand-cyan/20 selection:text-brand-blue">
+      <body className="min-h-[100svh] flex flex-col bg-[#0A1030] text-slate-900 antialiased selection:bg-brand-cyan/20 selection:text-brand-blue">
         {/* Skip to main content link for accessibility */}
         <a
           href="#main-content"

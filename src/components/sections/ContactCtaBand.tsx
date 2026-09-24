@@ -26,12 +26,12 @@ export function ContactCtaBand({
     <>
       <section
         data-theme="dark"
-        className="py-20 text-white relative overflow-hidden border-t border-slate-800/80"
+        className="py-14 sm:py-20 text-white relative overflow-hidden border-t border-slate-800/80"
       >
         <SectionBackground variant="cta" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-white/[0.09] to-white/[0.03] border border-white/20 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div className="p-6 sm:p-12 rounded-[32px] bg-gradient-to-b from-white/[0.09] to-white/[0.03] border border-white/20 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 shadow-2xl">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-brand-cyan">
                 <span>{eyebrow}</span>

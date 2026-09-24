@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { X, CheckCircle2, AlertCircle } from "lucide-react";
 import { modalFormSchema, type ModalFormData, serviceOptions } from "@/lib/validations";
 import { companyData } from "@/content/company";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 interface GetInTouchModalProps {
   isOpen: boolean;
@@ -62,13 +63,10 @@ export function GetInTouchModal({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
+  useBodyScrollLock(isOpen);
+
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      setStatus("idle");
-    }
+    if (!isOpen) setStatus("idle");
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -99,7 +97,7 @@ export function GetInTouchModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-navy-950/80 backdrop-blur-md transition-opacity"
@@ -107,11 +105,17 @@ export function GetInTouchModal({
         aria-hidden="true"
       />
 
-      {/* Modal Card */}
-      <div className="relative w-full max-w-2xl bg-white dark:bg-navy-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 z-10 my-8">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+      {/* Modal Card — full-height sheet on phones, centred card on desktop */}
+      <div
+        id="get-in-touch-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="get-in-touch-title"
+        className="relative w-full sm:max-w-2xl max-h-[100dvh] sm:max-h-[90svh] overflow-y-auto overscroll-contain bg-white dark:bg-navy-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 z-10"
+      >
+        <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
           <div>
-            <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
+            <h3 id="get-in-touch-title" className="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white">
               Get in Touch
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
@@ -120,7 +124,7 @@ export function GetInTouchModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-navy-800 transition-colors"
+            className="flex items-center justify-center min-w-[44px] min-h-[44px] -mr-1 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-navy-800 transition-colors flex-shrink-0"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -176,7 +180,7 @@ export function GetInTouchModal({
               <input
                 type="text"
                 placeholder="e.g. Rajesh"
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
                 {...register("firstName")}
               />
               {errors.firstName && (
@@ -191,7 +195,7 @@ export function GetInTouchModal({
               <input
                 type="text"
                 placeholder="e.g. Gupta"
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
                 {...register("lastName")}
               />
               {errors.lastName && (
@@ -208,7 +212,7 @@ export function GetInTouchModal({
               <input
                 type="email"
                 placeholder="you@company.com"
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
                 {...register("email")}
               />
               {errors.email && (
@@ -223,7 +227,7 @@ export function GetInTouchModal({
               <input
                 type="tel"
                 placeholder="+91 98XX XXX XXX"
-                className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
                 {...register("phone")}
               />
             </div>
@@ -236,7 +240,7 @@ export function GetInTouchModal({
             <input
               type="text"
               placeholder="Your organisation name"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
               {...register("company")}
             />
             {errors.company && (
@@ -249,7 +253,7 @@ export function GetInTouchModal({
               Service of Interest *
             </label>
             <select
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
               {...register("service")}
             >
               <option value="" disabled>
@@ -273,12 +277,12 @@ export function GetInTouchModal({
             <textarea
               rows={3}
               placeholder="Describe your SAP® challenge or what you'd like to explore..."
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue resize-vertical"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-800 text-slate-900 dark:text-white placeholder:text-slate-400 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue resize-vertical"
               {...register("message")}
             />
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="sticky bottom-0 -mx-5 sm:-mx-8 mt-4 px-5 sm:px-8 py-4 bg-white/95 dark:bg-navy-900/95 backdrop-blur border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
             <div className="text-xs text-slate-500 dark:text-slate-400">
               <span>Strictly confidential.</span>
             </div>
@@ -286,7 +290,7 @@ export function GetInTouchModal({
             <button
               type="submit"
               disabled={status === "loading"}
-              className="w-full sm:w-auto px-6 py-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full sm:w-auto px-6 py-3.5 min-h-[48px] rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <span>{status === "loading" ? "Sending..." : "Send Message →"}</span>
             </button>

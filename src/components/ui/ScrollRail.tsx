@@ -49,7 +49,7 @@ export function ScrollRail({
         ref={scrollRef}
         onScroll={checkScroll}
         className={cn(
-          "flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-4 px-2 no-scrollbar scroll-smooth",
+          "flex items-stretch gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory py-4 px-1 sm:px-2 no-scrollbar scroll-smooth scroll-px-1 sm:scroll-px-2",
           className
         )}
         style={{
@@ -68,7 +68,7 @@ export function ScrollRail({
             disabled={!canScrollLeft}
             aria-label="Scroll left"
             className={cn(
-              "absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 sm:-translate-x-5 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl border",
+              "hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 sm:-translate-x-5 z-20 w-11 h-11 rounded-full items-center justify-center transition-all duration-300 shadow-xl border",
               canScrollLeft
                 ? "bg-white text-navy-950 border-slate-200 hover:scale-110 hover:shadow-2xl cursor-pointer"
                 : "bg-white/40 text-slate-400 border-transparent opacity-0 pointer-events-none cursor-default"
@@ -82,7 +82,7 @@ export function ScrollRail({
             disabled={!canScrollRight}
             aria-label="Scroll right"
             className={cn(
-              "absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 sm:translate-x-5 z-20 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl border",
+              "hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 sm:translate-x-5 z-20 w-11 h-11 rounded-full items-center justify-center transition-all duration-300 shadow-xl border",
               canScrollRight
                 ? "bg-white text-navy-950 border-slate-200 hover:scale-110 hover:shadow-2xl cursor-pointer"
                 : "bg-white/40 text-slate-400 border-transparent opacity-0 pointer-events-none cursor-default"

@@ -24,7 +24,7 @@ export default function AboutPage() {
       {/* Hero Section (Dark navy mesh with team photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden"
+        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
       >
         <SectionBackground
           variant="pageHero"
@@ -57,7 +57,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story & Values Section (Light section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Story Text (7 cols) */}
@@ -110,7 +110,7 @@ export default function AboutPage() {
       </section>
 
       {/* Vision & Mission Section (Light Section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Vision & Mission"
@@ -151,7 +151,7 @@ export default function AboutPage() {
       </section>
 
       {/* By the Numbers (Light section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="By the Numbers"
@@ -176,7 +176,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership Team (Light section) */}
-      <section id="leadership" data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+      <section id="leadership" data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Leadership Team"

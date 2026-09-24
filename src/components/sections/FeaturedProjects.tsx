@@ -19,7 +19,7 @@ const caseStudyPhotos: Record<string, string> = {
 
 export function FeaturedProjects() {
   return (
-    <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+    <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
           <SectionHeading
@@ -48,7 +48,7 @@ export function FeaturedProjects() {
           {projectsData.map((project) => (
             <div
               key={project.slug}
-              className="flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-white border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300"
+              className="flex-shrink-0 w-[min(84vw,320px)] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-white border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300"
             >
               {/* Photo Cover */}
               <div className="relative h-48 w-full overflow-hidden bg-navy-950">
@@ -69,11 +69,11 @@ export function FeaturedProjects() {
               {/* Body */}
               <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 leading-snug line-clamp-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 leading-snug">
                     {project.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6 line-clamp-3">
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
                     {project.shortDescription}
                   </p>
 
@@ -84,7 +84,7 @@ export function FeaturedProjects() {
                     {project.results.slice(0, 2).map((res, rIdx) => (
                       <div key={rIdx} className="flex items-start gap-2 text-xs text-slate-700">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <span className="line-clamp-2">{res}</span>
+                        <span>{res}</span>
                       </div>
                     ))}
                   </div>

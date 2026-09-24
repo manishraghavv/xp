@@ -13,12 +13,12 @@ export function Footer() {
     <footer
       id="site-footer"
       data-theme="dark"
-      className="relative text-white pt-20 pb-28 sm:pb-32 overflow-hidden border-t border-slate-800/80"
+      className="relative text-white pt-14 sm:pt-20 pb-[calc(6.5rem+env(safe-area-inset-bottom,0px))] md:pb-20 overflow-hidden border-t border-slate-800/80"
     >
       <SectionBackground variant="footer" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-16">
           {/* Company Info Column (2 cols wide on desktop) */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block group">
@@ -111,7 +111,7 @@ export function Footer() {
         </div>
 
         {/* Legal Trademark Disclaimer */}
-        <div className="mt-6 pt-4 border-t border-slate-800/40 text-[11px] text-slate-400 leading-relaxed text-center sm:text-left">
+        <div className="mt-6 pt-4 border-t border-slate-800/40 text-sm text-slate-400 leading-relaxed text-left">
           SAP®, SAP S/4HANA®, SAP BTP®, SAP Fiori®, SAP Ariba®, Rise with SAP®, and other SAP products and services mentioned herein as well as their respective logos are trademarks or registered trademarks of SAP SE in Germany and in several other countries. XpmindGlobal is an independent enterprise consulting firm and is not affiliated with, sponsored by, or endorsed by SAP SE.
         </div>
       </div>

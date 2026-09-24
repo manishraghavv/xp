@@ -41,20 +41,20 @@ export function PromptBox({ className = "" }: PromptBoxProps) {
           className="relative rounded-3xl bg-navy-900/60 backdrop-blur-2xl border border-white/15 p-2 sm:p-3 shadow-2xl shadow-blue-950/50 transition-all duration-300 focus-within:border-brand-blue/60 focus-within:ring-2 focus-within:ring-brand-blue/20"
         >
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-            <div className="flex items-center flex-1 px-3 sm:px-4 py-2">
+            <div className="flex items-center flex-1 px-3 sm:px-4 py-2.5">
               <input
                 type="text"
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 placeholder="Tell us about your SAP® challenge…"
                 aria-label="Describe your SAP challenge for assessment"
-                className="w-full bg-transparent text-white placeholder-slate-400 text-sm sm:text-base outline-none font-sans"
+                className="w-full bg-transparent text-white placeholder-slate-400 text-base outline-none font-sans"
               />
             </div>
 
             <button
               type="submit"
-              className="btn-pill-gradient px-6 py-3.5 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group flex-shrink-0"
+              className="btn-pill-gradient w-full sm:w-auto px-6 py-3.5 rounded-full text-sm font-semibold flex items-center justify-center gap-2 group flex-shrink-0"
             >
               <span>Get Free Assessment</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -62,19 +62,21 @@ export function PromptBox({ className = "" }: PromptBoxProps) {
           </div>
         </form>
 
-        {/* Suggestion Chips */}
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-2">
-          <span className="text-xs text-slate-400 font-medium mr-1">Popular:</span>
-          {suggestionChips.map((chip, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleChipClick(chip)}
-              className="text-xs px-3.5 py-1.5 rounded-full bg-white/[0.07] hover:bg-white/[0.14] text-slate-200 border border-white/10 hover:border-brand-cyan/40 transition-all duration-200 flex items-center gap-1.5 backdrop-blur-sm"
-            >
-              <span>{chip.label}</span>
-            </button>
-          ))}
+        {/* Suggestion Chips — two per row on phones, inline from sm up */}
+        <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-2 px-2">
+          <span className="text-xs text-slate-400 font-medium sm:mr-1">Popular:</span>
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap sm:items-center">
+            {suggestionChips.map((chip, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleChipClick(chip)}
+                className="text-xs px-3 py-2.5 sm:py-1.5 rounded-full bg-white/[0.07] hover:bg-white/[0.14] text-slate-200 border border-white/10 hover:border-brand-cyan/40 transition-all duration-200 flex items-center justify-center backdrop-blur-sm min-h-[44px] sm:min-h-0"
+              >
+                <span>{chip.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

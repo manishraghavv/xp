@@ -7,7 +7,10 @@ export function MigrationComparison() {
   const data = s4hanaData.comparison;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div
+      id="migration-comparison"
+      className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8"
+    >
       {data.paths.map((path, idx) => {
         const isFeatured = path.featured;
 
@@ -15,9 +18,9 @@ export function MigrationComparison() {
           <div
             key={idx}
             className={cn(
-              "p-8 sm:p-10 rounded-3xl flex flex-col justify-between transition-all duration-300 relative",
+              "p-6 sm:p-10 rounded-3xl flex flex-col justify-between transition-all duration-300 relative",
               isFeatured
-                ? "bg-white border-2 border-brand-blue shadow-xl shadow-brand-blue/10 sm:-translate-y-2"
+                ? "bg-white border-2 border-brand-blue shadow-xl shadow-brand-blue/10 md:-translate-y-2"
                 : "glass-card-light border border-slate-200/90"
             )}
           >

@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({
       {/* Hero Section (Dark navy mesh with photo) */}
       <section
         data-theme="dark"
-        className="relative text-white pt-36 sm:pt-40 md:pt-44 pb-24 overflow-hidden"
+        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
       >
         <SectionBackground
           variant="pageHero"
@@ -124,7 +124,7 @@ export default async function ServiceDetailPage({
               </span>
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">
+            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1]">
               {service.title}
             </h1>
 
@@ -136,7 +136,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* Main Content Details (Light Section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Column: Scope & Deliverables (7 cols) */}
@@ -225,7 +225,7 @@ export default async function ServiceDetailPage({
       </section>
 
       {/* Related Services Section (Light Section) */}
-      <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+      <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>

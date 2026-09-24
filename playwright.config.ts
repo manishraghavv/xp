@@ -44,6 +44,7 @@ export default defineConfig({
       name: "Mobile 375x812",
       use: {
         ...devices["iPhone 13"],
+        browserName: "chromium",
         viewport: { width: 375, height: 812 },
       },
     },
@@ -51,6 +52,7 @@ export default defineConfig({
       name: "Mobile 390x844",
       use: {
         ...devices["iPhone 13"],
+        browserName: "chromium",
         viewport: { width: 390, height: 844 },
       },
     },
@@ -58,6 +60,7 @@ export default defineConfig({
       name: "Tablet 768x1024",
       use: {
         ...devices["Pixel 7"],
+        browserName: "chromium",
         viewport: { width: 768, height: 1024 },
       },
     },

@@ -10,7 +10,7 @@ export function WhyUsSection() {
   const points: WhyUsPoint[] = homeData.whyUs;
 
   return (
-    <section data-theme="light" className="py-24 sm:py-32 bg-white border-b border-slate-200">
+    <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Why Choose Us"
@@ -38,7 +38,7 @@ export function WhyUsSection() {
         </div>
 
         {/* 6 Strategic Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 mb-16 sm:mb-24">
           {points.map((card: WhyUsPoint, idx: number) => (
             <div
               key={idx}

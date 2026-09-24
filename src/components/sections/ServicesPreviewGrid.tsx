@@ -22,7 +22,7 @@ const serviceImageMap: Record<string, string> = {
 
 export function ServicesPreviewGrid() {
   return (
-    <section data-theme="light" className="py-24 sm:py-32 bg-[#F6F7FB] border-b border-slate-200">
+    <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Our Services"
@@ -34,7 +34,7 @@ export function ServicesPreviewGrid() {
         />
 
         {/* 9 Services Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 mb-16 sm:mb-24">
           {servicesData.map((service) => (
             <div
               key={service.slug}
@@ -75,7 +75,7 @@ export function ServicesPreviewGrid() {
                     {service.bullets.slice(0, 3).map((bullet, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-2 text-xs text-slate-700">
                         <CheckCircle2 className="w-3.5 h-3.5 text-brand-blue mt-0.5 flex-shrink-0" />
-                        <span className="line-clamp-1">{bullet}</span>
+                        <span>{bullet}</span>
                       </li>
                     ))}
                   </ul>
