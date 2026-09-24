@@ -1,18 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
-import {
-  FileText,
-  Layers,
-  ShieldCheck,
-  CreditCard,
-  BarChart,
-  RefreshCw,
-  TrendingUp,
-  Activity,
-  ArrowUpRight,
-} from "lucide-react";
-
+import React from "react";
 interface FioriTile {
   id: string;
   title: string;
@@ -20,7 +6,6 @@ interface FioriTile {
   metric: string;
   unit?: string;
   trend: string;
-  icon: React.ReactNode;
   category: string;
 }
 
@@ -32,7 +17,6 @@ const tiles: FioriTile[] = [
     metric: "100%",
     unit: "Reconciled",
     trend: "+4.2% daily throughput",
-    icon: <FileText className="w-5 h-5 text-blue-500" />,
     category: "Finance (FI/CO)",
   },
   {
@@ -42,7 +26,6 @@ const tiles: FioriTile[] = [
     metric: "0",
     unit: "Syntax Errors",
     trend: "100% HANA-ready",
-    icon: <RefreshCw className="w-5 h-5 text-cyan-500" />,
     category: "System Conversion",
   },
   {
@@ -52,7 +35,6 @@ const tiles: FioriTile[] = [
     metric: "Zero",
     unit: "Critical SoD Violations",
     trend: "SOX / Audit Clean",
-    icon: <ShieldCheck className="w-5 h-5 text-emerald-500" />,
     category: "GRC & Security",
   },
   {
@@ -62,7 +44,6 @@ const tiles: FioriTile[] = [
     metric: "94.6%",
     unit: "Auto-Cleared",
     trend: "Same-day cash position",
-    icon: <CreditCard className="w-5 h-5 text-amber-500" />,
     category: "Treasury",
   },
   {
@@ -72,7 +53,6 @@ const tiles: FioriTile[] = [
     metric: "+18.4%",
     unit: "EBITDA Visibility",
     trend: "Live HANA live-connection",
-    icon: <BarChart className="w-5 h-5 text-violet-500" />,
     category: "Analytics",
   },
   {
@@ -82,34 +62,28 @@ const tiles: FioriTile[] = [
     metric: "99.98%",
     unit: "Contractual Uptime",
     trend: "24×7 War Room Active",
-    icon: <Activity className="w-5 h-5 text-blue-600" />,
     category: "Support",
   },
 ];
 
 export function D2_FioriTileGrid() {
-  const [activeTile, setActiveTile] = useState<string | null>(null);
-
   return (
     <div className="w-full max-w-5xl mx-auto my-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {tiles.map((tile) => {
-          const isSelected = activeTile === tile.id;
+        {tiles.map((tile, idx) => {
           return (
             <div
               key={tile.id}
-              onMouseEnter={() => setActiveTile(tile.id)}
-              onMouseLeave={() => setActiveTile(null)}
-              className="p-6 rounded-3xl bg-white/80 border border-slate-200/90 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition-all duration-300 hover:shadow-2xl hover:border-brand-blue/40 hover:-translate-y-1 cursor-pointer flex flex-col justify-between group"
+              className="p-6 rounded-3xl bg-white/80 border border-slate-200/90 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition-all duration-300 hover:shadow-2xl hover:border-brand-blue/40 hover:-translate-y-1 flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
                     {tile.category}
                   </span>
-                  <div className="w-9 h-9 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center transition-transform group-hover:scale-110">
-                    {tile.icon}
-                  </div>
+                  <span className="text-xs font-mono font-bold tracking-widest text-slate-400">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
                 </div>
 
                 <h4 className="text-base font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-1">
@@ -129,8 +103,7 @@ export function D2_FioriTileGrid() {
                     </span>
                   )}
                 </div>
-                <div className="text-[11px] text-emerald-600 font-medium flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" />
+                <div className="text-[11px] text-emerald-600 font-medium">
                   <span>{tile.trend}</span>
                 </div>
               </div>

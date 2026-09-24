@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, Clock, AlertCircle, RefreshCw } from "lucide-react";
 
 export function D7_ReconMockTable() {
   const transactions = [
@@ -13,7 +12,6 @@ export function D7_ReconMockTable() {
       type: "Credit",
       status: "Auto-Matched",
       statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-      icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />,
       glDoc: "1400029104",
     },
     {
@@ -24,7 +22,6 @@ export function D7_ReconMockTable() {
       type: "Debit",
       status: "Auto-Matched",
       statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-      icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />,
       glDoc: "1400029105",
     },
     {
@@ -35,7 +32,6 @@ export function D7_ReconMockTable() {
       type: "Credit",
       status: "Auto-Matched",
       statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
-      icon: <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />,
       glDoc: "1400029106",
     },
     {
@@ -46,7 +42,6 @@ export function D7_ReconMockTable() {
       type: "Debit",
       status: "Pending Search String",
       statusColor: "bg-amber-50 text-amber-700 border-amber-200",
-      icon: <Clock className="w-3.5 h-3.5 text-amber-600" />,
       glDoc: "Rule Queued",
     },
   ];
@@ -89,9 +84,8 @@ export function D7_ReconMockTable() {
                 <td className="py-3 font-mono font-bold text-slate-900 text-right">{tx.amount}</td>
                 <td className="py-3 text-center">
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${tx.statusColor}`}
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border whitespace-nowrap ${tx.statusColor}`}
                   >
-                    {tx.icon}
                     <span>{tx.status}</span>
                   </span>
                 </td>

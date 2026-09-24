@@ -40,7 +40,7 @@ export function D6_ModuleConstellation() {
       </div>
 
       {/* Grid of Interactive Modules */}
-      <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-6">
+      <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2 mb-6">
         {modules.map((m) => {
           const isSelected = activeCode === m.code;
           return (
@@ -74,7 +74,7 @@ export function D6_ModuleConstellation() {
           </p>
         </div>
         <div className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 flex-shrink-0">
-          ✓ In-house CA & Functional Practice Lead
+          In-house CA & Functional Practice Lead
         </div>
       </div>
     </div>

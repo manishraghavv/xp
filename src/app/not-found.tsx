@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, Compass, PhoneCall } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PillButton } from "@/components/ui/PillButton";
 import { SectionBackground } from "@/components/ui/SectionBackground";
 
@@ -33,29 +33,16 @@ export default function NotFound() {
             href="/"
             variant="primary"
             size="md"
-            icon={<Home className="w-4 h-4" />}
-            iconPosition="left"
+            icon={<ArrowRight className="w-4 h-4" />}
           >
             Return Home
           </PillButton>
 
-          <PillButton
-            href="/services"
-            variant="glass"
-            size="md"
-            icon={<Compass className="w-4 h-4" />}
-            iconPosition="left"
-          >
+          <PillButton href="/services" variant="glass" size="md">
             Browse Services
           </PillButton>
 
-          <PillButton
-            href="/contact"
-            variant="secondary"
-            size="md"
-            icon={<PhoneCall className="w-4 h-4" />}
-            iconPosition="left"
-          >
+          <PillButton href="/contact" variant="secondary" size="md">
             Contact Support
           </PillButton>
         </div>

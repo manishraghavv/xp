@@ -4,39 +4,13 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  ChevronDown,
-  Sparkles,
-  MessageSquareText,
-  ArrowRight,
-  Cloud,
-  BarChart3,
-  Network,
-  ShieldCheck,
-  GraduationCap,
-  RefreshCw,
-  Layers,
-  Headphones,
-  Award,
-} from "lucide-react";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import { servicesData } from "@/content/services";
 import { MenuOverlay } from "./MenuOverlay";
 import { GetInTouchModal } from "./GetInTouchModal";
 import { ScrollProgress } from "./ScrollProgress";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { cn } from "@/lib/utils";
-
-const serviceIcons: Record<string, React.ReactNode> = {
-  "sap-cloud-saas-solutions": <Cloud className="w-5 h-5 text-cyan-500" />,
-  "sap-analytics-reporting": <BarChart3 className="w-5 h-5 text-blue-500" />,
-  "sap-integration-services": <Network className="w-5 h-5 text-indigo-500" />,
-  "sap-grc-security-compliance": <ShieldCheck className="w-5 h-5 text-emerald-500" />,
-  "sap-training-enablement": <GraduationCap className="w-5 h-5 text-amber-500" />,
-  "s4hana-upgrade-migration": <RefreshCw className="w-5 h-5 text-cyan-500" />,
-  "sap-implementation-rollout": <Layers className="w-5 h-5 text-violet-500" />,
-  "application-management-services-ams": <Headphones className="w-5 h-5 text-blue-500" />,
-  "sap-centre-of-excellence-coe": <Award className="w-5 h-5 text-amber-500" />,
-};
 
 export function FloatingNavbar() {
   const { isVisible, isScrolled } = useScrollDirection();
@@ -358,7 +332,6 @@ export function FloatingNavbar() {
                   onClick={() => openModal("S/4HANA Upgrade & Migration")}
                   className="h-11 sm:h-12 lg:h-[52px] px-4 sm:px-6 lg:px-7 rounded-full bg-[#0B0D14] hover:bg-[#171C4A] text-white shadow-md active:scale-95 transition-all flex items-center gap-2 sm:gap-2.5 font-medium text-xs sm:text-sm lg:text-[16px] cursor-pointer group"
                 >
-                  <MessageSquareText className="w-4 h-4 lg:w-5 lg:h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
                   <span className="hidden sm:inline">Get in Touch</span>
                   <span className="sm:hidden">Contact</span>
                 </button>
@@ -407,9 +380,9 @@ export function FloatingNavbar() {
                     onClick={closeDropdown}
                     className="p-3 rounded-2xl hover:bg-[#EEF2FF] border border-transparent hover:border-blue-200/80 transition-all flex items-start gap-3 group"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-blue-50/90 border border-blue-100 flex items-center justify-center flex-shrink-0 group-hover:scale-105 group-hover:bg-white transition-all shadow-sm">
-                      {serviceIcons[svc.slug] || <Sparkles className="w-5 h-5 text-[#1B3FD1]" />}
-                    </div>
+                    <span className="text-xs font-mono font-bold tracking-widest text-[#1B3FD1]/60 flex-shrink-0 pt-0.5">
+                      {svc.number}
+                    </span>
                     <div className="flex-1 min-w-0">
                       <div className="text-[13px] font-bold text-[#14163F] group-hover:text-[#1B3FD1] transition-colors leading-snug">
                         {svc.title}

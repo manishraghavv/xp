@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Phone, Mail } from "lucide-react";
+import { ArrowRight, Phone, Mail } from "lucide-react";
 import { homeData } from "@/content/home";
 import { companyData } from "@/content/company";
 import { PillButton } from "@/components/ui/PillButton";
@@ -26,7 +26,6 @@ export function HomeCtaBand() {
           <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-brand-cyan/20 to-transparent rounded-bl-full pointer-events-none" />
 
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-            <Sparkles className="w-4 h-4 text-brand-cyan" />
             <span>Start Your Enterprise Transformation</span>
           </div>
 

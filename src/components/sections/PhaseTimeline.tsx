@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { s4hanaData, type MigrationPhase } from "@/content/s4hana";
-import { ChevronDown, Plus, Minus, ArrowRight, CheckCircle2, Wrench } from "lucide-react";
+import { ChevronDown, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function PhaseTimeline() {
@@ -72,9 +72,8 @@ export function PhaseTimeline() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6">
                   {/* Activities */}
                   <div className="space-y-3">
-                    <h5 className="text-xs font-bold uppercase tracking-wider text-brand-blue border-b border-slate-200 pb-2 flex items-center gap-1.5">
-                      <ArrowRight className="w-3.5 h-3.5" />
-                      <span>Activities</span>
+                    <h5 className="text-xs font-bold uppercase tracking-wider text-brand-blue border-b border-slate-200 pb-2">
+                      Activities
                     </h5>
                     <ul className="space-y-2">
                       {phase.activities.map((act, idx) => (
@@ -88,9 +87,8 @@ export function PhaseTimeline() {
 
                   {/* Deliverables */}
                   <div className="space-y-3">
-                    <h5 className="text-xs font-bold uppercase tracking-wider text-emerald-700 border-b border-slate-200 pb-2 flex items-center gap-1.5">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Deliverables</span>
+                    <h5 className="text-xs font-bold uppercase tracking-wider text-emerald-700 border-b border-slate-200 pb-2">
+                      Deliverables
                     </h5>
                     <ul className="space-y-2">
                       {phase.deliverables.map((del, idx) => (
@@ -104,9 +102,8 @@ export function PhaseTimeline() {
 
                   {/* SAP Tools */}
                   <div className="space-y-3">
-                    <h5 className="text-xs font-bold uppercase tracking-wider text-amber-700 border-b border-slate-200 pb-2 flex items-center gap-1.5">
-                      <Wrench className="w-3.5 h-3.5" />
-                      <span>SAP® Tools</span>
+                    <h5 className="text-xs font-bold uppercase tracking-wider text-amber-700 border-b border-slate-200 pb-2">
+                      SAP® Tools
                     </h5>
                     <div className="flex flex-wrap gap-2 pt-1">
                       {phase.tools.map((tool, idx) => (

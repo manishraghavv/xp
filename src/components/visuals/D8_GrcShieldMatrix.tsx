@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, Lock, AlertTriangle, CheckCircle } from "lucide-react";
 
 export function D8_GrcShieldMatrix() {
   const sodRules = [
@@ -15,9 +14,6 @@ export function D8_GrcShieldMatrix() {
     <div className="w-full max-w-4xl mx-auto my-6 p-6 sm:p-8 rounded-4xl bg-white border border-slate-200 shadow-xl">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-5 border-b border-slate-100 gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
           <div>
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               SAP® GRC Access Control (AC 12.0)
@@ -44,9 +40,8 @@ export function D8_GrcShieldMatrix() {
               <div className="text-[11px] text-slate-500 mt-0.5">Risk Level: {r.risk}</div>
             </div>
             <span
-              className={`text-[10px] font-bold px-2.5 py-1 rounded-full border flex items-center gap-1 ${r.color}`}
+              className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${r.color}`}
             >
-              <CheckCircle className="w-3 h-3" />
               <span>{r.status}</span>
             </span>
           </div>

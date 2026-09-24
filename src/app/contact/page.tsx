@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { companyData } from "@/content/company";
 import { ContactForm } from "@/components/sections/ContactForm";
-import { Phone, Mail, MapPin, Clock, FileCheck2, Users, ShieldCheck, Sparkles } from "lucide-react";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact Us | Consult with Senior SAP® Specialists",
@@ -20,22 +20,18 @@ import { SectionBackground } from "@/components/ui/SectionBackground";
 export default function ContactPage() {
   const whyReachOut = [
     {
-      icon: <FileCheck2 className="w-5 h-5 text-brand-blue" />,
       title: "Free Readiness Assessment",
       text: "A 90-minute complimentary technical and financial review of your current SAP® or ECC landscape.",
     },
     {
-      icon: <Users className="w-5 h-5 text-brand-blue" />,
       title: "Senior Consultant Direct Access",
       text: "Speak directly with seasoned Chartered Accountants and S/4HANA architects, not sales account executives.",
     },
     {
-      icon: <Clock className="w-5 h-5 text-brand-blue" />,
       title: "Rapid 48-Hour Turnaround",
       text: "Receive a tailored statement of work, milestone breakdown, and transparent pricing within 48 business hours.",
     },
     {
-      icon: <ShieldCheck className="w-5 h-5 text-brand-blue" />,
       title: "Flexible Engagement Models",
       text: "Predictable fixed-scope deliverables, dedicated onshore/offshore teams, or SLA-backed monthly support.",
     },
@@ -60,7 +56,6 @@ export default function ContactPage() {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>Start the Conversation</span>
             </div>
 
@@ -171,9 +166,9 @@ export default function ContactPage() {
                 <div className="space-y-4">
                   {whyReachOut.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-3.5">
-                      <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        {item.icon}
-                      </div>
+                      <span className="text-sm font-mono font-bold tracking-widest text-brand-blue/70 flex-shrink-0 pt-0.5">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
                       <div>
                         <h5 className="text-sm font-bold text-slate-900">{item.title}</h5>
                         <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">{item.text}</p>

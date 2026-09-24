@@ -2,18 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ShieldCheck, Database, Code, Users, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PillButton } from "@/components/ui/PillButton";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
 import { SectionBackground } from "@/components/ui/SectionBackground";
 import { homeData } from "@/content/home";
-
-const iconMap: Record<string, React.ReactNode> = {
-  Database: <Database className="w-5 h-5 text-blue-400" />,
-  Code: <Code className="w-5 h-5 text-brand-cyan" />,
-  Users: <Users className="w-5 h-5 text-emerald-400" />,
-  Clock: <Clock className="w-5 h-5 text-amber-400" />,
-};
 
 export function MigrationPromo() {
   const { urgencyBadge, headline, description, stats, features, ctaPrimary, urgencyStrip } =
@@ -68,9 +61,9 @@ export function MigrationPromo() {
               key={idx}
               className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-md space-y-3 hover:border-brand-blue/50 hover:bg-white/[0.07] transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                {iconMap[card.icon] || <ShieldCheck className="w-5 h-5 text-brand-cyan" />}
-              </div>
+              <span className="block text-xs font-mono font-bold tracking-widest text-brand-cyan/80">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
               <h4 className="text-base font-bold text-white">{card.title}</h4>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {card.desc}
@@ -80,10 +73,9 @@ export function MigrationPromo() {
         </div>
 
         {/* Urgency Strip and CTA Button */}
-        <div className="p-8 rounded-3xl bg-white/[0.05] border border-white/15 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+        <div className="p-8 pl-7 rounded-3xl bg-white/[0.05] border border-white/15 border-l-4 border-l-amber-400 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
           <div className="space-y-1 text-center md:text-left">
-            <div className="text-sm font-bold text-amber-300 flex items-center justify-center md:justify-start gap-2">
-              <span>⚠️</span>
+            <div className="text-sm font-bold text-amber-300">
               <span>{urgencyStrip}</span>
             </div>
             <div className="text-xs sm:text-sm text-slate-300">

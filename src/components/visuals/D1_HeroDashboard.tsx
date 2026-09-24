@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, TrendingUp, ShieldCheck, Activity, Database, ArrowUpRight } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export function D1_HeroDashboard() {
   return (
@@ -35,43 +35,37 @@ export function D1_HeroDashboard() {
         {/* 3 KPI Tiles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="text-xs text-slate-400 mb-1 flex items-center justify-between">
+            <div className="text-xs text-slate-400 mb-1">
               <span>Universal Journal (ACDOCA)</span>
-              <Database className="w-3.5 h-3.5 text-brand-cyan" />
             </div>
             <div className="text-xl sm:text-2xl font-bold font-display text-white">
               2,840,120
             </div>
-            <div className="text-[11px] text-emerald-400 flex items-center gap-1 mt-1 font-medium">
-              <TrendingUp className="w-3 h-3" />
+            <div className="text-[11px] text-emerald-400 mt-1 font-medium">
               <span>Real-time postings synchronized</span>
             </div>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="text-xs text-slate-400 mb-1 flex items-center justify-between">
+            <div className="text-xs text-slate-400 mb-1">
               <span>AMS Response Time</span>
-              <Activity className="w-3.5 h-3.5 text-blue-400" />
             </div>
             <div className="text-xl sm:text-2xl font-bold font-display text-white">
               99.98%
             </div>
-            <div className="text-[11px] text-cyan-400 flex items-center gap-1 mt-1 font-medium">
-              <CheckCircle2 className="w-3 h-3" />
+            <div className="text-[11px] text-cyan-400 mt-1 font-medium">
               <span>Priority 1 SLA adhered</span>
             </div>
           </div>
 
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
-            <div className="text-xs text-slate-400 mb-1 flex items-center justify-between">
+            <div className="text-xs text-slate-400 mb-1">
               <span>Automated Clearing</span>
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
             </div>
             <div className="text-xl sm:text-2xl font-bold font-display text-white">
               94.6%
             </div>
-            <div className="text-[11px] text-amber-300 flex items-center gap-1 mt-1 font-medium">
-              <ArrowUpRight className="w-3 h-3" />
+            <div className="text-[11px] text-amber-300 mt-1 font-medium">
               <span>MT940 statements auto-cleared</span>
             </div>
           </div>

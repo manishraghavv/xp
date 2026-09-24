@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X, Send, Lock, CheckCircle2, AlertCircle } from "lucide-react";
+import { X, CheckCircle2, AlertCircle } from "lucide-react";
 import { modalFormSchema, type ModalFormData, serviceOptions } from "@/lib/validations";
 import { companyData } from "@/content/company";
 
@@ -131,7 +131,7 @@ export function GetInTouchModal({
           <div className="my-6 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 flex items-start gap-3">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-sm">✓ Thank you! We&apos;ll be in touch within 24 business hours.</p>
+              <p className="font-semibold text-sm">Thank you! We&apos;ll be in touch within 24 business hours.</p>
               <p className="text-xs mt-1">
                 Our senior SAP® consultants are reviewing your requirements and will reach out promptly.
               </p>
@@ -279,8 +279,7 @@ export function GetInTouchModal({
           </div>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-              <Lock className="w-3.5 h-3.5 text-emerald-500" />
+            <div className="text-xs text-slate-500 dark:text-slate-400">
               <span>Strictly confidential.</span>
             </div>
 
@@ -289,7 +288,6 @@ export function GetInTouchModal({
               disabled={status === "loading"}
               className="w-full sm:w-auto px-6 py-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              <Send className="w-4 h-4" />
               <span>{status === "loading" ? "Sending..." : "Send Message →"}</span>
             </button>
           </div>

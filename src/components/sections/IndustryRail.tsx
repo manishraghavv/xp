@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Factory, SunMedium, ShoppingBag, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollRail } from "@/components/ui/ScrollRail";
 import { homeData, type IndustryItem } from "@/content/home";
@@ -11,12 +11,6 @@ const industryPhotos: Record<string, string> = {
   Manufacturing: "/images/industry-manufacturing.jpg",
   "Power & Energy": "/images/industry-power-energy.jpg",
   FMCG: "/images/industry-fmcg.jpg",
-};
-
-const industryIcons: Record<string, React.ReactNode> = {
-  Factory: <Factory className="w-5 h-5 text-brand-blue" />,
-  SunMedium: <SunMedium className="w-5 h-5 text-amber-500" />,
-  ShoppingBag: <ShoppingBag className="w-5 h-5 text-emerald-500" />,
 };
 
 const industryHighlights: Record<string, string[]> = {
@@ -80,10 +74,7 @@ export function IndustryRail() {
                   Sector Specialization
                 </span>
 
-                <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center text-white">
-                    {industryIcons[item.icon] || <Factory className="w-4 h-4 text-white" />}
-                  </div>
+                <div className="absolute bottom-4 left-4">
                   <h3 className="text-xl font-bold text-white tracking-tight">
                     {item.name}
                   </h3>

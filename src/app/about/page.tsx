@@ -5,7 +5,6 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { companyData } from "@/content/company";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
-import { Microscope, Handshake, Zap, Compass, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 
 import { SectionBackground } from "@/components/ui/SectionBackground";
@@ -20,14 +19,6 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const iconMap: Record<string, React.ReactNode> = {
-    Microscope: <Microscope className="w-5 h-5 text-brand-blue" />,
-    Handshake: <Handshake className="w-5 h-5 text-brand-blue" />,
-    Zap: <Zap className="w-5 h-5 text-brand-blue" />,
-    Compass: <Compass className="w-5 h-5 text-brand-blue" />,
-    ShieldCheck: <ShieldCheck className="w-5 h-5 text-brand-blue" />,
-  };
-
   return (
     <div>
       {/* Hero Section (Dark navy mesh with team photo) */}
@@ -47,7 +38,6 @@ export default function AboutPage() {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>About XpmindGlobal</span>
             </div>
 
@@ -100,9 +90,9 @@ export default function AboutPage() {
                   className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-xl hover:border-brand-blue/30 transition-all duration-300"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0">
-                      {iconMap[val.icon] || <Zap className="w-5 h-5 text-brand-blue" />}
-                    </div>
+                    <span className="text-sm font-mono font-bold tracking-widest text-brand-blue/70 flex-shrink-0 pt-0.5">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
                     <div>
                       <h4 className="text-base font-bold text-slate-900 mb-1">
                         {val.title}

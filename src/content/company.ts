@@ -7,7 +7,6 @@ export interface LeadershipMember {
 }
 
 export interface CoreValue {
-  icon: string;
   title: string;
   description: string;
 }
@@ -55,31 +54,26 @@ export const companyData = {
 
   values: [
     {
-      icon: "Microscope",
       title: "Intellectual Depth",
       description:
         "Every engagement is grounded in thorough business analysis, not assumptions. We diagnose before we prescribe.",
     },
     {
-      icon: "Handshake",
       title: "True Partnership",
       description:
         "We stay invested beyond go-live. Our AMS and CoE models are designed for long-term value creation.",
     },
     {
-      icon: "Zap",
       title: "Speed with Precision",
       description:
         "Reusable accelerators, standardised playbooks, and pre-built templates ensure rapid delivery without compromising quality.",
     },
     {
-      icon: "Compass",
       title: "Finance-Technology Alignment",
       description:
         "With CA and finance professionals at our core, SAP® configurations always serve broader business and compliance goals.",
     },
     {
-      icon: "ShieldCheck",
       title: "Compliance-Ready Delivery",
       description:
         "Every solution is designed with SOX, GSTN, GDPR, and local statutory compliance baked in from day one.",

@@ -4,7 +4,6 @@ export interface S4Stat {
 }
 
 export interface RiskCard {
-  icon: string;
   title: string;
   description: string;
 }
@@ -27,13 +26,11 @@ export interface MigrationPhase {
 }
 
 export interface ScopeCard {
-  icon: string;
   title: string;
   bullets: string[];
 }
 
 export interface WhyUsCard {
-  icon: string;
   title: string;
   description: string;
 }
@@ -69,25 +66,21 @@ export const s4hanaData = {
       "XpmindGlobal's accelerated brownfield approach means you can be live on S/4HANA well ahead of the deadline — without the cost, risk, or disruption of a greenfield reimplementation.",
     risks: [
       {
-        icon: "Banknote",
         title: "Rising Maintenance Costs",
         description:
           "ECC extended support fees increase year-on-year. Staying on ECC post-2027 will cost significantly more than migrating today.",
       },
       {
-        icon: "ShieldAlert",
         title: "Security Vulnerabilities",
         description:
           "Fewer patches, slower security fixes. An unsupported ECC environment is an increasing liability for your business and your data.",
       },
       {
-        icon: "TrendingDown",
         title: "Competitive Disadvantage",
         description:
           "Competitors on S/4HANA have real-time reporting, AI insights, and streamlined processes. ECC cannot match this capability gap.",
       },
       {
-        icon: "Ban",
         title: "Innovation Blocked",
         description:
           "SAP® BTP, Fiori, embedded analytics, and AI extensions are S/4HANA-native. You cannot access these on ECC.",
@@ -286,7 +279,6 @@ export const s4hanaData = {
     title: "Everything included in our fixed-scope package.",
     cards: [
       {
-        icon: "Cpu",
         title: "Technical Conversion",
         bullets: [
           "Full SUM/DMO execution",
@@ -297,7 +289,6 @@ export const s4hanaData = {
         ],
       },
       {
-        icon: "Briefcase",
         title: "Finance Simplification",
         bullets: [
           "New G/L to Universal Journal migration",
@@ -308,7 +299,6 @@ export const s4hanaData = {
         ],
       },
       {
-        icon: "Database",
         title: "Data Migration & Quality",
         bullets: [
           "Data cleansing workshops",
@@ -319,7 +309,6 @@ export const s4hanaData = {
         ],
       },
       {
-        icon: "CheckSquare",
         title: "Testing & Validation",
         bullets: [
           "Unit & integration test scripts",
@@ -330,7 +319,6 @@ export const s4hanaData = {
         ],
       },
       {
-        icon: "GraduationCap",
         title: "Training & Enablement",
         bullets: [
           "Role-based end user training",
@@ -341,7 +329,6 @@ export const s4hanaData = {
         ],
       },
       {
-        icon: "Shield",
         title: "Hypercare & Post Go-Live",
         bullets: [
           "Dedicated support for 4 weeks",
@@ -359,37 +346,31 @@ export const s4hanaData = {
     title: "Not just another SAP® partner.",
     cards: [
       {
-        icon: "Zap",
         title: "Proprietary Accelerator Toolkit",
         description:
           "Pre-built templates, test scripts, data migration tools, and cutover checklists refined across dozens of brownfield projects — cutting your timeline by weeks.",
       },
       {
-        icon: "Briefcase",
         title: "Finance-Led Approach",
         description:
           "Our leadership team includes Chartered Accountants and finance veterans. We understand your finance processes as deeply as the technology — preventing costly post-go-live fixes.",
       },
       {
-        icon: "ClipboardCheck",
         title: "Fixed-Scope Commitment",
         description:
           "We commit to a defined scope, timeline, and cost upfront. No creep, no surprises — a signed Statement of Work that protects you from day one.",
       },
       {
-        icon: "Wrench",
         title: "Deep ABAP Expertise",
         description:
           "Our consultants adapt, not abandon, your custom code. Proven ABAP remediation methodology means your Z-programs and exits continue working on S/4HANA.",
       },
       {
-        icon: "Handshake",
         title: "End-to-End Ownership",
         description:
           "One team owns your project from readiness check to hypercare exit. No handoffs between vendors, no gaps in accountability.",
       },
       {
-        icon: "Globe",
         title: "Long-Term Partnership",
         description:
           "Post go-live, our AMS team knows your system inside-out. Ongoing support, upgrades, and enhancements without the learning curve.",

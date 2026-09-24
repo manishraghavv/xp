@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle2, ChevronRight, Clock, ShieldCheck, Wrench } from "lucide-react";
+import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { s4hanaData } from "@/content/s4hana";
 
 export function D4_RoadmapGantt() {
@@ -21,8 +21,7 @@ export function D4_RoadmapGantt() {
             16-Week Phase-Gated Conversion Roadmap
           </h3>
         </div>
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-slate-100 px-3.5 py-1.5 rounded-full">
-          <Clock className="w-4 h-4 text-brand-blue" />
+        <div className="text-xs font-semibold text-slate-500 bg-slate-100 px-3.5 py-1.5 rounded-full">
           <span>Click any phase bar to inspect deliverables</span>
         </div>
       </div>

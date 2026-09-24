@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Sparkles } from "lucide-react";
 import { PromptBox } from "@/components/ui/PromptBox";
 import { D1_HeroDashboard } from "@/components/visuals/D1_HeroDashboard";
 import { SectionBackground } from "@/components/ui/SectionBackground";
@@ -26,7 +25,6 @@ export function HeroSection() {
           {/* Centered Benefit-Led Headline & Eyebrow */}
           <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.08] border border-white/15 backdrop-blur-md text-xs sm:text-sm font-semibold text-brand-cyan mb-4 sm:mb-5 shadow-xl shadow-cyan-950/40">
-              <Sparkles className="w-4 h-4 text-brand-cyan" />
               <span>{homeData.hero.badge}</span>
             </div>
 

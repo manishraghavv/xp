@@ -1,27 +1,10 @@
 "use client";
 
 import React from "react";
-import {
-  Cpu,
-  TrendingUp,
-  CheckCircle,
-  Zap,
-  Shield,
-  Users,
-} from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { D2_FioriTileGrid } from "@/components/visuals/D2_FioriTileGrid";
 import { D6_ModuleConstellation } from "@/components/visuals/D6_ModuleConstellation";
 import { homeData, type WhyUsPoint } from "@/content/home";
-
-const iconMap: Record<string, React.ReactNode> = {
-  Cpu: <Cpu className="w-5 h-5 text-brand-blue" />,
-  TrendingUp: <TrendingUp className="w-5 h-5 text-brand-cyan" />,
-  CheckCircle: <CheckCircle className="w-5 h-5 text-blue-600" />,
-  Zap: <Zap className="w-5 h-5 text-amber-500" />,
-  Shield: <Shield className="w-5 h-5 text-emerald-600" />,
-  Users: <Users className="w-5 h-5 text-violet-600" />,
-};
 
 export function WhyUsSection() {
   const points: WhyUsPoint[] = homeData.whyUs;
@@ -62,11 +45,8 @@ export function WhyUsSection() {
               className="p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/80 shadow-md hover:shadow-xl hover:border-brand-blue/30 transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
-                    {iconMap[card.icon] || <Cpu className="w-5 h-5 text-brand-blue" />}
-                  </div>
-                  <span className="text-xs font-mono font-bold text-slate-400">
+                <div className="mb-6">
+                  <span className="text-sm font-mono font-bold tracking-widest text-brand-blue/70">
                     {card.num}
                   </span>
                 </div>

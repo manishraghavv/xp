@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { servicesData, deliveryMethodology } from "@/content/services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 import { SectionBackground } from "@/components/ui/SectionBackground";
 
@@ -50,7 +50,6 @@ export default function ServicesPage() {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>Full Lifecycle SAP® Services</span>
             </div>
 

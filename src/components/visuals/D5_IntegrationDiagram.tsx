@@ -1,14 +1,12 @@
 "use client";
 
 import React from "react";
-import { Server, Cloud, CreditCard, Users, Cpu, ArrowLeftRight, Layers, ShieldCheck } from "lucide-react";
-
 export function D5_IntegrationDiagram() {
   const nodes = [
-    { label: "Banking & MT940", icon: <CreditCard className="w-4 h-4 text-emerald-400" />, desc: "Auto-Reconciliation", pos: "top-4 left-6" },
-    { label: "Vendor Portal (VRF)", icon: <Users className="w-4 h-4 text-cyan-400" />, desc: "Bi-directional Onboarding", pos: "top-4 right-6" },
-    { label: "SAP® CPI / PI/PO", icon: <Layers className="w-4 h-4 text-blue-400" />, desc: "Enterprise Middleware", pos: "bottom-4 left-6" },
-    { label: "Hyperscalers (AWS/Azure/GCP)", icon: <Cloud className="w-4 h-4 text-violet-400" />, desc: "Rise with SAP® BTP", pos: "bottom-4 right-6" },
+    { label: "Banking & MT940", desc: "Auto-Reconciliation" },
+    { label: "Vendor Portal (VRF)", desc: "Bi-directional Onboarding" },
+    { label: "SAP® CPI / PI/PO", desc: "Enterprise Middleware" },
+    { label: "Hyperscalers (AWS/Azure/GCP)", desc: "Rise with SAP® BTP" },
   ];
 
   return (
@@ -33,9 +31,6 @@ export function D5_IntegrationDiagram() {
 
         {/* Central SAP Hub */}
         <div className="z-10 p-6 rounded-3xl bg-gradient-to-br from-brand-blue/30 via-navy-900 to-brand-cyan/20 border border-brand-cyan/50 shadow-2xl text-center max-w-[220px]">
-          <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-brand-cyan flex items-center justify-center mx-auto mb-3 border border-cyan-500/30">
-            <Cpu className="w-6 h-6 animate-spin-slow" />
-          </div>
           <div className="text-sm font-bold text-white">SAP® Core Engine</div>
           <div className="text-[11px] text-slate-300 mt-1 font-mono">S/4HANA & ECC</div>
           <div className="mt-2 text-[10px] text-cyan-300 font-semibold bg-cyan-950/60 px-2.5 py-0.5 rounded-full inline-block">
@@ -45,34 +40,26 @@ export function D5_IntegrationDiagram() {
 
         {/* Surrounding Nodes */}
         <div className="absolute top-2 left-2 sm:left-6 p-3 sm:p-4 rounded-2xl bg-navy-900/90 border border-white/10 shadow-lg text-left max-w-[190px]">
-          <div className="flex items-center gap-2 mb-1">
-            {nodes[0].icon}
-            <span className="text-xs font-bold text-slate-100">{nodes[0].label}</span>
-          </div>
+          <span className="block text-[10px] font-mono font-bold tracking-widest text-emerald-400/80 mb-1">01</span>
+          <div className="text-xs font-bold text-slate-100">{nodes[0].label}</div>
           <div className="text-[10px] text-slate-400">{nodes[0].desc}</div>
         </div>
 
         <div className="absolute top-2 right-2 sm:right-6 p-3 sm:p-4 rounded-2xl bg-navy-900/90 border border-white/10 shadow-lg text-left max-w-[190px]">
-          <div className="flex items-center gap-2 mb-1">
-            {nodes[1].icon}
-            <span className="text-xs font-bold text-slate-100">{nodes[1].label}</span>
-          </div>
+          <span className="block text-[10px] font-mono font-bold tracking-widest text-cyan-400/80 mb-1">02</span>
+          <div className="text-xs font-bold text-slate-100">{nodes[1].label}</div>
           <div className="text-[10px] text-slate-400">{nodes[1].desc}</div>
         </div>
 
         <div className="absolute bottom-2 left-2 sm:left-6 p-3 sm:p-4 rounded-2xl bg-navy-900/90 border border-white/10 shadow-lg text-left max-w-[190px]">
-          <div className="flex items-center gap-2 mb-1">
-            {nodes[2].icon}
-            <span className="text-xs font-bold text-slate-100">{nodes[2].label}</span>
-          </div>
+          <span className="block text-[10px] font-mono font-bold tracking-widest text-blue-400/80 mb-1">03</span>
+          <div className="text-xs font-bold text-slate-100">{nodes[2].label}</div>
           <div className="text-[10px] text-slate-400">{nodes[2].desc}</div>
         </div>
 
         <div className="absolute bottom-2 right-2 sm:right-6 p-3 sm:p-4 rounded-2xl bg-navy-900/90 border border-white/10 shadow-lg text-left max-w-[190px]">
-          <div className="flex items-center gap-2 mb-1">
-            {nodes[3].icon}
-            <span className="text-xs font-bold text-slate-100">{nodes[3].label}</span>
-          </div>
+          <span className="block text-[10px] font-mono font-bold tracking-widest text-violet-400/80 mb-1">04</span>
+          <div className="text-xs font-bold text-slate-100">{nodes[3].label}</div>
           <div className="text-[10px] text-slate-400">{nodes[3].desc}</div>
         </div>
       </div>

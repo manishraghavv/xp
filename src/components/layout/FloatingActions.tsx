@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowUp, Calendar } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { GetInTouchModal } from "./GetInTouchModal";
 
 export function FloatingActions() {
@@ -86,7 +86,6 @@ export function FloatingActions() {
             className="pointer-events-auto px-5 py-3 rounded-full btn-pill-gradient text-white text-sm font-bold shadow-2xl shadow-blue-500/35 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 border border-white/25 backdrop-blur-xl cursor-pointer"
             aria-label="Book Free Assessment"
           >
-            <Calendar className="w-4 h-4 text-cyan-200" />
             <span>Book Free Assessment</span>
           </button>
         )}

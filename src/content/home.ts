@@ -5,14 +5,12 @@ export interface TickerItem {
 }
 
 export interface IndustryItem {
-  icon: string;
   name: string;
   description: string;
 }
 
 export interface WhyUsPoint {
   num: string;
-  icon: string;
   title: string;
   description: string;
 }
@@ -65,7 +63,7 @@ export const homeData = {
   ],
 
   migrationPromo: {
-    urgencyBadge: "⚡ Limited Project Slots · Act Now",
+    urgencyBadge: "Limited Project Slots · Act Now",
     headline: "ECC to S/4HANA Brownfield Migration in Just 16 Weeks*",
     description:
       "SAP® will end mainstream maintenance for ECC in December 2027. Our accelerated Brownfield conversion brings your existing ECC system to S/4HANA in 16 weeks* at ~40% lower cost — preserving all data, custom code, and business processes.",
@@ -76,27 +74,23 @@ export const homeData = {
     ],
     features: [
       {
-        icon: "Database",
         title: "All Data Preserved",
         desc: "Complete historical database converted in-place with zero data loss.",
       },
       {
-        icon: "Code",
         title: "Customisations Retained",
         desc: "Existing ABAP Z-programs and workflows remediated and preserved.",
       },
       {
-        icon: "Users",
         title: "Minimal Re-Training",
         desc: "Processes remain familiar; users quickly adopt modern SAP® Fiori UX.",
       },
       {
-        icon: "Clock",
         title: "Faster Time to Value",
         desc: "Live in months, not years — at a fraction of greenfield reimplementation cost.",
       },
     ],
-    urgencyStrip: "⏰ SAP® ECC Maintenance Ends 2027 · Secure Your Slot Today",
+    urgencyStrip: "SAP® ECC Maintenance Ends 2027 · Secure Your Slot Today",
     ctaPrimary: { label: "See Migration Details →", href: "/s4hana-migration" },
     ctaSecondary: { label: "Book Free Assessment", href: "/contact" },
   },
@@ -104,42 +98,36 @@ export const homeData = {
   whyUs: [
     {
       num: "01",
-      icon: "Cpu",
       title: "Deep SAP® Specialisation",
       description:
         "We do not dilute our focus. Every consultant on our team is dedicated exclusively to the SAP® ecosystem, bringing deep technical and functional knowledge across ECC and S/4HANA.",
     },
     {
       num: "02",
-      icon: "TrendingUp",
       title: "Finance-First Perspective",
       description:
         "Founded by Chartered Accountants, we see SAP® through a financial lens. We ensure your system delivers accurate reporting, robust internal controls, and real bottom-line value.",
     },
     {
       num: "03",
-      icon: "CheckCircle",
       title: "Outcome-Focused Delivery",
       description:
         "We measure success by business outcomes — not hours billed. Our fixed-scope deliverables and phase-gated methodologies give you predictability in timeline and cost.",
     },
     {
       num: "04",
-      icon: "Zap",
       title: "Reusable Accelerators",
       description:
         "Our proprietary library of migration tools, integration templates, and custom reports cuts project timelines by up to 40% compared to building from scratch.",
     },
     {
       num: "05",
-      icon: "Shield",
       title: "Offshore Advantage",
       description:
         "High-calibre Indian delivery teams working at competitive rates provide round-the-clock coverage, rapid turnaround, and significant cost savings for global clients.",
     },
     {
       num: "06",
-      icon: "Users",
       title: "Long-Term Partnership",
       description:
         "We are built for enduring relationships. From initial implementation to ongoing AMS and Centre of Excellence governance, we grow with your business.",
@@ -148,19 +136,16 @@ export const homeData = {
 
   industries: [
     {
-      icon: "Factory",
       name: "Manufacturing",
       description:
         "End-to-end production planning, bill of materials management, shop floor integration, standard costing, and supply chain visibility.",
     },
     {
-      icon: "SunMedium",
       name: "Power & Energy",
       description:
         "Multi-plant operations, asset management, complex regulatory compliance, project accounting, and high-volume vendor management.",
     },
     {
-      icon: "ShoppingBag",
       name: "FMCG",
       description:
         "Trade spend management, multi-channel distribution, high-volume order-to-cash, batch management, and real-time inventory tracking.",

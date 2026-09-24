@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { projectsData } from "@/content/projects";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 import { SectionBackground } from "@/components/ui/SectionBackground";
-import { Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Case Studies & Client Impact | Proven SAP® Results",
@@ -45,7 +45,6 @@ export default function ProjectsPage() {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>Client Success Stories</span>
             </div>
 

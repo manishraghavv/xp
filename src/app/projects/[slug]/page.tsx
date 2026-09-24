@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { projectsData } from "@/content/projects";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { CheckCircle2, ArrowRight, ChevronRight, Sparkles } from "lucide-react";
+import { CheckCircle2, ArrowRight, ChevronRight } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 import { D7_ReconMockTable } from "@/components/visuals/D7_ReconMockTable";
 import { D5_IntegrationDiagram } from "@/components/visuals/D5_IntegrationDiagram";
@@ -107,7 +107,6 @@ export default async function ProjectDetailPage({
 
           <div className="max-w-4xl space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>{project.tag}</span>
             </div>
 

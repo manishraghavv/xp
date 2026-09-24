@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
+import { CheckCircle2, AlertCircle } from "lucide-react";
 import {
   trainingInterestSchema,
   type TrainingInterestData,
@@ -75,7 +75,6 @@ export function TrainingForm({
     <div id="register-interest" className="p-8 sm:p-12 rounded-3xl glass-card-light shadow-xl border border-slate-200/90 scroll-mt-32">
       <div className="mb-6 space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
           <span>Coming Soon</span>
         </div>
         <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900">
@@ -90,7 +89,7 @@ export function TrainingForm({
         <div className="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start gap-3">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div className="text-sm">
-            <p className="font-bold">✓ Registered! We&apos;ll notify you when enrolment opens.</p>
+            <p className="font-bold">Registered! We&apos;ll notify you when enrolment opens.</p>
             <p className="text-xs mt-1 text-emerald-700">
               You will receive curriculum updates and early-bird enrolment access directly in your inbox.
             </p>
@@ -198,7 +197,6 @@ export function TrainingForm({
             disabled={status === "loading"}
             className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-sm font-semibold shadow-lg shadow-brand-blue/25 hover:shadow-brand-blue/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            <Send className="w-4 h-4" />
             <span>{status === "loading" ? "Registering..." : "Register My Interest →"}</span>
           </button>
         </div>

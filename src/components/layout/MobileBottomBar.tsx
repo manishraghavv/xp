@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Calendar } from "lucide-react";
 import { GetInTouchModal } from "./GetInTouchModal";
 
 export function MobileBottomBar() {
@@ -64,7 +63,6 @@ export function MobileBottomBar() {
           onClick={() => setIsModalOpen(true)}
           className="w-full btn-pill-gradient py-3.5 rounded-full text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-transform cursor-pointer"
         >
-          <Calendar className="w-4 h-4 text-cyan-200" />
           <span>Book Free Assessment</span>
         </button>
       </div>

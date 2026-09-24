@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TwoWaysCardPair } from "@/components/ui/TwoWaysCardPair";
 import { servicesData } from "@/content/services";

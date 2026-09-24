@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ChevronRight, Home } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export interface BreadcrumbItem {
   label: string;
@@ -57,7 +57,6 @@ export function Breadcrumbs({ items, theme = "light", className }: BreadcrumbsPr
                   }
                   aria-current="page"
                 >
-                  {index === 0 ? <Home className="w-3.5 h-3.5 inline mr-1" /> : null}
                   {item.label}
                 </span>
               ) : (
@@ -69,7 +68,6 @@ export function Breadcrumbs({ items, theme = "light", className }: BreadcrumbsPr
                       : "text-slate-500 hover:text-slate-900"
                   }`}
                 >
-                  {index === 0 && <Home className="w-3.5 h-3.5 mr-1" />}
                   {item.label}
                 </Link>
               )}

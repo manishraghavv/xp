@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { GetInTouchModal } from "@/components/layout/GetInTouchModal";
 import { SectionBackground } from "@/components/ui/SectionBackground";
 
@@ -34,7 +34,6 @@ export function ContactCtaBand({
           <div className="p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-white/[0.09] to-white/[0.03] border border-white/20 backdrop-blur-2xl flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-brand-cyan">
-                <Sparkles className="w-3.5 h-3.5" />
                 <span>{eyebrow}</span>
               </div>
               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug">

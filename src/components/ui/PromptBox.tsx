@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, ArrowRight, CornerDownLeft } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { GetInTouchModal } from "@/components/layout/GetInTouchModal";
 
 interface PromptBoxProps {
@@ -42,7 +42,6 @@ export function PromptBox({ className = "" }: PromptBoxProps) {
         >
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <div className="flex items-center flex-1 px-3 sm:px-4 py-2">
-              <Sparkles className="w-5 h-5 text-brand-cyan flex-shrink-0 mr-3 animate-pulse" />
               <input
                 type="text"
                 value={promptText}

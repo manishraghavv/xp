@@ -8,7 +8,6 @@ export interface TrainingTrack {
 }
 
 export interface TechnicalCourse {
-  icon: string;
   title: string;
   description: string;
   level: string;
@@ -17,7 +16,6 @@ export interface TechnicalCourse {
 }
 
 export interface TrustBadge {
-  icon: string;
   label: string;
 }
 
@@ -35,10 +33,10 @@ export const trainingData = {
   },
 
   trustBadges: [
-    { icon: "Sparkles", label: "Expert-Led Content" },
-    { icon: "PlayCircle", label: "Video-Based Learning" },
-    { icon: "Award", label: "Certification Support" },
-    { icon: "Lock", label: "Secure Access" },
+    { label: "Expert-Led Content" },
+    { label: "Video-Based Learning" },
+    { label: "Certification Support" },
+    { label: "Secure Access" },
   ] as TrustBadge[],
 
   tracks: [
@@ -91,7 +89,6 @@ export const trainingData = {
 
   courses: [
     {
-      icon: "CircleDollarSign",
       title: "SAP® FICO — Financial Accounting & Controlling",
       description:
         "End-to-end coverage from GL configuration to cost controlling, asset accounting, and closing processes.",
@@ -100,7 +97,6 @@ export const trainingData = {
       modules: "12 Modules",
     },
     {
-      icon: "Package",
       title: "SAP® MM — Materials Management & Procurement",
       description:
         "Procurement lifecycle, inventory management, vendor evaluation, and goods movements in SAP®.",
@@ -109,7 +105,6 @@ export const trainingData = {
       modules: "10 Modules",
     },
     {
-      icon: "Zap",
       title: "S/4HANA Migration — Greenfield & Brownfield",
       description:
         "Technical and functional migration strategies, tools, testing methodology, and cutover planning.",
@@ -118,7 +113,6 @@ export const trainingData = {
       modules: "14 Modules",
     },
     {
-      icon: "ShieldAlert",
       title: "SAP® GRC — Governance, Risk & Compliance",
       description:
         "Access Control, Process Control, SoD analysis, role design, and compliance reporting in SAP® GRC.",
@@ -127,7 +121,6 @@ export const trainingData = {
       modules: "8 Modules",
     },
     {
-      icon: "Cloud",
       title: "SAP® BTP & Cloud Integration (CPI)",
       description:
         "Integration flows, API management, iFlows, and hybrid connectivity using SAP® Business Technology Platform.",
@@ -136,7 +129,6 @@ export const trainingData = {
       modules: "11 Modules",
     },
     {
-      icon: "RefreshCw",
       title: "Business Process Management & Digital Transformation",
       description:
         "Process mapping, change management, digital strategy, and aligning SAP® with business transformation goals.",

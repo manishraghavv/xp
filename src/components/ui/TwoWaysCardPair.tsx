@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Check, ArrowRight, Zap, ShieldCheck } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { PillButton } from "./PillButton";
 
 interface TwoWaysCardPairProps {
@@ -17,7 +17,6 @@ export function TwoWaysCardPair({ onOpenModal }: TwoWaysCardPairProps) {
 
         <div>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-brand-blue text-xs font-bold uppercase tracking-wider mb-6 border border-blue-100">
-            <Zap className="w-3.5 h-3.5" />
             <span>Path 01 · Milestone-Driven</span>
           </div>
 
@@ -66,7 +65,6 @@ export function TwoWaysCardPair({ onOpenModal }: TwoWaysCardPairProps) {
 
         <div>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-brand-cyan text-xs font-bold uppercase tracking-wider mb-6 border border-cyan-500/20">
-            <ShieldCheck className="w-3.5 h-3.5" />
             <span>Path 02 · Continuous SLA</span>
           </div>
 

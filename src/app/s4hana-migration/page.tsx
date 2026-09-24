@@ -13,28 +13,7 @@ import { MigrationComparison } from "@/components/sections/MigrationComparison";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
 import { D4_RoadmapGantt } from "@/components/visuals/D4_RoadmapGantt";
 import { SectionBackground } from "@/components/ui/SectionBackground";
-import {
-  Banknote,
-  ShieldAlert,
-  TrendingDown,
-  Ban,
-  ArrowRight,
-  Cpu,
-  Briefcase,
-  Database,
-  CheckSquare,
-  GraduationCap,
-  Shield,
-  Zap,
-  ClipboardCheck,
-  Wrench,
-  Handshake,
-  Globe,
-  CheckCircle2,
-  Sparkles,
-  Calendar,
-  AlertTriangle,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 
 export const metadata: Metadata = {
@@ -47,31 +26,6 @@ export const metadata: Metadata = {
 };
 
 export default function S4HanaMigrationPage() {
-  const riskIconMap: Record<string, React.ReactNode> = {
-    Banknote: <Banknote className="w-6 h-6 text-amber-500" />,
-    ShieldAlert: <ShieldAlert className="w-6 h-6 text-red-500" />,
-    TrendingDown: <TrendingDown className="w-6 h-6 text-amber-600" />,
-    Ban: <Ban className="w-6 h-6 text-red-600" />,
-  };
-
-  const scopeIconMap: Record<string, React.ReactNode> = {
-    Cpu: <Cpu className="w-6 h-6 text-brand-blue" />,
-    Briefcase: <Briefcase className="w-6 h-6 text-brand-blue" />,
-    Database: <Database className="w-6 h-6 text-brand-blue" />,
-    CheckSquare: <CheckSquare className="w-6 h-6 text-brand-blue" />,
-    GraduationCap: <GraduationCap className="w-6 h-6 text-brand-blue" />,
-    Shield: <Shield className="w-6 h-6 text-brand-blue" />,
-  };
-
-  const whyIconMap: Record<string, React.ReactNode> = {
-    Zap: <Zap className="w-6 h-6 text-brand-blue" />,
-    Briefcase: <Briefcase className="w-6 h-6 text-brand-blue" />,
-    ClipboardCheck: <ClipboardCheck className="w-6 h-6 text-brand-blue" />,
-    Wrench: <Wrench className="w-6 h-6 text-brand-blue" />,
-    Handshake: <Handshake className="w-6 h-6 text-brand-blue" />,
-    Globe: <Globe className="w-6 h-6 text-brand-blue" />,
-  };
-
   // FAQPage JSON-LD schema
   const faqSchema = {
     "@context": "https://schema.org",
@@ -111,7 +65,7 @@ export default function S4HanaMigrationPage() {
 
           <div className="max-w-4xl space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
-              <span>⚡ {s4hanaData.hero.badge}</span>
+              <span>{s4hanaData.hero.badge}</span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-black tracking-tight leading-[1.05]">
@@ -217,9 +171,9 @@ export default function S4HanaMigrationPage() {
                   key={idx}
                   className="p-6 rounded-[24px] bg-white border border-slate-200/90 shadow-sm space-y-3 group hover:border-amber-500/40 hover:shadow-md transition-all"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
-                    {riskIconMap[risk.icon] || <ShieldAlert className="w-5 h-5 text-amber-500" />}
-                  </div>
+                  <span className="block text-sm font-mono font-bold tracking-widest text-amber-500/80">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
                   <h4 className="text-base font-bold text-slate-900 group-hover:text-amber-600 transition-colors">
                     {risk.title}
                   </h4>
@@ -300,9 +254,9 @@ export default function S4HanaMigrationPage() {
                 key={idx}
                 className="p-8 rounded-[28px] bg-white border border-slate-200/90 shadow-sm space-y-6 group hover:border-brand-blue/30 hover:shadow-lg transition-all"
               >
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  {scopeIconMap[card.icon] || <Cpu className="w-6 h-6 text-brand-blue" />}
-                </div>
+                <span className="block text-sm font-mono font-bold tracking-widest text-brand-blue/70">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
 
                 <h3 className="text-xl font-display font-bold text-slate-900 group-hover:text-brand-blue transition-colors">
                   {card.title}
@@ -344,9 +298,9 @@ export default function S4HanaMigrationPage() {
                 key={idx}
                 className="p-8 rounded-[28px] bg-white border border-slate-200/90 shadow-sm space-y-4 group hover:border-brand-blue/30 hover:shadow-lg transition-all"
               >
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  {whyIconMap[card.icon] || <Zap className="w-6 h-6 text-brand-blue" />}
-                </div>
+                <span className="block text-sm font-mono font-bold tracking-widest text-brand-blue/70">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
 
                 <h3 className="text-xl font-display font-bold text-slate-900 group-hover:text-brand-blue transition-colors">
                   {card.title}

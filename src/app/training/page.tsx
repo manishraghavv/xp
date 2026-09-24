@@ -8,42 +8,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { TrainingForm } from "@/components/sections/TrainingForm";
 import { PillButton } from "@/components/ui/PillButton";
-import {
-  Sparkles,
-  PlayCircle,
-  Award,
-  Lock,
-  ArrowRight,
-  CheckCircle2,
-  CircleDollarSign,
-  Package,
-  Zap,
-  ShieldAlert,
-  Cloud,
-  RefreshCw,
-  Clock,
-  BookOpen,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export default function TrainingPage() {
   const [selectedProgramme, setSelectedProgramme] = useState("");
-
-  const trustIconMap: Record<string, React.ReactNode> = {
-    Sparkles: <Sparkles className="w-4 h-4 text-brand-cyan" />,
-    PlayCircle: <PlayCircle className="w-4 h-4 text-brand-cyan" />,
-    Award: <Award className="w-4 h-4 text-brand-cyan" />,
-    Lock: <Lock className="w-4 h-4 text-brand-cyan" />,
-  };
-
-  const courseIconMap: Record<string, React.ReactNode> = {
-    CircleDollarSign: <CircleDollarSign className="w-6 h-6 text-brand-blue" />,
-    Package: <Package className="w-6 h-6 text-brand-blue" />,
-    Zap: <Zap className="w-6 h-6 text-brand-blue" />,
-    ShieldAlert: <ShieldAlert className="w-6 h-6 text-brand-blue" />,
-    Cloud: <Cloud className="w-6 h-6 text-brand-blue" />,
-    RefreshCw: <RefreshCw className="w-6 h-6 text-brand-blue" />,
-  };
 
   const handleNotifyClick = (programmeName: string) => {
     setSelectedProgramme(programmeName);
@@ -72,7 +41,6 @@ export default function TrainingPage() {
 
           <div className="max-w-4xl space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-brand-cyan" />
               <span>{trainingData.hero.eyebrow}</span>
             </div>
 
@@ -123,7 +91,6 @@ export default function TrainingPage() {
                   key={idx}
                   className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-medium backdrop-blur-sm"
                 >
-                  {trustIconMap[badge.icon]}
                   <span>{badge.label}</span>
                 </div>
               ))}
@@ -165,7 +132,7 @@ export default function TrainingPage() {
                   </h3>
 
                   <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium mb-4">
-                    <span className="font-bold text-brand-blue">🎯 Ideal for: </span>
+                    <span className="font-bold text-brand-blue">Ideal for: </span>
                     {track.idealFor}
                   </div>
 
@@ -225,9 +192,9 @@ export default function TrainingPage() {
                 className="p-8 rounded-4xl bg-[#F6F7FB] border border-slate-200/90 shadow-md flex flex-col justify-between group hover:shadow-2xl hover:border-brand-blue/30 transition-all"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-sm">
-                    {courseIconMap[course.icon] || <BookOpen className="w-6 h-6 text-brand-blue" />}
-                  </div>
+                  <span className="block text-sm font-mono font-bold tracking-widest text-brand-blue/70 mb-4">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
 
                   <h3 className="text-xl font-display font-bold text-slate-900 mb-2 group-hover:text-brand-blue transition-colors">
                     {course.title}
@@ -243,14 +210,8 @@ export default function TrainingPage() {
                     {course.level}
                   </span>
                   <div className="flex items-center gap-3 font-mono font-medium">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {course.hours}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <BookOpen className="w-3.5 h-3.5" />
-                      {course.modules}
-                    </span>
+                    <span>{course.hours}</span>
+                    <span>{course.modules}</span>
                   </div>
                 </div>
               </div>

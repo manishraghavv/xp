@@ -1,6 +1,6 @@
 import React from "react";
 import { s4hanaData } from "@/content/s4hana";
-import { Check, X, Minus, Sparkles } from "lucide-react";
+import { Check, X, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function MigrationComparison() {
@@ -22,8 +22,7 @@ export function MigrationComparison() {
             )}
           >
             {isFeatured && (
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-[11px] font-bold tracking-wider uppercase shadow-md flex items-center gap-1.5 whitespace-nowrap">
-                <Sparkles className="w-3.5 h-3.5" />
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-blue to-brand-cyan text-white text-[11px] font-bold tracking-wider uppercase shadow-md whitespace-nowrap">
                 <span>{path.tag}</span>
               </div>
             )}

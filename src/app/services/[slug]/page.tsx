@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { servicesData } from "@/content/services";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { CheckCircle2, ArrowRight, Sparkles, ChevronRight } from "lucide-react";
+import { CheckCircle2, ArrowRight, ChevronRight } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
 import { D5_IntegrationDiagram } from "@/components/visuals/D5_IntegrationDiagram";
@@ -172,7 +172,6 @@ export default async function ServiceDetailPage({
                   className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-4"
                 >
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-brand-blue" />
                     <h3 className="text-xs font-bold uppercase tracking-wider text-brand-blue">
                       {side.title}
                     </h3>
