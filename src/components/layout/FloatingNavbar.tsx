@@ -19,13 +19,10 @@ export function FloatingNavbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalService, setModalService] = useState("S/4HANA Upgrade & Migration");
   const [isFocusedWithin, setIsFocusedWithin] = useState(false);
+  // When true, the panel moves focus to its first item as soon as it mounts
+  const [focusFirstItem, setFocusFirstItem] = useState(false);
 
-  // Track whether the dropdown was opened by hover (so click can "pin" it)
-  const openedByHover = useRef(false);
-  // Refs for hover delay timers
-  const hoverOpenTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hoverCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // Refs for outside-click detection
+  // Refs for outside-click detection and keyboard focus management
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
@@ -33,16 +30,10 @@ export function FloatingNavbar() {
   const pathname = usePathname();
 
   // ── Helpers ──────────────────────────────────────────────
-  const clearHoverTimers = useCallback(() => {
-    if (hoverOpenTimer.current) { clearTimeout(hoverOpenTimer.current); hoverOpenTimer.current = null; }
-    if (hoverCloseTimer.current) { clearTimeout(hoverCloseTimer.current); hoverCloseTimer.current = null; }
-  }, []);
-
   const closeDropdown = useCallback(() => {
-    clearHoverTimers();
-    openedByHover.current = false;
+    setFocusFirstItem(false);
     setIsServicesOpen(false);
-  }, [clearHoverTimers]);
+  }, []);
 
   // ── Close on route change ────────────────────────────────
   useEffect(() => {
@@ -50,17 +41,68 @@ export function FloatingNavbar() {
     setIsMenuOverlayOpen(false);
   }, [pathname, closeDropdown]);
 
-  // ── ESC key handler ──────────────────────────────────────
+  // ── Keyboard: ESC close · Tab trap · arrow-key item navigation ──
   useEffect(() => {
+    if (!isServicesOpen) return;
+
+    const getPanelFocusables = () =>
+      Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? []
+      );
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isServicesOpen) {
+      if (e.key === "Escape") {
+        e.preventDefault();
         closeDropdown();
         triggerRef.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const trigger = triggerRef.current;
+        const nodes: HTMLElement[] = trigger
+          ? [trigger, ...getPanelFocusables()]
+          : getPanelFocusables();
+        if (nodes.length === 0) return;
+
+        const idx = nodes.indexOf(document.activeElement as HTMLElement);
+        e.preventDefault();
+        const next =
+          idx === -1
+            ? e.shiftKey
+              ? nodes.length - 1
+              : 1
+            : e.shiftKey
+              ? (idx - 1 + nodes.length) % nodes.length
+              : (idx + 1) % nodes.length;
+        nodes[next]?.focus();
+        return;
+      }
+
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        const items = getPanelFocusables();
+        if (items.length === 0) return;
+        const idx = items.indexOf(document.activeElement as HTMLElement);
+        if (idx === -1) return; // let the trigger's own handler deal with it
+        e.preventDefault();
+        const next =
+          e.key === "ArrowDown"
+            ? (idx + 1) % items.length
+            : (idx - 1 + items.length) % items.length;
+        items[next]?.focus();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isServicesOpen, closeDropdown]);
+
+  // ── Move focus to the first panel item when opened via arrow key ──
+  useEffect(() => {
+    if (!isServicesOpen || !focusFirstItem) return;
+    panelRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+    setFocusFirstItem(false);
+  }, [isServicesOpen, focusFirstItem]);
 
   // ── Outside pointerdown handler ──────────────────────────
   useEffect(() => {
@@ -80,84 +122,18 @@ export function FloatingNavbar() {
     return () => document.removeEventListener("pointerdown", handlePointerDown, true);
   }, [isServicesOpen, closeDropdown]);
 
-  // ── Hover handlers (mouse only, with open/close delays) ──
-  const handleHoverRegionEnter = useCallback((e: React.PointerEvent | React.MouseEvent) => {
-    // Only respond to actual mouse, not touch
-    if ("pointerType" in e && e.pointerType !== "mouse") return;
-
-    // Cancel any pending close
-    if (hoverCloseTimer.current) { clearTimeout(hoverCloseTimer.current); hoverCloseTimer.current = null; }
-
-    if (isServicesOpen) return; // already open, do nothing
-
-    hoverOpenTimer.current = setTimeout(() => {
-      openedByHover.current = true;
-      setIsServicesOpen(true);
-    }, 100);
-  }, [isServicesOpen]);
-
-  const handleHoverRegionLeave = useCallback((e: React.PointerEvent | React.MouseEvent) => {
-    if ("pointerType" in e && e.pointerType !== "mouse") return;
-
-    // Cancel any pending open
-    if (hoverOpenTimer.current) { clearTimeout(hoverOpenTimer.current); hoverOpenTimer.current = null; }
-
-    // Only auto-close if it was opened by hover (not pinned by click)
-    if (!openedByHover.current) return;
-
-    hoverCloseTimer.current = setTimeout(() => {
-      closeDropdown();
-    }, 250);
-  }, [closeDropdown]);
-
-  // ── Click handler on Services trigger ────────────────────
-  const handleServicesClick = useCallback(() => {
-    clearHoverTimers();
-
-    if (isServicesOpen) {
-      // If currently open (whether by hover or click), close it
-      closeDropdown();
-    } else {
-      // Open it, and mark as NOT opened by hover (click-pinned)
-      openedByHover.current = false;
-      setIsServicesOpen(true);
-    }
-  }, [isServicesOpen, closeDropdown, clearHoverTimers]);
-
-  // ── When dropdown is open, clicking while it was hover-opened "pins" it ──
-  // Actually handled: if it was opened by hover and user clicks, we want it to STAY open.
-  // The click handler above sees isServicesOpen===true and closes. So we need
-  // special logic: if openedByHover, the first click pins it (converts to click-open).
+  // ── Click handler on Services trigger (click-only, never navigates) ──
   const handleServicesTriggerClick = useCallback(() => {
-    clearHoverTimers();
+    setFocusFirstItem(false);
+    setIsServicesOpen((prev) => !prev);
+  }, []);
 
-    if (isServicesOpen && openedByHover.current) {
-      // Hover-opened → pin it open (convert to click-open, don't close)
-      openedByHover.current = false;
-      return;
-    }
-
-    if (isServicesOpen) {
-      // Was click-pinned → close
-      closeDropdown();
-    } else {
-      // Was closed → open by click
-      openedByHover.current = false;
-      setIsServicesOpen(true);
-    }
-  }, [isServicesOpen, closeDropdown, clearHoverTimers]);
-
-  // ── Keyboard handler on Services trigger ─────────────────
-  const handleServicesKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === "ArrowDown") {
+  // ── Keyboard handler on Services trigger (Enter/Space fire click natively) ──
+  const handleServicesKeyDown = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
+      setFocusFirstItem(true);
       setIsServicesOpen(true);
-      openedByHover.current = false;
-      // Focus first item after panel renders
-      requestAnimationFrame(() => {
-        const firstItem = document.querySelector<HTMLAnchorElement>("#services-dropdown-panel a");
-        firstItem?.focus();
-      });
     }
   }, []);
 
@@ -205,7 +181,7 @@ export function FloatingNavbar() {
         <div
           ref={scrimRef}
           aria-hidden="true"
-          className="fixed inset-0 z-[58] bg-[rgba(6,10,40,0.45)] backdrop-blur-[3px] animate-in fade-in duration-200"
+          className="fixed inset-0 z-[55] bg-[rgba(6,10,40,0.45)] backdrop-blur-[3px]"
         />
       )}
 
@@ -291,12 +267,7 @@ export function FloatingNavbar() {
 
                   if (link.hasDropdown) {
                     return (
-                      <div
-                        key={link.href}
-                        className="relative"
-                        onPointerEnter={handleHoverRegionEnter}
-                        onPointerLeave={handleHoverRegionLeave}
-                      >
+                      <div key={link.href} className="relative">
                         {/* Single unified button trigger — click toggles, does NOT navigate */}
                         <button
                           ref={triggerRef}
@@ -360,81 +331,81 @@ export function FloatingNavbar() {
             </div>
           </div>
 
-          {/* ──── Services Dropdown Panel (SIBLING of the bar, not a child) ──── */}
+          {/* ──── Services Dropdown Panel (sibling of the bar · click-only) ──── */}
           {isServicesOpen && (
             <div
               ref={panelRef}
               id="services-dropdown-panel"
               role="region"
               aria-label="Enterprise SAP Services"
-              onPointerEnter={handleHoverRegionEnter}
-              onPointerLeave={handleHoverRegionLeave}
-              className={cn(
-                "services-dropdown-panel",
-                "absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2",
-                "w-[min(940px,calc(100vw-72px))] max-h-[calc(100svh-140px)] overflow-y-auto",
-                "rounded-[28px] p-6 lg:p-7 z-[70] text-[#14163F]",
-                "animate-in fade-in slide-in-from-top-2 duration-200"
-              )}
+              className="services-dropdown-panel text-[#14163F]"
             >
-              {/* Header row */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-slate-200/60">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6488]">
-                  Enterprise SAP® Capabilities
-                </span>
-                <Link
-                  href="/services"
-                  onClick={closeDropdown}
-                  className="text-xs font-semibold text-[#1B3FD1] hover:text-blue-800 flex items-center gap-1 group"
-                >
-                  <span>Explore All Services</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </div>
-
-              {/* 3×3 Services Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 my-4">
-                {servicesData.map((svc) => (
+              {/* Opaque surface — clips the rounded corners, holds the single scroll region */}
+              <div className="services-dropdown-surface">
+                {/* Header row — non-scrolling */}
+                <div className="flex-none flex items-center justify-between gap-3 px-6 lg:px-7 pt-5 pb-3 border-b border-slate-200/60">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6488]">
+                    Enterprise SAP® Capabilities
+                  </span>
                   <Link
-                    key={svc.slug}
-                    href={`/services/${svc.slug}`}
+                    href="/services"
                     onClick={closeDropdown}
-                    className="p-3 rounded-2xl hover:bg-[#EEF2FF] border border-transparent hover:border-blue-200/80 transition-all flex items-start gap-3 group"
+                    className="text-xs font-semibold text-[#1B3FD1] hover:text-blue-800 flex items-center gap-1 group flex-shrink-0"
                   >
-                    <span className="text-xs font-mono font-bold tracking-widest text-[#1B3FD1]/60 flex-shrink-0 pt-0.5">
-                      {svc.number}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[13px] font-bold text-[#14163F] group-hover:text-[#1B3FD1] transition-colors leading-snug">
-                        {svc.title}
-                      </div>
-                      <div className="text-[11px] text-slate-600 mt-0.5 leading-normal">
-                        {svc.shortDescription}
-                      </div>
-                    </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#1B3FD1] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all self-center flex-shrink-0" />
+                    <span>Explore All Services</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </Link>
-                ))}
-              </div>
-
-              {/* Bottom S/4HANA promo row */}
-              <div className="pt-3.5 border-t border-slate-200/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-1">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 tracking-wider">
-                    2027 ECC Deadline
-                  </span>
-                  <span className="text-xs font-semibold text-[#14163F]">
-                    ECC to S/4HANA Brownfield Migration in 16 Weeks*
-                  </span>
                 </div>
-                <Link
-                  href="/s4hana-migration"
-                  onClick={closeDropdown}
-                  className="text-xs font-bold text-[#1B3FD1] hover:underline flex items-center gap-1 group"
+
+                {/* 3×3 Services Grid — the ONLY scroll region */}
+                <div
+                  className="services-dropdown-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 lg:px-7 py-3"
+                  data-lenis-prevent
                 >
-                  <span>Learn More</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-1.5">
+                    {servicesData.map((svc) => (
+                      <Link
+                        key={svc.slug}
+                        href={`/services/${svc.slug}`}
+                        onClick={closeDropdown}
+                        className="p-2.5 rounded-2xl hover:bg-[#EEF2FF] border border-transparent hover:border-blue-200/80 transition-all flex items-start gap-3 group"
+                      >
+                        <span className="text-xs font-mono font-bold tracking-widest text-[#1B3FD1]/60 flex-shrink-0 pt-0.5">
+                          {svc.number}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[13px] font-bold text-[#14163F] group-hover:text-[#1B3FD1] transition-colors leading-snug">
+                            {svc.title}
+                          </div>
+                          <div className="text-[11px] text-slate-600 mt-0.5 leading-snug">
+                            {svc.shortDescription}
+                          </div>
+                        </div>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#1B3FD1] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all self-center flex-shrink-0" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bottom S/4HANA promo row — non-scrolling, always visible */}
+                <div className="flex-none flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 px-6 lg:px-7 py-3 border-t border-slate-200/60">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 tracking-wider">
+                      2027 ECC Deadline
+                    </span>
+                    <span className="text-xs font-semibold text-[#14163F]">
+                      ECC to S/4HANA Brownfield Migration in 16 Weeks*
+                    </span>
+                  </div>
+                  <Link
+                    href="/s4hana-migration"
+                    onClick={closeDropdown}
+                    className="text-xs font-bold text-[#1B3FD1] hover:underline flex items-center gap-1 group flex-shrink-0"
+                  >
+                    <span>Learn More</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </div>
           )}
