@@ -21,6 +21,7 @@ const QUICK_LINKS = [
   { label: "SAP® Services", href: "/services" },
   { label: "Projects & Case Studies", href: "/projects" },
   { label: "XPMIND Learning Cell", href: "/training" },
+  { label: "Careers Hiring", href: "/careers" },
   { label: "16-Week S/4HANA Migration", href: "/s4hana-migration" },
   { label: "Contact Us", href: "/contact" },
 ];

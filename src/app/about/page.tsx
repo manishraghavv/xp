@@ -52,6 +52,10 @@ export default function AboutPage() {
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
               A specialist SAP® consulting firm founded by Chartered Accountants and senior technology leaders. We bring financial discipline, deep ERP architecture, and two decades of field experience to every engagement.
             </p>
+
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
+              Founded in 2020, XpmindGlobal was built by a team of Chartered Accountants, SAP® S/4HANA certified professionals, and business process experts — each carrying 20–29 years of hands-on experience. We exist to make SAP® work harder for your business.
+            </p>
           </div>
         </div>
       </section>

@@ -16,7 +16,14 @@ export function WhyUsSection() {
           eyebrow="Why Choose Us"
           title="Why Leading Enterprises Choose XpmindGlobal"
           highlight="Why Leading Enterprises"
-          subtitle="A dedicated SAP® specialist firm combining Chartered Accountant business rigor with deep technical architecture mastery."
+          subtitle={
+            <>
+              A dedicated SAP® specialist firm combining Chartered Accountant business rigor with deep technical architecture mastery.
+              <span className="block mt-4">
+                Founded in 2020, XpmindGlobal brings together Chartered Accountants, SAP® S/4HANA certified consultants, and process engineers — each with 20–29 years of hands-on experience. Not junior resources learning on your dime.
+              </span>
+            </>
+          }
           align="center"
           theme="light"
         />

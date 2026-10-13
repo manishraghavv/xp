@@ -21,6 +21,7 @@ export const navigationData = {
     { label: "Services", href: "/services" },
     { label: "Projects", href: "/projects" },
     { label: "Training", href: "/training" },
+    { label: "Careers Hiring", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ] as NavItem[],
 
@@ -121,6 +122,7 @@ export const navigationData = {
         { label: "Our Team", href: "/about#leadership" },
         { label: "Case Studies", href: "/projects" },
         { label: "Training", href: "/training" },
+        { label: "Careers", href: "/careers" },
         { label: "Contact Us", href: "/contact" },
       ],
     },

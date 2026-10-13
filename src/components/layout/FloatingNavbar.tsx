@@ -10,10 +10,13 @@ import { MenuOverlay } from "./MenuOverlay";
 import { GetInTouchModal } from "./GetInTouchModal";
 import { ScrollProgress } from "./ScrollProgress";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { useOverlayOpen } from "@/hooks/useBodyScrollLock";
 import { cn } from "@/lib/utils";
 
 export function FloatingNavbar() {
   const { isVisible, isScrolled } = useScrollDirection();
+  // Any page-level modal or menu that locks body scroll (Get in Touch, Apply, ...)
+  const isOverlayOpen = useOverlayOpen();
   const [isMenuOverlayOpen, setIsMenuOverlayOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,6 +42,7 @@ export function FloatingNavbar() {
   useEffect(() => {
     closeDropdown();
     setIsMenuOverlayOpen(false);
+    setIsFocusedWithin(false);
   }, [pathname, closeDropdown]);
 
   // ── Keyboard: ESC close · Tab trap · arrow-key item navigation ──
@@ -159,6 +163,7 @@ export function FloatingNavbar() {
     !isServicesOpen &&
     !isMenuOverlayOpen &&
     !isModalOpen &&
+    !isOverlayOpen &&
     !isFocusedWithin;
 
   const navLinks = [
@@ -166,6 +171,7 @@ export function FloatingNavbar() {
     { label: "Services", href: "/services", hasDropdown: true },
     { label: "Projects", href: "/projects" },
     { label: "Training", href: "/training" },
+    { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ];
 
@@ -188,7 +194,11 @@ export function FloatingNavbar() {
       {/* Fixed Header Wrapper — no filter, no opacity, only transform for hide/show */}
       <header
         role="banner"
-        onFocus={() => setIsFocusedWithin(true)}
+        onFocus={(e) => {
+          // Keyboard focus only. A mouse or touch click leaves focus on the clicked
+          // link/button, which would otherwise pin the navbar visible forever.
+          if (e.target.matches(":focus-visible")) setIsFocusedWithin(true);
+        }}
         onBlur={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget)) {
             setIsFocusedWithin(false);
@@ -304,6 +314,7 @@ export function FloatingNavbar() {
                       href={link.href}
                       className={cn(
                         "px-4 lg:px-5 py-2 rounded-full text-[16px] font-medium transition-colors duration-200",
+                        link.href === "/careers" && "lg:hidden min-[1340px]:inline-flex",
                         isActive
                           ? "bg-[#E8EEFF] text-[#1B3FD1] font-semibold"
                           : "text-[#14163F] hover:text-[#1B3FD1] hover:bg-slate-50"

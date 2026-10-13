@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { SplitWords } from "@/components/motion/Reveal";
 
 interface SectionHeadingProps {
   eyebrow?: string;
@@ -22,15 +23,8 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   // If highlight is provided and title is a string, replace highlight with gradient span
   const renderTitle = () => {
-    if (typeof title === "string" && highlight && title.includes(highlight)) {
-      const parts = title.split(highlight);
-      return (
-        <>
-          {parts[0]}
-          <span className="gradient-heading-accent">{highlight}</span>
-          {parts[1]}
-        </>
-      );
+    if (typeof title === "string") {
+      return <SplitWords text={title} highlight={highlight} />;
     }
     return title;
   };
@@ -61,7 +55,7 @@ export function SectionHeading({
       <h2
         className={cn(
           "font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.15] mb-5",
-          theme === "dark" ? "text-white" : "text-slate-900"
+          theme === "dark" ? "text-white heading-depth-dark" : "text-slate-900 heading-depth-light"
         )}
       >
         {renderTitle()}

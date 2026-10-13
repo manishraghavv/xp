@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { companyData } from "@/content/company";
 import { ContactForm } from "@/components/sections/ContactForm";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Globe } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact Us | Consult with Senior SAP® Specialists",
@@ -139,6 +139,21 @@ export default function ContactPage() {
                         className="font-medium text-brand-blue hover:underline"
                       >
                         {companyData.email}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3.5">
+                    <Globe className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                        Website
+                      </div>
+                      <a
+                        href="https://www.xpmindglobal.com"
+                        className="font-medium text-brand-blue hover:underline"
+                      >
+                        www.xpmindglobal.com
                       </a>
                     </div>
                   </div>

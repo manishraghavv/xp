@@ -81,7 +81,7 @@ export function FeaturedProjects() {
                     <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                       Key Outcomes
                     </span>
-                    {project.results.slice(0, 2).map((res, rIdx) => (
+                    {project.results.slice(0, 4).map((res, rIdx) => (
                       <div key={rIdx} className="flex items-start gap-2 text-xs text-slate-700">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
                         <span>{res}</span>

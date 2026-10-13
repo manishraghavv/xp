@@ -1,5 +1,6 @@
 "use client";
 
+import { PillButton } from "@/components/ui/PillButton";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -93,6 +94,17 @@ export function ServicesPreviewGrid() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <PillButton
+            href="/services"
+            variant="outline"
+            size="md"
+            icon={<ArrowRight className="w-4 h-4" />}
+          >
+            View All 9 Services
+          </PillButton>
         </div>
 
         {/* Two Ways Engagement Model Comparison (Hostinger Pattern) */}

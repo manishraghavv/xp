@@ -221,7 +221,7 @@ export function ContactForm() {
             className="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white text-slate-900 text-base focus:outline-none focus:ring-2 focus:ring-brand-blue"
             {...register("landscape")}
           >
-            <option value="">Select current landscape status...</option>
+            <option value="">Tell us about your current SAP® environment...</option>
             {landscapeOptions.map((opt) => (
               <option key={opt} value={opt}>
                 {opt}

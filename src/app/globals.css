@@ -1,12 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-inter: 'Inter', sans-serif;
-  --font-outfit: 'Outfit', sans-serif;
 
   /* Rich Navy-Indigo Dark Palette (Lighter, richer, never flat black) */
   --bg-deep: #0A1030;
@@ -475,3 +471,40 @@ html.menu-open {
   }
 }
 
+
+/* Keep in-page anchor targets clear of the floating navbar when it is shown */
+#paths,
+#tracks,
+#leadership,
+#migration-comparison {
+  scroll-margin-top: 7rem;
+}
+
+/* ---------- Lenis smooth scroll ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------- Heading depth (drop-shadow works with gradient-clipped text) ---------- */
+.heading-depth-dark {
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.35)) drop-shadow(0 12px 28px rgba(6, 182, 212, 0.22));
+}
+.heading-depth-light {
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.9)) drop-shadow(0 10px 22px rgba(59, 130, 246, 0.16));
+}
+@media (prefers-reduced-motion: reduce) {
+  .heading-depth-dark,
+  .heading-depth-light {
+    filter: none;
+  }
+}

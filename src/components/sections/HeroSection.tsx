@@ -5,6 +5,8 @@ import { PromptBox } from "@/components/ui/PromptBox";
 import { D1_HeroDashboard } from "@/components/visuals/D1_HeroDashboard";
 import { SectionBackground } from "@/components/ui/SectionBackground";
 import { homeData } from "@/content/home";
+import { HeroBackdrop } from "@/components/three/HeroBackdrop";
+import { Heading3D } from "@/components/three/Heading3D";
 
 export function HeroSection() {
   return (
@@ -18,6 +20,8 @@ export function HeroSection() {
         image="/images/backgrounds/sap-hero.webp"
         priority
       />
+      {/* Interactive 3D layer (lazy, falls back to the CSS background alone) */}
+      <HeroBackdrop variant="home" />
 
       {/* 1. Above-The-Fold Viewport (100svh framing for 1366x768 & 1440x900) */}
       <div className="min-h-[100svh] flex flex-col justify-center pt-24 sm:pt-36 md:pt-44 pb-10 sm:pb-14 relative z-10">
@@ -30,7 +34,7 @@ export function HeroSection() {
 
             <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-[clamp(2.2rem,4.5vw,4.25rem)] font-extrabold tracking-tight leading-[1.1] md:leading-[1.08] mb-3.5 sm:mb-5">
               Enterprise SAP® Solutions That{" "}
-              <span className="gradient-heading-accent">Drive Real Growth.</span>
+              <Heading3D text="Drive Real Growth." />
             </h1>
 
             <p className="text-base md:text-lg text-slate-300 max-w-[65ch] mx-auto leading-relaxed">

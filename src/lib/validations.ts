@@ -14,12 +14,12 @@ export const serviceOptions = [
 ] as const;
 
 export const landscapeOptions = [
-  "ECC (planning to migrate)",
-  "S/4HANA (on-premise)",
-  "S/4HANA Cloud (Public/Private)",
-  "No SAP® yet (Greenfield exploration)",
+  "SAP® ECC (planning to migrate)",
+  "SAP® S/4HANA (on-premise)",
+  "SAP® S/4HANA Cloud",
+  "No SAP® — greenfield implementation",
   "SAP® alongside another ERP",
-  "Not sure / exploring options",
+  "Not sure",
 ] as const;
 
 export const trainingProgrammes = [
@@ -73,3 +73,30 @@ export const trainingInterestSchema = z.object({
 });
 
 export type TrainingInterestData = z.infer<typeof trainingInterestSchema>;
+
+// Careers application form schema (CV file is validated separately in the API route)
+export const applicationSchema = z.object({
+  applyingAs: z.string().min(1, "Please select how you are applying"),
+  fullName: z.string().min(1, "Full name is required").max(100),
+  email: z.string().email("Please provide a valid email"),
+  mobile: z.string().min(1, "Mobile number is required").max(30),
+  location: z.string().min(1, "Current location is required").max(100),
+  primaryArea: z.string().min(1, "Please select a primary SAP® area"),
+  experience: z.string().min(1, "Please select your total SAP® experience"),
+  otherModules: z.string().max(300).optional().or(z.literal("")),
+  availability: z.string().optional().or(z.literal("")),
+  workMode: z.string().optional().or(z.literal("")),
+  qualification: z.string().max(150).optional().or(z.literal("")),
+  passingYear: z.string().max(10).optional().or(z.literal("")),
+  linkedin: z.string().max(300).optional().or(z.literal("")),
+  about: z.string().max(3000).optional().or(z.literal("")),
+  consent: z
+    .boolean({ required_error: "Please agree to continue" })
+    .refine((v) => v === true, "Please agree to continue"),
+  website_bot_trap: z.string().max(0, "Bot detected").optional().or(z.literal("")),
+});
+
+export type ApplicationData = z.infer<typeof applicationSchema>;
+
+export const CV_MAX_BYTES = 5 * 1024 * 1024;
+export const CV_ALLOWED_EXTENSIONS = [".pdf", ".doc", ".docx"] as const;

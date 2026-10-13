@@ -63,6 +63,10 @@ export default function ServicesPage() {
             <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
               Structured to deliver measurable outcomes across your entire SAP® lifecycle. From strategic architectural advisory and S/4HANA migrations to 24×7 AMS support and Centre of Excellence governance.
             </p>
+
+            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
+              A complete SAP® services business covers cloud, analytics, integration, compliance, enablement, migration, implementation, managed support, and strategic advisory. XpmindGlobal provides all nine — with clear paths from initial engagement to long-term partnership.
+            </p>
           </div>
         </div>
       </section>

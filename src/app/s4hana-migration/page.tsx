@@ -96,7 +96,7 @@ export default function S4HanaMigrationPage() {
             </div>
 
             {/* 4 Stats Grid */}
-            <div className="pt-10 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl">
+            <div className="pt-10 border-t border-slate-800/80 flex flex-wrap gap-x-10 gap-y-6 max-w-3xl">
               {s4hanaData.hero.stats.map((stat, idx) => (
                 <StatCounter
                   key={idx}

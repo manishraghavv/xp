@@ -1,9 +1,20 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { FloatingNavbar } from "@/components/layout/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+
+// Self-hosted at build time by next/font (no runtime request to Google, swap + preload)
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -131,7 +142,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${sora.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -147,15 +158,17 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <FloatingNavbar />
+        <SmoothScroll>
+          <FloatingNavbar />
 
-        <main id="main-content" className="flex-grow">
-          {children}
-        </main>
+          <main id="main-content" className="flex-grow">
+            {children}
+          </main>
 
-        <Footer />
-        <FloatingActions />
-        <MobileBottomBar />
+          <Footer />
+          <FloatingActions />
+          <MobileBottomBar />
+        </SmoothScroll>
       </body>
     </html>
   );

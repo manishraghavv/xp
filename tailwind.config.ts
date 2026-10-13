@@ -42,7 +42,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
-        display: ["var(--font-outfit)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
       },
       backdropBlur: {
         xs: "2px",
