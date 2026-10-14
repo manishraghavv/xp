@@ -66,7 +66,7 @@ const tiles: FioriTile[] = [
   },
 ];
 
-export function D2_FioriTileGrid() {
+export function D2_FioriTileGrid({ size = "md" }: { size?: "md" | "sm" }) {
   return (
     <div className="w-full max-w-5xl mx-auto my-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -74,19 +74,19 @@ export function D2_FioriTileGrid() {
           return (
             <div
               key={tile.id}
-              className="p-6 rounded-3xl bg-white/80 border border-slate-200/90 shadow-lg shadow-blue-900/5 backdrop-blur-xl transition-all duration-300 hover:shadow-2xl hover:border-brand-blue/40 hover:-translate-y-1 flex flex-col justify-between group"
+              className={`card-interactive card-interactive--light card-interactive--passive ${size === "sm" ? "card-interactive--compact" : "card-interactive--md"} card-label-slate p-6 rounded-3xl bg-white/80 border border-slate-200/90 shadow-lg shadow-blue-900/5 backdrop-blur-xl flex flex-col justify-between`}
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  <span className="card-label text-[11px] font-bold uppercase tracking-wider text-slate-400">
                     {tile.category}
                   </span>
-                  <span className="text-xs font-mono font-bold tracking-widest text-slate-400">
+                  <span className="card-index text-xs font-mono font-bold tracking-widest text-slate-400">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
                 </div>
 
-                <h4 className="text-base font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-1">
+                <h4 className="text-base font-bold text-slate-900 mb-1">
                   {tile.title}
                 </h4>
                 <p className="text-xs text-slate-500 mb-5">{tile.subtitle}</p>
@@ -94,17 +94,17 @@ export function D2_FioriTileGrid() {
 
               <div className="pt-4 border-t border-slate-100">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-2xl font-extrabold font-display text-slate-900">
+                  <span className="card-number inline-block text-2xl font-extrabold font-display text-slate-900">
                     {tile.metric}
                   </span>
                   {tile.unit && (
-                    <span className="text-xs font-semibold text-slate-500">
+                    <span className="card-unit text-xs font-semibold text-slate-500">
                       {tile.unit}
                     </span>
                   )}
                 </div>
                 <div className="text-[11px] text-emerald-600 font-medium">
-                  <span>{tile.trend}</span>
+                  <span className="link-underline-anim">{tile.trend}</span>
                 </div>
               </div>
             </div>

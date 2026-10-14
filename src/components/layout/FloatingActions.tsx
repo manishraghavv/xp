@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, ArrowRight } from "lucide-react";
 import { GetInTouchModal } from "./GetInTouchModal";
 import {
   useElementInView,
@@ -45,10 +45,10 @@ export function FloatingActions() {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="pointer-events-auto w-12 h-12 rounded-full bg-navy-950/90 hover:bg-navy-900 text-white shadow-2xl border border-white/20 backdrop-blur-xl hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center justify-center group"
+            className="pointer-events-auto w-12 h-12 rounded-full bg-navy-950/90 hover:bg-navy-900 text-white shadow-2xl border border-white/20 backdrop-blur-xl btn-shine cursor-pointer flex items-center justify-center"
             aria-label="Back to top of page"
           >
-            <ArrowUp className="w-4 h-4 text-brand-cyan group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUp className="arrow-up w-4 h-4 text-brand-cyan" />
           </button>
         )}
 
@@ -56,10 +56,11 @@ export function FloatingActions() {
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="pointer-events-auto px-5 py-3 rounded-full btn-pill-gradient text-white text-sm font-bold shadow-2xl shadow-blue-500/35 hover:scale-105 active:scale-95 transition-all flex items-center border border-white/25 backdrop-blur-xl cursor-pointer"
+            className="pointer-events-auto px-5 py-3 rounded-full btn-pill-gradient btn-shine text-white text-sm font-bold shadow-2xl shadow-blue-500/35 flex items-center gap-2 border border-white/25 backdrop-blur-xl cursor-pointer"
             aria-label="Book Free Assessment"
           >
-            Book Free Assessment
+            <span>Book Free Assessment</span>
+            <ArrowRight className="btn-arrow w-4 h-4" aria-hidden="true" />
           </button>
         )}
       </div>

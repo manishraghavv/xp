@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { TabPills } from "@/components/ui/TabPills";
 
 interface SapModule {
   code: string;
@@ -21,12 +22,58 @@ const modules: SapModule[] = [
   { code: "AM", name: "Asset Management", desc: "Fixed Asset Lifecycle, Depreciation Calculations, Asset Valuation" },
 ];
 
+const tabItems = modules.map((m) => ({ id: m.code, label: m.code, title: m.name }));
+
+function ModuleDetail({ module: m }: { module: SapModule }) {
+  return (
+    <>
+      <div>
+        <div className="flex items-center gap-2">
+          <span className="module-chip px-2.5 py-0.5 rounded-full bg-blue-100 text-brand-blue font-mono font-extrabold text-xs">
+            SAP® {m.code}
+          </span>
+          <h4 className="module-title text-base font-bold text-slate-900">{m.name}</h4>
+        </div>
+        <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">{m.desc}</p>
+      </div>
+      <div className="role-pill text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 flex-shrink-0">
+        In-house CA & Functional Practice Lead
+      </div>
+    </>
+  );
+}
+
+const LAYER = "col-start-1 row-start-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4";
+
 export function D6_ModuleConstellation() {
-  const [activeCode, setActiveCode] = useState<string>("FI");
-  const activeModule = modules.find((m) => m.code === activeCode) || modules[0];
+  // committed = the selected module (click / keyboard). preview = transient hover.
+  const [committed, setCommitted] = useState<string>("FI");
+  const [preview, setPreview] = useState<string | null>(null);
+  const [announce, setAnnounce] = useState("");
+
+  const shown = preview ?? committed;
+
+  // Keep the previous module around for one swap animation (derived state).
+  const [lastShown, setLastShown] = useState(shown);
+  const [leaving, setLeaving] = useState<string | null>(null);
+  const [swapped, setSwapped] = useState(false);
+  if (shown !== lastShown) {
+    setLastShown(shown);
+    setLeaving(lastShown);
+    setSwapped(true);
+  }
+
+  const current = modules.find((m) => m.code === shown) || modules[0];
+  const out = leaving ? modules.find((m) => m.code === leaving) : undefined;
+
+  const commit = (code: string) => {
+    setCommitted(code);
+    const m = modules.find((x) => x.code === code);
+    if (m) setAnnounce(`SAP ${m.code}, ${m.name}`);
+  };
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-8 p-6 sm:p-8 rounded-4xl bg-slate-50 border border-slate-200 shadow-xl">
+    <div className="card-interactive card-interactive--lg card-interactive--light card-interactive--passive w-full max-w-4xl mx-auto my-8 p-6 sm:p-8 rounded-4xl bg-slate-50 border border-slate-200 shadow-xl">
       <div className="text-center mb-6">
         <span className="text-xs font-bold uppercase tracking-widest text-brand-blue">
           Full Functional Scope
@@ -40,41 +87,48 @@ export function D6_ModuleConstellation() {
       </div>
 
       {/* Grid of Interactive Modules */}
-      <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2 mb-6">
-        {modules.map((m) => {
-          const isSelected = activeCode === m.code;
-          return (
-            <button
-              key={m.code}
-              type="button"
-              onClick={() => setActiveCode(m.code)}
-              className={`p-3 rounded-2xl text-center font-mono font-bold text-sm transition-all duration-200 border cursor-pointer ${
-                isSelected
-                  ? "bg-brand-blue text-white border-brand-blue shadow-lg scale-105"
-                  : "bg-white text-slate-700 border-slate-200 hover:border-brand-blue/40 hover:bg-blue-50/50"
-              }`}
-            >
-              {m.code}
-            </button>
-          );
-        })}
-      </div>
+      <TabPills
+        items={tabItems}
+        value={committed}
+        onChange={commit}
+        onPreview={setPreview}
+        ariaLabel="SAP functional modules"
+        idPrefix="module-tab"
+        panelId="module-panel"
+        className="tab-row grid grid-cols-5 sm:grid-cols-10 gap-1.5 sm:gap-2 mb-6"
+      />
 
-      {/* Selected Module Detail Panel */}
-      <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-brand-blue font-mono font-extrabold text-xs">
-              SAP® {activeModule.code}
-            </span>
-            <h4 className="text-base font-bold text-slate-900">{activeModule.name}</h4>
+      <span className="sr-only" role="status" aria-live="polite">
+        {announce}
+      </span>
+
+      {/* Selected Module Detail Panel (fixed height: every module is laid out invisibly
+          in the same grid cell, so the card is always as tall as the tallest one) */}
+      <div
+        id="module-panel"
+        role="tabpanel"
+        aria-labelledby={`module-tab-${committed}`}
+        className="card-interactive card-interactive--md card-heading-blue card-interactive--light card-interactive--passive p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm grid"
+      >
+        {modules.map((m) => (
+          <div key={m.code} className={`${LAYER} invisible`} aria-hidden="true">
+            <ModuleDetail module={m} />
           </div>
-          <p className="text-xs text-slate-600 mt-1.5 leading-relaxed">
-            {activeModule.desc}
-          </p>
-        </div>
-        <div className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 flex-shrink-0">
-          In-house CA & Functional Practice Lead
+        ))}
+
+        {out && (
+          <div
+            key={`out-${out.code}-${lastShown}`}
+            className={`${LAYER} module-layer-out`}
+            aria-hidden="true"
+            onAnimationEnd={() => setLeaving(null)}
+          >
+            <ModuleDetail module={out} />
+          </div>
+        )}
+
+        <div key={current.code} className={`${LAYER} ${swapped ? "module-layer-in" : ""}`}>
+          <ModuleDetail module={current} />
         </div>
       </div>
     </div>

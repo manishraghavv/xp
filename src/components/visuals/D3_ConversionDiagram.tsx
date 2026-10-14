@@ -4,7 +4,7 @@ import React from "react";
 
 export function D3_ConversionDiagram() {
   return (
-    <div className="w-full max-w-5xl mx-auto my-8 p-6 sm:p-10 rounded-4xl bg-navy-950/80 backdrop-blur-2xl border border-white/15 shadow-2xl text-white relative overflow-hidden">
+    <div className="card-interactive card-interactive--lg card-interactive--dark w-full max-w-5xl mx-auto my-8 p-6 sm:p-10 rounded-4xl bg-navy-950/80 backdrop-blur-2xl border border-white/15 shadow-2xl text-white relative overflow-hidden">
       {/* Background orbs */}
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
@@ -23,7 +23,7 @@ export function D3_ConversionDiagram() {
 
       <div className="grid grid-cols-1 lg:grid-cols-11 gap-4 sm:gap-6 items-center">
         {/* Step 1: Legacy ECC 6.0 (3 cols) */}
-        <div className="lg:col-span-3 p-5 sm:p-6 rounded-3xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full">
+        <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--warm lg:col-span-3 p-5 sm:p-6 rounded-3xl bg-white/[0.04] border border-white/10 flex flex-col justify-between h-full">
           <div>
             <span className="block text-xs font-mono font-bold tracking-widest text-amber-400/80 mb-3">
               01
@@ -44,7 +44,7 @@ export function D3_ConversionDiagram() {
         </div>
 
         {/* Step 2: XPMIND Conversion Engine (5 cols) */}
-        <div className="lg:col-span-5 p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-blue-900/30 via-navy-900/80 to-cyan-900/30 border border-brand-cyan/40 shadow-xl relative">
+        <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--featured lg:col-span-5 p-5 sm:p-6 rounded-3xl bg-gradient-to-b from-blue-900/30 via-navy-900/80 to-cyan-900/30 border border-brand-cyan/40 shadow-xl relative">
           <div className="text-center mb-5">
             <span className="text-xs font-extrabold uppercase tracking-wider text-brand-cyan">
               XPMIND 16-Week Accelerated Engine
@@ -60,9 +60,9 @@ export function D3_ConversionDiagram() {
             ].map((step, idx) => (
               <div
                 key={idx}
-                className="p-2.5 px-3.5 rounded-xl bg-white/[0.05] border border-white/10 flex items-center gap-3"
+                className="card-interactive card-interactive--sm card-interactive--dark p-2.5 px-3.5 rounded-xl bg-white/[0.05] border border-white/10 flex items-center gap-3"
               >
-                <div className="w-5 h-5 rounded-full bg-cyan-500/20 text-brand-cyan flex items-center justify-center flex-shrink-0 text-[10px] font-bold">
+                <div className="card-badge w-5 h-5 rounded-full bg-cyan-500/20 text-brand-cyan flex items-center justify-center flex-shrink-0 text-[10px] font-bold">
                   {idx + 1}
                 </div>
                 <div className="min-w-0">
@@ -80,7 +80,7 @@ export function D3_ConversionDiagram() {
         </div>
 
         {/* Step 3: Modern SAP S/4HANA (3 cols) */}
-        <div className="lg:col-span-3 p-5 sm:p-6 rounded-3xl bg-white/[0.06] border border-brand-blue/40 shadow-xl flex flex-col justify-between h-full">
+        <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--cool lg:col-span-3 p-5 sm:p-6 rounded-3xl bg-white/[0.06] border border-brand-blue/40 shadow-xl flex flex-col justify-between h-full">
           <div>
             <span className="block text-xs font-mono font-bold tracking-widest text-brand-cyan/80 mb-3">
               02

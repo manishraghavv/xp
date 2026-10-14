@@ -38,12 +38,12 @@ export function MigrationPromo() {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white/[0.05] border border-white/15 backdrop-blur-xl text-center shadow-xl hover:border-cyan-400/40 transition-all"
+              className="card-interactive card-interactive--md card-interactive--dark p-6 rounded-3xl bg-white/[0.05] border border-white/15 backdrop-blur-xl text-center shadow-xl"
             >
-              <div className="text-3xl sm:text-4xl font-extrabold font-display text-white mb-1">
+              <div className="card-number text-3xl sm:text-4xl font-extrabold font-display text-white mb-1">
                 {stat.val}
               </div>
-              <div className="text-sm font-bold text-brand-cyan mb-1">{stat.lbl}</div>
+              <div className="card-label text-sm font-bold text-brand-cyan mb-1">{stat.lbl}</div>
               <div className="text-xs text-slate-300">Guaranteed Benchmark</div>
             </div>
           ))}
@@ -59,12 +59,12 @@ export function MigrationPromo() {
           {features.map((card, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-md space-y-3 hover:border-brand-blue/50 hover:bg-white/[0.07] transition-all"
+              className="card-interactive card-interactive--md card-interactive--dark p-6 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-md space-y-3"
             >
-              <span className="block text-xs font-mono font-bold tracking-widest text-brand-cyan/80">
+              <span className="card-number card-label block text-xs font-mono font-bold tracking-widest text-brand-cyan/80">
                 {String(idx + 1).padStart(2, "0")}
               </span>
-              <h4 className="text-base font-bold text-white">{card.title}</h4>
+              <h4 className="card-title text-base font-bold text-white">{card.title}</h4>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 {card.desc}
               </p>

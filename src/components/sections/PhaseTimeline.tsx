@@ -28,12 +28,11 @@ export function PhaseTimeline() {
         return (
           <div
             key={phase.phase}
-            data-open={isOpen}
             className={cn(
-              "acc-item reveal-up rounded-2xl border transition-all duration-300 overflow-hidden",
+              "card-interactive card-interactive--lg card-interactive--light rounded-2xl border overflow-hidden",
               isOpen
                 ? "bg-white border-brand-blue/30 shadow-md shadow-brand-blue/5"
-                : "bg-white/80 border-slate-200/90 hover:border-slate-300 shadow-sm"
+                : "bg-white/80 border-slate-200/90 shadow-sm"
             )}
           >
             {/* Phase Header */}

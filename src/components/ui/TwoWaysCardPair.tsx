@@ -12,7 +12,7 @@ export function TwoWaysCardPair({ onOpenModal }: TwoWaysCardPairProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
       {/* Model 1: Strategic Project Delivery */}
-      <div className="rounded-4xl p-8 sm:p-10 bg-white/80 border border-slate-200/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-2xl hover:border-brand-blue/30 group">
+      <div className="card-interactive rounded-4xl p-8 sm:p-10 bg-white/80 border border-slate-200/80 shadow-xl shadow-blue-900/5 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between transition-all duration-300 group">
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-full pointer-events-none" />
 
         <div>
@@ -60,7 +60,7 @@ export function TwoWaysCardPair({ onOpenModal }: TwoWaysCardPairProps) {
       </div>
 
       {/* Model 2: Application Management Services (AMS) */}
-      <div className="rounded-4xl p-8 sm:p-10 bg-navy-950 text-white border border-slate-800 shadow-2xl shadow-blue-950/40 relative overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-brand-cyan/40 group">
+      <div className="card-interactive rounded-4xl p-8 sm:p-10 bg-navy-950 text-white border border-slate-800 shadow-2xl shadow-blue-950/40 relative overflow-hidden flex flex-col justify-between transition-all duration-300 group">
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-cyan-500/15 to-transparent rounded-bl-full pointer-events-none" />
 
         <div>

@@ -10,7 +10,7 @@ export function D1_HeroDashboard() {
       <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/20 via-brand-cyan/15 to-brand-violet/20 rounded-[32px] blur-2xl -z-10" />
 
       {/* Main Glass Dashboard Window */}
-      <div className="rounded-3xl bg-navy-950/75 backdrop-blur-2xl border border-white/15 shadow-2xl p-5 sm:p-7 text-white overflow-hidden relative">
+      <div className="card-interactive card-interactive--lg card-interactive--dark card-interactive--still card-interactive--passive rounded-3xl bg-navy-950/75 backdrop-blur-2xl border border-white/15 shadow-2xl p-5 sm:p-7 text-white overflow-hidden relative">
         {/* Window Header */}
         <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-6">
           <div className="flex items-center gap-2">
@@ -34,38 +34,38 @@ export function D1_HeroDashboard() {
 
         {/* 3 KPI Tiles */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--passive card-lift-6 p-4 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="text-xs text-slate-400 mb-1">
               <span>Universal Journal (ACDOCA)</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold font-display text-white">
+            <div className="card-number text-xl sm:text-2xl font-bold font-display text-white">
               2,840,120
             </div>
-            <div className="text-[11px] text-emerald-400 mt-1 font-medium">
+            <div className="card-caption text-[11px] text-emerald-400 mt-1 font-medium">
               <span>Real-time postings synchronized</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--passive card-lift-6 p-4 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="text-xs text-slate-400 mb-1">
               <span>AMS Response Time</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold font-display text-white">
+            <div className="card-number text-xl sm:text-2xl font-bold font-display text-white">
               99.98%
             </div>
-            <div className="text-[11px] text-cyan-400 mt-1 font-medium">
+            <div className="card-caption text-[11px] text-cyan-400 mt-1 font-medium">
               <span>Priority 1 SLA adhered</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10">
+          <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--passive card-lift-6 p-4 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="text-xs text-slate-400 mb-1">
               <span>Automated Clearing</span>
             </div>
-            <div className="text-xl sm:text-2xl font-bold font-display text-white">
+            <div className="card-number text-xl sm:text-2xl font-bold font-display text-white">
               94.6%
             </div>
-            <div className="text-[11px] text-amber-300 mt-1 font-medium">
+            <div className="card-caption text-[11px] text-amber-300 mt-1 font-medium">
               <span>MT940 statements auto-cleared</span>
             </div>
           </div>
@@ -74,7 +74,7 @@ export function D1_HeroDashboard() {
         {/* Charts Section */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
           {/* Main Throughput Chart (SVG) */}
-          <div className="md:col-span-8 p-4 rounded-2xl bg-white/[0.03] border border-white/10">
+          <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--passive md:col-span-8 p-4 rounded-2xl bg-white/[0.03] border border-white/10">
             <div className="flex items-center justify-between text-xs mb-3 text-slate-300">
               <span className="font-semibold">S/4HANA System Conversion Velocity</span>
               <span className="text-slate-400">16-Week Trajectory</span>
@@ -97,6 +97,16 @@ export function D1_HeroDashboard() {
                   d="M 0 85 Q 70 70, 130 55 T 260 30 T 400 12 L 400 100 L 0 100 Z"
                   fill="url(#areaGradient)"
                 />
+                {/* Soft glow under the line (fades in on card hover) */}
+                <path
+                  className="chart-glow"
+                  d="M 0 85 Q 70 70, 130 55 T 260 30 T 400 12"
+                  fill="none"
+                  stroke="#60A5FA"
+                  strokeOpacity="0.45"
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                />
                 {/* Curve Line */}
                 <path
                   d="M 0 85 Q 70 70, 130 55 T 260 30 T 400 12"
@@ -106,7 +116,7 @@ export function D1_HeroDashboard() {
                   strokeLinecap="round"
                 />
                 {/* Current Milestone Dot */}
-                <circle cx="260" cy="30" r="4.5" fill="#06B6D4" stroke="#FFFFFF" strokeWidth="2" />
+                <circle className="chart-dot" cx="260" cy="30" r="4.5" fill="#06B6D4" stroke="#FFFFFF" strokeWidth="2" />
                 <text x="260" y="20" fill="#06B6D4" fontSize="9" fontWeight="bold" textAnchor="middle">
                   Week 09
                 </text>
@@ -115,7 +125,7 @@ export function D1_HeroDashboard() {
           </div>
 
           {/* Module Distribution Mini-Bars */}
-          <div className="md:col-span-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5">
+          <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--passive md:col-span-4 p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
             <span className="text-xs font-semibold text-slate-300 block mb-1">Module Health Index</span>
             {[
               { mod: "FI / CO", pct: 98, color: "bg-blue-500" },
@@ -123,13 +133,13 @@ export function D1_HeroDashboard() {
               { mod: "PP / QM", pct: 92, color: "bg-violet-500" },
               { mod: "BTP / CPI", pct: 99, color: "bg-amber-400" },
             ].map((item, idx) => (
-              <div key={idx} className="space-y-1">
+              <div key={idx} className="module-row space-y-1">
                 <div className="flex justify-between text-[11px] text-slate-300">
                   <span>{item.mod}</span>
-                  <span className="font-mono text-slate-400">{item.pct}%</span>
+                  <span className="module-pct font-mono text-slate-400">{item.pct}%</span>
                 </div>
                 <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${item.color}`} style={{ width: `${item.pct}%` }} />
+                  <div className={`module-bar h-full rounded-full ${item.color}`} style={{ width: `${item.pct}%` }} />
                 </div>
               </div>
             ))}
@@ -138,7 +148,7 @@ export function D1_HeroDashboard() {
       </div>
 
       {/* Floating Badge 1: S/4HANA Migration Ring */}
-      <div className="hidden md:flex items-center gap-3.5 absolute -top-5 -right-4 p-3.5 px-4 rounded-2xl bg-navy-900/90 backdrop-blur-xl border border-white/20 shadow-2xl animate-bounce-slow">
+      <div className="hidden md:flex items-center gap-3.5 card-interactive card-interactive--float card-interactive--dark card-interactive--passive float-slow absolute -top-5 -right-4 p-3.5 px-4 rounded-2xl bg-navy-900/90 backdrop-blur-xl border border-white/20 shadow-2xl">
         <div className="relative w-10 h-10 flex items-center justify-center">
           <svg className="w-10 h-10 -rotate-90" viewBox="0 0 36 36">
             <path
@@ -149,7 +159,7 @@ export function D1_HeroDashboard() {
               d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
             <path
-              className="text-brand-cyan"
+              className="ring-fill text-brand-cyan"
               strokeDasharray="62, 100"
               strokeWidth="3.5"
               strokeLinecap="round"
@@ -167,7 +177,7 @@ export function D1_HeroDashboard() {
       </div>
 
       {/* Floating Badge 2: MT940 Bank Recon Match */}
-      <div className="hidden md:flex items-center gap-2.5 absolute -bottom-5 -left-4 p-3 px-4 rounded-2xl bg-navy-900/90 backdrop-blur-xl border border-white/20 shadow-2xl">
+      <div className="hidden md:flex items-center gap-2.5 card-interactive card-interactive--float card-interactive--dark card-interactive--passive float-slow absolute -bottom-5 -left-4 p-3 px-4 rounded-2xl bg-navy-900/90 backdrop-blur-xl border border-white/20 shadow-2xl">
         <div className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
           <CheckCircle2 className="w-4 h-4" />
         </div>

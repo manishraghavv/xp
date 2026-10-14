@@ -39,12 +39,11 @@ export function Accordion({ items, className, theme = "light" }: AccordionProps)
         return (
           <div
             key={item.id}
-            data-open={isOpen}
             className={cn(
-              "acc-item reveal-up rounded-xl border transition-all duration-300 overflow-hidden",
+              "card-interactive card-interactive--lg rounded-xl border overflow-hidden",
               theme === "dark"
-                ? "bg-navy-800/60 border-slate-700/60 hover:border-slate-600"
-                : "bg-white/80 border-slate-200/80 hover:border-brand-blue/30 shadow-sm"
+                ? "bg-navy-800/60 border-slate-700/60 card-interactive--dark"
+                : "bg-white/80 border-slate-200/80 card-interactive--light shadow-sm"
             )}
           >
             <button
@@ -64,20 +63,18 @@ export function Accordion({ items, className, theme = "light" }: AccordionProps)
                 )}
               />
             </button>
-            <div className="acc-panel" data-open={isOpen}>
-              <div className="acc-panel-inner">
-                <div
-                  className={cn(
-                    "px-6 pb-6 pt-1 text-sm sm:text-base leading-relaxed border-t",
-                    theme === "dark"
-                      ? "text-slate-300 border-slate-700/40"
-                      : "text-slate-600 border-slate-100"
-                  )}
-                >
-                  {typeof item.answer === "string" ? <p>{item.answer}</p> : item.answer}
-                </div>
+            {isOpen && (
+              <div
+                className={cn(
+                  "px-6 pb-6 pt-1 text-sm sm:text-base leading-relaxed border-t",
+                  theme === "dark"
+                    ? "text-slate-300 border-slate-700/40"
+                    : "text-slate-600 border-slate-100"
+                )}
+              >
+                {typeof item.answer === "string" ? <p>{item.answer}</p> : item.answer}
               </div>
-            </div>
+            )}
           </div>
         );
       })}
