@@ -43,6 +43,8 @@ export function MenuOverlay({ isOpen, onClose, onOpenModal }: MenuOverlayProps) 
   const scrollRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const [openService, setOpenService] = useState<string | null>(null);
+  // Below lg the service list is an accordion (collapsed until tapped).
+  const [servicesExpanded, setServicesExpanded] = useState(false);
 
   useBodyScrollLock(isOpen);
 
@@ -55,6 +57,7 @@ export function MenuOverlay({ isOpen, onClose, onOpenModal }: MenuOverlayProps) 
         scrollRef.current.scrollTop = 0;
       }
       setOpenService(null);
+      setServicesExpanded(false);
     }
     prevIsOpen.current = isOpen;
   }, [isOpen]);
@@ -235,9 +238,22 @@ export function MenuOverlay({ isOpen, onClose, onOpenModal }: MenuOverlayProps) 
               {/* ── Column 2 — All 9 service lines (text only) ── */}
               <div className="border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-10">
                 <div className="flex items-center justify-between gap-3 mb-3">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-300">
-                    Specialist Service Lines
-                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setServicesExpanded((v) => !v)}
+                    aria-expanded={servicesExpanded}
+                    aria-controls="menu-services-list"
+                    className="lg:pointer-events-none lg:cursor-default flex items-center gap-2 min-h-[44px] lg:min-h-0 text-[11px] font-bold uppercase tracking-widest text-slate-300"
+                  >
+                    <span>Specialist Service Lines</span>
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={cn(
+                        "lg:hidden w-4 h-4 transition-transform duration-200",
+                        servicesExpanded && "rotate-180"
+                      )}
+                    />
+                  </button>
                   <Link
                     href="/services"
                     onClick={onClose}
@@ -247,7 +263,7 @@ export function MenuOverlay({ isOpen, onClose, onOpenModal }: MenuOverlayProps) 
                   </Link>
                 </div>
 
-                <ul>
+                <ul id="menu-services-list" className={cn(!servicesExpanded && "hidden lg:block")}>
                   {servicesData.map((svc) => {
                     const isExpanded = openService === svc.slug;
                     return (
