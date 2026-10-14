@@ -32,3 +32,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local env files (keep the example)
+.env
+.env.*
+!.env.example
+
+# local verification and reference material, not part of the site
+/ui-reference/
+/screenshots/
+/project-backup-*/
+
+# unreferenced master video
+/public/Video/
+
+# logs and editor folders
+*.log
+.vscode/
+.idea/

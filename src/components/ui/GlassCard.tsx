@@ -18,8 +18,9 @@ export function GlassCard({
   return (
     <div
       className={cn(
-        "reveal-scale card-lift rounded-2xl transition-all duration-300",
+        "rounded-2xl transition-all duration-300",
         variant === "light" ? "glass-card-light" : "glass-card-dark text-white",
+        hoverEffect && "card-interactive",
         !hoverEffect && "hover:transform-none hover:shadow-none",
         className
       )}

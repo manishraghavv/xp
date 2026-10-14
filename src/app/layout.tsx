@@ -1,27 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Inter } from "next/font/google";
 import "./globals.css";
-import "./motion.css";
-import "./glass.css";
+import { inter, outfit } from "@/lib/fonts";
 import { FloatingNavbar } from "@/components/layout/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
-
-// Two self-hosted families, four weights in total (next/font preloads them).
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-  variable: "--font-geist",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  display: "swap",
-  variable: "--font-inter",
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -149,7 +132,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${geist.variable} ${inter.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
