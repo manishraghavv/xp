@@ -28,8 +28,8 @@ export function SectionBackground({
         )}
       >
         {/* Soft atmospheric ambient light glows */}
-        <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-500/[0.07] rounded-full blur-[110px]" />
-        <div className="absolute top-1/3 -right-32 w-[600px] h-[600px] bg-purple-500/[0.06] rounded-full blur-[130px]" />
+        <div className="parallax-y absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-500/[0.07] rounded-full blur-[110px]" />
+        <div className="parallax-y absolute top-1/3 -right-32 w-[600px] h-[600px] bg-purple-500/[0.06] rounded-full blur-[130px]" />
         <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-cyan-500/[0.06] rounded-full blur-[120px]" />
       </div>
     );

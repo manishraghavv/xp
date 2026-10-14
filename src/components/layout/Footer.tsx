@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import { companyData } from "@/content/company";
 import { navigationData } from "@/content/navigation";
 import { SectionBackground } from "@/components/ui/SectionBackground";
@@ -18,7 +18,7 @@ export function Footer() {
       <SectionBackground variant="footer" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-16">
+        <div className="reveal-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-16">
           {/* Company Info Column (2 cols wide on desktop) */}
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="inline-block group">
@@ -108,6 +108,13 @@ export function Footer() {
           <div className="text-brand-cyan font-medium">
             SAP® Consulting · Greater Noida · India
           </div>
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-slate-200 hover:text-white hover:border-white/40 transition-colors"
+          >
+            <ArrowUp className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Back to top</span>
+          </a>
         </div>
 
         {/* Legal Trademark Disclaimer */}

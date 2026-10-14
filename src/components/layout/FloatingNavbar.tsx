@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ChevronDown, ArrowRight } from "lucide-react";
-import { servicesData } from "@/content/services";
+import { navigationData } from "@/content/navigation";
 import { MenuOverlay } from "./MenuOverlay";
 import { GetInTouchModal } from "./GetInTouchModal";
 import { ScrollProgress } from "./ScrollProgress";
@@ -18,6 +18,7 @@ export function FloatingNavbar() {
   // Any page-level modal or menu that locks body scroll (Get in Touch, Apply, ...)
   const isOverlayOpen = useOverlayOpen();
   const [isMenuOverlayOpen, setIsMenuOverlayOpen] = useState(false);
+  const openedByHover = useRef(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalService, setModalService] = useState("S/4HANA Upgrade & Migration");
@@ -128,6 +129,11 @@ export function FloatingNavbar() {
 
   // ── Click handler on Services trigger (click-only, never navigates) ──
   const handleServicesTriggerClick = useCallback(() => {
+    if (openedByHover.current) {
+      // Already open from hover: a click pins it open instead of closing it
+      openedByHover.current = false;
+      return;
+    }
     setFocusFirstItem(false);
     setIsServicesOpen((prev) => !prev);
   }, []);
@@ -194,6 +200,12 @@ export function FloatingNavbar() {
       {/* Fixed Header Wrapper — no filter, no opacity, only transform for hide/show */}
       <header
         role="banner"
+        onMouseLeave={() => {
+          if (openedByHover.current) {
+            openedByHover.current = false;
+            closeDropdown();
+          }
+        }}
         onFocus={(e) => {
           // Keyboard focus only. A mouse or touch click leaves focus on the clicked
           // link/button, which would otherwise pin the navbar visible forever.
@@ -210,7 +222,7 @@ export function FloatingNavbar() {
           shouldHide ? "-translate-y-[150%]" : "translate-y-0"
         )}
       >
-        <div className="max-w-[1720px] mx-auto relative pointer-events-none">
+        <div className="nav-enter max-w-[1720px] mx-auto relative pointer-events-none">
 
           {/* ──── The Unified Infosys Frosted Glass Bar ──── */}
           <div
@@ -287,9 +299,22 @@ export function FloatingNavbar() {
                           aria-expanded={isServicesOpen}
                           aria-controls="services-dropdown-panel"
                           onClick={handleServicesTriggerClick}
+                          onMouseEnter={(e) => {
+                            if (e.currentTarget.ownerDocument.defaultView?.matchMedia("(hover: hover)").matches && !isServicesOpen) {
+                              openedByHover.current = true;
+                              setFocusFirstItem(false);
+                              setIsServicesOpen(true);
+                            }
+                          }}
+                          onFocus={(e) => {
+                            if (e.currentTarget.matches(":focus-visible") && !isServicesOpen) {
+                              setFocusFirstItem(false);
+                              setIsServicesOpen(true);
+                            }
+                          }}
                           onKeyDown={handleServicesKeyDown}
                           className={cn(
-                            "px-4 lg:px-5 py-2 rounded-full text-[16px] font-medium transition-colors duration-200",
+                            "nav-link relative px-4 lg:px-5 py-2 rounded-full text-[16px] font-medium transition-colors duration-200",
                             "flex items-center gap-1.5 cursor-pointer",
                             (isActive || isServicesOpen)
                               ? "bg-[#E8EEFF] text-[#1B3FD1] font-semibold"
@@ -313,7 +338,7 @@ export function FloatingNavbar() {
                       key={link.href}
                       href={link.href}
                       className={cn(
-                        "px-4 lg:px-5 py-2 rounded-full text-[16px] font-medium transition-colors duration-200",
+                        "nav-link relative px-4 lg:px-5 py-2 rounded-full text-[16px] font-medium transition-colors duration-200",
                         link.href === "/careers" && "lg:hidden min-[1340px]:inline-flex",
                         isActive
                           ? "bg-[#E8EEFF] text-[#1B3FD1] font-semibold"
@@ -368,32 +393,39 @@ export function FloatingNavbar() {
                   </Link>
                 </div>
 
-                {/* 3×3 Services Grid — the ONLY scroll region */}
+                {/* Mega menu columns — the ONLY scroll region */}
                 <div
                   className="services-dropdown-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 lg:px-7 py-3"
                   data-lenis-prevent
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-1.5">
-                    {servicesData.map((svc) => (
-                      <Link
-                        key={svc.slug}
-                        href={`/services/${svc.slug}`}
-                        onClick={closeDropdown}
-                        className="p-2.5 rounded-2xl hover:bg-[#EEF2FF] border border-transparent hover:border-blue-200/80 transition-all flex items-start gap-3 group"
-                      >
-                        <span className="text-xs font-mono font-bold tracking-widest text-[#1B3FD1]/60 flex-shrink-0 pt-0.5">
-                          {svc.number}
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <div className="text-[13px] font-bold text-[#14163F] group-hover:text-[#1B3FD1] transition-colors leading-snug">
-                            {svc.title}
-                          </div>
-                          <div className="text-[11px] text-slate-600 mt-0.5 leading-snug">
-                            {svc.shortDescription}
-                          </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
+                    {navigationData.megaMenu.map((col) => (
+                      <div key={col.title}>
+                        <div className="px-2.5 pb-2 mb-1 text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-[#5B6488] border-b border-slate-200/70">
+                          {col.title}
                         </div>
-                        <ArrowRight className="w-3.5 h-3.5 text-[#1B3FD1] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all self-center flex-shrink-0" />
-                      </Link>
+                        <ul className="space-y-0.5">
+                          {col.items.map((item) => (
+                            <li key={item.href}>
+                              <Link
+                                href={item.href}
+                                onClick={closeDropdown}
+                                className="p-2.5 rounded-xl hover:bg-[#EEF2FF] focus-visible:bg-[#EEF2FF] border border-transparent hover:border-blue-200/80 transition-colors flex items-start gap-3 group"
+                              >
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-[0.875rem] font-semibold text-[#14163F] group-hover:text-[#1B3FD1] transition-colors leading-snug">
+                                    {item.title}
+                                  </div>
+                                  <div className="text-[0.75rem] text-slate-600 mt-0.5 leading-snug">
+                                    {item.description}
+                                  </div>
+                                </div>
+                                <ArrowRight className="w-3.5 h-3.5 text-[#1B3FD1] opacity-0 -translate-x-1 group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:translate-x-0 transition-all self-center flex-shrink-0" />
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
                   </div>
                 </div>

@@ -1,19 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import "./globals.css";
+import "./motion.css";
+import "./glass.css";
 import { FloatingNavbar } from "@/components/layout/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingActions } from "@/components/layout/FloatingActions";
 import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
-import { SmoothScroll } from "@/components/motion/SmoothScroll";
 
-// Self-hosted at build time by next/font (no runtime request to Google, swap + preload)
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const sora = Sora({
+// Two self-hosted families, four weights in total (next/font preloads them).
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-display",
+  weight: ["600", "700"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-geist",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  display: "swap",
+  variable: "--font-inter",
 });
 
 export const viewport: Viewport = {
@@ -142,7 +149,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable} ${sora.variable}`}>
+    <html lang="en" className={`scroll-smooth ${geist.variable} ${inter.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -158,17 +165,15 @@ export default function RootLayout({
           Skip to main content
         </a>
 
-        <SmoothScroll>
-          <FloatingNavbar />
+        <FloatingNavbar />
 
-          <main id="main-content" className="flex-grow">
-            {children}
-          </main>
+        <main id="main-content" className="flex-grow">
+          {children}
+        </main>
 
-          <Footer />
-          <FloatingActions />
-          <MobileBottomBar />
-        </SmoothScroll>
+        <Footer />
+        <FloatingActions />
+        <MobileBottomBar />
       </body>
     </html>
   );

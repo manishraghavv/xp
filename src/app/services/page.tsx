@@ -211,7 +211,7 @@ export default function ServicesPage() {
                 key={idx}
                 className="p-6 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 text-center space-y-3 relative group hover:border-brand-blue/40 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-brand-blue font-display font-black text-base flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-sm">
+                <div className="process-node w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-brand-blue font-display font-black text-base flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-sm">
                   {step.step}
                 </div>
 
@@ -222,6 +222,10 @@ export default function ServicesPage() {
                 </p>
               </div>
             ))}
+            <div
+              className="process-line hidden md:block absolute left-[10%] right-[10%] top-[3rem] h-px bg-blue-200"
+              aria-hidden="true"
+            />
           </div>
         </div>
       </section>
