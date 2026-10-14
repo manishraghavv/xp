@@ -1,10 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { s4hanaData } from "@/content/s4hana";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { PillButton } from "@/components/ui/PillButton";
 import { Accordion } from "@/components/ui/Accordion";
@@ -12,9 +10,9 @@ import { PhaseTimeline } from "@/components/sections/PhaseTimeline";
 import { MigrationComparison } from "@/components/sections/MigrationComparison";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
 import { D4_RoadmapGantt } from "@/components/visuals/D4_RoadmapGantt";
-import { SectionBackground } from "@/components/ui/SectionBackground";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "ECC to S/4HANA Brownfield Migration in 16 Weeks | XpmindGlobal",
@@ -48,72 +46,42 @@ export default function S4HanaMigrationPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Hero Section (Dark navy mesh) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
+      <PageHero
+        image="/images/backgrounds/bg-migration-datacenter.jpg"
+        imageAlt="ECC to S/4HANA Migration"
+        imageSize={[1920, 1077]}
+        pos="50% 50%"
+        variant="violet"
+        textWidth="4xl"
+        crumbs={[{ label: "S/4HANA Migration" }]}
+        badge={s4hanaData.hero.badge}
+        badgeTone="amber"
+        title={s4hanaData.hero.title}
+        intro={[s4hanaData.hero.subtitle]}
+        below={<D3_ConversionDiagram />}
       >
-        <SectionBackground
-          variant="pageHero"
-          image="/images/backgrounds/bg-migration-datacenter.jpg"
-          imageAlt="ECC to S/4HANA Migration"
-          priority
-        />
+        <div className="flex flex-wrap items-center gap-4 pt-2">
+          <PillButton
+            href="/contact"
+            variant="primary"
+            size="lg"
+            icon={<ArrowRight className="w-4 h-4" />}
+          >
+            Book a Free Assessment
+          </PillButton>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "S/4HANA Migration" }]} theme="dark" className="mb-6" />
-
-          <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
-              <span>{s4hanaData.hero.badge}</span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-5xl lg:text-6xl xl:text-[4.2rem] font-black tracking-tight leading-[1.08]">
-              {s4hanaData.hero.title}
-            </h1>
-
-            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-normal max-w-3xl">
-              {s4hanaData.hero.subtitle}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <PillButton
-                href="/contact"
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-4 h-4" />}
-              >
-                Book a Free Assessment
-              </PillButton>
-
-              <PillButton
-                href="#process"
-                variant="glass"
-                size="lg"
-              >
-                See the 16-Week Process
-              </PillButton>
-            </div>
-
-            {/* 4 Stats Grid */}
-            <div className="pt-10 border-t border-slate-800/80 flex flex-wrap gap-x-10 gap-y-6 max-w-3xl">
-              {s4hanaData.hero.stats.map((stat, idx) => (
-                <StatCounter
-                  key={idx}
-                  number={stat.value}
-                  label={stat.label}
-                  theme="dark"
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* D3: Interactive Conversion Diagram inside Hero Flow */}
-          <div className="mt-14">
-            <D3_ConversionDiagram />
-          </div>
+          <PillButton href="#process" variant="glass" size="lg">
+            See the 16-Week Process
+          </PillButton>
         </div>
-      </section>
+
+        {/* 4 Stats Grid */}
+        <div className="pt-10 border-t border-slate-800/80 flex flex-wrap gap-x-10 gap-y-6 max-w-3xl">
+          {s4hanaData.hero.stats.map((stat, idx) => (
+            <StatCounter key={idx} number={stat.value} label={stat.label} theme="dark" />
+          ))}
+        </div>
+      </PageHero>
 
       {/* Why Migrate Right Now (Light Section) */}
       <section
@@ -124,7 +92,7 @@ export default function S4HanaMigrationPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Column (6 cols): 3 Narrative Paragraphs + Photo Card */}
             <div className="lg:col-span-6 space-y-6">
-              <SectionHeading
+              <SectionHeader
                 eyebrow={s4hanaData.urgency.eyebrow}
                 title={
                   <>
@@ -142,13 +110,13 @@ export default function S4HanaMigrationPage() {
               </div>
 
               {/* Photo Showcase */}
-              <div className="relative rounded-[24px] overflow-hidden border border-slate-200/90 shadow-lg mt-6 group">
-                <div className="relative h-64 sm:h-72 w-full">
+              <div className="card-interactive card-interactive--lg card-interactive--light card-interactive--passive relative rounded-[24px] overflow-hidden border border-slate-200/90 shadow-lg mt-6">
+                <div className="case-media relative h-64 sm:h-72 w-full">
                   <Image
                     src="/images/service-migration.jpg"
                     alt="SAP S/4HANA Migration Enterprise Landscape Architecture"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/20 to-transparent" />
@@ -169,12 +137,12 @@ export default function S4HanaMigrationPage() {
               {s4hanaData.urgency.risks.map((risk, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-[24px] bg-white border border-slate-200/90 shadow-sm space-y-3 group hover:border-amber-500/40 hover:shadow-md transition-all"
+                  className="card-interactive card-interactive--md card-interactive--light card-interactive--passive p-6 rounded-[24px] bg-white border border-slate-200/90 shadow-sm space-y-3"
                 >
                   <span className="block text-sm font-mono font-bold tracking-widest text-amber-500/80">
                     {String(idx + 1).padStart(2, "0")}
                   </span>
-                  <h4 className="text-base font-bold text-slate-900 group-hover:text-amber-600 transition-colors">
+                  <h4 className="text-base font-bold text-slate-900">
                     {risk.title}
                   </h4>
                   <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -193,7 +161,7 @@ export default function S4HanaMigrationPage() {
         className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200/80"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={s4hanaData.comparison.eyebrow}
             title={s4hanaData.comparison.title}
             subtitle={s4hanaData.comparison.subtitle}
@@ -211,7 +179,7 @@ export default function S4HanaMigrationPage() {
         className="py-16 sm:py-24 lg:py-32 bg-canvas-subtle light-mesh-bg border-b border-slate-200/80 scroll-mt-24"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={s4hanaData.timeline.eyebrow}
             title={s4hanaData.timeline.title}
             subtitle={s4hanaData.timeline.subtitle}
@@ -237,7 +205,7 @@ export default function S4HanaMigrationPage() {
         className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200/80"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={s4hanaData.scope.eyebrow}
             title={
               <>
@@ -252,13 +220,13 @@ export default function S4HanaMigrationPage() {
             {s4hanaData.scope.cards.map((card, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-[28px] bg-white border border-slate-200/90 shadow-sm space-y-6 group hover:border-brand-blue/30 hover:shadow-lg transition-all"
+                className="card-interactive card-interactive--md card-interactive--light card-interactive--passive p-8 rounded-[28px] bg-white border border-slate-200/90 shadow-sm space-y-6"
               >
                 <span className="block text-sm font-mono font-bold tracking-widest text-brand-blue/70">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
 
-                <h3 className="text-xl font-display font-bold text-slate-900 group-hover:text-brand-blue transition-colors">
+                <h3 className="text-xl font-display font-bold text-slate-900">
                   {card.title}
                 </h3>
 
@@ -282,7 +250,7 @@ export default function S4HanaMigrationPage() {
         className="py-16 sm:py-24 lg:py-32 bg-canvas-subtle light-mesh-bg border-b border-slate-200/80"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={s4hanaData.whyUs.eyebrow}
             title={
               <>
@@ -296,13 +264,13 @@ export default function S4HanaMigrationPage() {
             {s4hanaData.whyUs.cards.map((card, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-[28px] bg-white border border-slate-200/90 shadow-sm space-y-4 group hover:border-brand-blue/30 hover:shadow-lg transition-all"
+                className="card-interactive card-interactive--md card-interactive--light card-interactive--passive p-8 rounded-[28px] bg-white border border-slate-200/90 shadow-sm space-y-4"
               >
                 <span className="block text-sm font-mono font-bold tracking-widest text-brand-blue/70">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
 
-                <h3 className="text-xl font-display font-bold text-slate-900 group-hover:text-brand-blue transition-colors">
+                <h3 className="text-xl font-display font-bold text-slate-900">
                   {card.title}
                 </h3>
 
@@ -321,7 +289,7 @@ export default function S4HanaMigrationPage() {
         className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200/80"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow="Frequently Asked Questions"
             title={
               <>

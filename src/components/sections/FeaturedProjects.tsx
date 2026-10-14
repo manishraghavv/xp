@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2, ChevronRight } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ScrollRail } from "@/components/ui/ScrollRail";
 import { PillButton } from "@/components/ui/PillButton";
 import { projectsData } from "@/content/projects";
@@ -22,7 +22,7 @@ export function FeaturedProjects() {
     <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
-          <SectionHeading
+          <SectionHeader
             eyebrow="Case Studies"
             title="Proven Results Across Complex SAP® Landscapes"
             highlight="Proven Results"
@@ -48,7 +48,7 @@ export function FeaturedProjects() {
           {projectsData.map((project) => (
             <div
               key={project.slug}
-              className="flex-shrink-0 w-[min(84vw,320px)] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-white border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300"
+              className="card-interactive flex-shrink-0 w-[min(84vw,320px)] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-white border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between transition-all duration-300"
             >
               {/* Photo Cover */}
               <div className="relative h-48 w-full overflow-hidden bg-navy-950">
@@ -57,7 +57,7 @@ export function FeaturedProjects() {
                   alt={project.title}
                   fill
                   sizes="420px"
-                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/30 to-transparent" />
                 

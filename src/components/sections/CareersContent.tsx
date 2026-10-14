@@ -2,14 +2,14 @@
 
 import React, { useState } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ApplyModal } from "@/components/layout/ApplyModal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { PillButton } from "@/components/ui/PillButton";
 import { Accordion } from "@/components/ui/Accordion";
-import { SectionBackground } from "@/components/ui/SectionBackground";
 import { careersData } from "@/content/careers";
+import { PageHero } from "@/components/layout/PageHero";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export function CareersContent() {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
@@ -24,82 +24,65 @@ export function CareersContent() {
 
   return (
     <div>
-      {/* Hero Section (Dark navy mesh) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
+      <PageHero
+        image="/images/backgrounds/bg-about-collaboration.jpg"
+        imageAlt="SAP Consulting Team Collaboration"
+        imageSize={[1920, 1281]}
+        pos="70% 40%"
+        tintLeft={0.94}
+        imageWidth="74%"
+        textWidth="4xl"
+        crumbs={[{ label: "Careers" }]}
+        badge={hero.badge}
+        title={`${hero.titleLead} ${hero.titleAccent}`}
+        highlight={hero.titleAccent}
+        intro={[hero.subtitle]}
       >
-        <SectionBackground
-          variant="pageHero"
-          image="/images/backgrounds/bg-about-collaboration.jpg"
-          imageAlt="SAP Consulting Team Collaboration"
-          priority
-        />
+        <div className="flex flex-wrap items-center gap-4 pt-2">
+          <PillButton
+            variant="primary"
+            size="md"
+            onClick={() => openApply()}
+            icon={<ArrowRight className="w-4 h-4" />}
+          >
+            {hero.primaryCta}
+          </PillButton>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "Careers" }]} theme="dark" className="mb-8" />
-
-          <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider">
-              <span>{hero.badge}</span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1]">
-              {hero.titleLead}{" "}
-              <span className="gradient-heading-accent">{hero.titleAccent}</span>
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal max-w-2xl">
-              {hero.subtitle}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <PillButton
-                variant="primary"
-                size="md"
-                onClick={() => openApply()}
-                icon={<ArrowRight className="w-4 h-4" />}
-              >
-                {hero.primaryCta}
-              </PillButton>
-
-              <PillButton href="#paths" variant="secondary" size="md">
-                {hero.secondaryCta}
-              </PillButton>
-            </div>
-
-            <div className="pt-8 border-t border-white/10 flex flex-wrap gap-x-10 gap-y-6">
-              {hero.stats.map((stat, idx) => (
-                <StatCounter key={idx} number={stat.number} label={stat.label} theme="dark" />
-              ))}
-            </div>
-
-            <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {hero.cards.map((card, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm"
-                >
-                  <div className="text-sm font-bold text-white">{card.title}</div>
-                  <div className="text-xs text-slate-300 mt-1">{card.line1}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">{card.line2}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-2 flex flex-wrap items-center gap-3">
-              {hero.modules.map((m, idx) => (
-                <div
-                  key={idx}
-                  className="px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-medium backdrop-blur-sm"
-                >
-                  <span>{m}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <PillButton href="#paths" variant="secondary" size="md">
+            {hero.secondaryCta}
+          </PillButton>
         </div>
-      </section>
+
+        <div className="pt-8 border-t border-white/10 flex flex-wrap gap-x-10 gap-y-6">
+          {hero.stats.map((stat, idx) => (
+            <StatCounter key={idx} number={stat.number} label={stat.label} theme="dark" />
+          ))}
+        </div>
+
+        <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {hero.cards.map((card, idx) => (
+            <div
+              key={idx}
+              className="card-interactive p-4 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm"
+            >
+              <div className="text-sm font-bold text-white">{card.title}</div>
+              <div className="text-xs text-slate-300 mt-1">{card.line1}</div>
+              <div className="text-xs text-slate-400 mt-0.5">{card.line2}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-2 flex flex-wrap items-center gap-3">
+          {hero.modules.map((m, idx) => (
+            <div
+              key={idx}
+              className="px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-xs text-slate-300 font-medium backdrop-blur-sm"
+            >
+              <span>{m}</span>
+            </div>
+          ))}
+        </div>
+      </PageHero>
 
       {/* Three Paths (Light Section) */}
       <section
@@ -108,7 +91,7 @@ export function CareersContent() {
         className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={paths.eyebrow}
             title={paths.title}
             highlight={paths.highlight}
@@ -121,7 +104,7 @@ export function CareersContent() {
             {paths.items.map((path) => (
               <div
                 key={path.id}
-                className="p-8 rounded-4xl bg-white border border-slate-200/90 shadow-xl flex flex-col justify-between group hover:border-brand-blue/30 transition-all duration-300"
+                className="card-interactive p-8 rounded-4xl bg-white border border-slate-200/90 shadow-xl flex flex-col justify-between group transition-all duration-300"
               >
                 <div>
                   <div className="mb-4">
@@ -130,7 +113,7 @@ export function CareersContent() {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl font-display font-bold text-slate-900 mb-2 group-hover:text-brand-blue transition-colors">
+                  <h3 className="text-2xl font-display font-bold text-slate-900 mb-2">
                     {path.title}
                   </h3>
 
@@ -169,7 +152,7 @@ export function CareersContent() {
       {/* Why XpmindGlobal (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={whyUs.eyebrow}
             title={whyUs.title}
             highlight={whyUs.highlight}
@@ -182,7 +165,7 @@ export function CareersContent() {
             {whyUs.cards.map((card, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-xl hover:border-brand-blue/30 transition-all duration-300"
+                className="card-interactive p-8 rounded-3xl bg-white border border-slate-200/90 shadow-xl transition-all duration-300"
               >
                 <span className="text-xs font-bold text-brand-blue">
                   {String(idx + 1).padStart(2, "0")}
@@ -200,7 +183,7 @@ export function CareersContent() {
       {/* Skills in Demand (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={skills.eyebrow}
             title={skills.title}
             highlight={skills.highlight}
@@ -213,7 +196,7 @@ export function CareersContent() {
             {skills.groups.map((group, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-xl"
+                className="card-interactive p-8 rounded-3xl bg-white border border-slate-200/90 shadow-xl"
               >
                 <h3 className="text-lg font-display font-bold text-slate-900 mb-4">
                   {group.title}
@@ -237,7 +220,7 @@ export function CareersContent() {
       {/* How It Works (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={howItWorks.eyebrow}
             title={howItWorks.title}
             highlight={howItWorks.highlight}
@@ -249,7 +232,7 @@ export function CareersContent() {
             {howItWorks.steps.map((step, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xl"
+                className="card-interactive p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xl"
               >
                 <div className="text-xs font-bold text-brand-blue mb-2">
                   {String(idx + 1).padStart(2, "0")}
@@ -267,7 +250,7 @@ export function CareersContent() {
       {/* Candidate FAQs (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow={faqs.eyebrow}
             title={faqs.title}
             highlight={faqs.highlight}

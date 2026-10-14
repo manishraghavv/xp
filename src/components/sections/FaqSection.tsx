@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Accordion } from "@/components/ui/Accordion";
 import { s4hanaData } from "@/content/s4hana";
 
@@ -15,7 +15,7 @@ export function FaqSection() {
   return (
     <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
+        <SectionHeader
           eyebrow="Frequently Asked Questions"
           title="Everything You Need to Know About SAP® Engagements"
           highlight="Frequently Asked"

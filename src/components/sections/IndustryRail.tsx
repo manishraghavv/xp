@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ScrollRail } from "@/components/ui/ScrollRail";
 import { homeData, type IndustryItem } from "@/content/home";
 
@@ -43,7 +43,7 @@ export function IndustryRail() {
   return (
     <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
+        <SectionHeader
           eyebrow="Industries We Serve"
           title="Specialised SAP® Domain Expertise"
           highlight="Domain Expertise"
@@ -57,7 +57,7 @@ export function IndustryRail() {
           {items.map((item: IndustryItem, idx: number) => (
             <div
               key={idx}
-              className="flex-shrink-0 w-[min(84vw,320px)] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300"
+              className="card-interactive flex-shrink-0 w-[min(84vw,320px)] sm:w-[380px] lg:w-[420px] snap-start rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between transition-all duration-300"
             >
               {/* Photo Cover */}
               <div className="relative h-52 w-full overflow-hidden bg-navy-950">
@@ -66,7 +66,7 @@ export function IndustryRail() {
                   alt={item.name}
                   fill
                   sizes="420px"
-                  className="object-cover transition-transform duration-500 hover:scale-105"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/30 to-transparent" />
                 

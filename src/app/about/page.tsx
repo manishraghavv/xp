@@ -1,13 +1,11 @@
 import React from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { companyData } from "@/content/company";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StatCounter } from "@/components/ui/StatCounter";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
+import { PageHero } from "@/components/layout/PageHero";
 
-import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export const metadata: Metadata = {
   title: "About Us | Senior SAP® Consultants & Finance Minds",
@@ -21,44 +19,22 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div>
-      {/* Hero Section (Dark navy mesh with team photo) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
-      >
-        <SectionBackground
-          variant="pageHero"
-          image="/images/backgrounds/bg-about-collaboration.jpg"
-          imageAlt="Enterprise SAP Consulting Team Collaboration"
-          priority
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "About Us" }]} theme="dark" className="mb-8" />
-
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <span>About XpmindGlobal</span>
-            </div>
-
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] mb-6">
-              Finance minds.{" "}
-              <span className="gradient-heading-accent">
-                SAP® expertise.
-              </span>{" "}
-              Real outcomes.
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              A specialist SAP® consulting firm founded by Chartered Accountants and senior technology leaders. We bring financial discipline, deep ERP architecture, and two decades of field experience to every engagement.
-            </p>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              Founded in 2020, XpmindGlobal was built by a team of Chartered Accountants, SAP® S/4HANA certified professionals, and business process experts — each carrying 20–29 years of hands-on experience. We exist to make SAP® work harder for your business.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image="/images/backgrounds/bg-about-collaboration.jpg"
+        imageAlt="Enterprise SAP Consulting Team Collaboration"
+        imageSize={[1920, 1281]}
+        pos="70% 40%"
+        tintLeft={0.94}
+        imageWidth="74%"
+        crumbs={[{ label: "About Us" }]}
+        badge="About XpmindGlobal"
+        title="Finance minds. SAP® expertise. Real outcomes."
+        highlight="SAP® expertise."
+        intro={[
+          "A specialist SAP® consulting firm founded by Chartered Accountants and senior technology leaders. We bring financial discipline, deep ERP architecture, and two decades of field experience to every engagement.",
+          "Founded in 2020, XpmindGlobal was built by a team of Chartered Accountants, SAP® S/4HANA certified professionals, and business process experts — each carrying 20–29 years of hands-on experience. We exist to make SAP® work harder for your business.",
+        ]}
+      />
 
       {/* Our Story & Values Section (Light section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
@@ -66,7 +42,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Story Text (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              <SectionHeading
+              <SectionHeader
                 eyebrow="Our Background"
                 title="Our Story"
                 highlight="Story"
@@ -91,7 +67,7 @@ export default function AboutPage() {
               {companyData.values.map((val, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-xl hover:border-brand-blue/30 transition-all duration-300"
+                  className="card-interactive p-6 rounded-3xl bg-white border border-slate-200/90 shadow-md transition-all duration-300"
                 >
                   <div className="flex items-start gap-4">
                     <span className="text-sm font-mono font-bold tracking-widest text-brand-blue/70 flex-shrink-0 pt-0.5">
@@ -116,7 +92,7 @@ export default function AboutPage() {
       {/* Vision & Mission Section (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow="Vision & Mission"
             title="What Drives Us Every Day"
             highlight="Drives Us"
@@ -157,7 +133,7 @@ export default function AboutPage() {
       {/* By the Numbers (Light section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow="By the Numbers"
             title="Impact That Speaks for Itself"
             highlight="Speaks for Itself"
@@ -167,7 +143,7 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {companyData.metrics.map((m, idx) => (
-              <div key={idx} className="p-8 rounded-3xl bg-white border border-slate-200/90 shadow-md text-center space-y-3">
+              <div key={idx} className="card-interactive p-8 rounded-3xl bg-white border border-slate-200/90 shadow-md text-center space-y-3">
                 <StatCounter number={m.number} label="" theme="light" />
                 <h4 className="text-base font-bold text-slate-900">{m.title}</h4>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -182,7 +158,7 @@ export default function AboutPage() {
       {/* Leadership Team (Light section) */}
       <section id="leadership" data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow="Leadership Team"
             title="Meet the Experts Behind XpmindGlobal"
             highlight="Meet the Experts"
@@ -195,14 +171,14 @@ export default function AboutPage() {
             {companyData.leadership.map((member, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-brand-blue/30 flex flex-col justify-between group transition-all duration-300"
+                className="card-interactive p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md flex flex-col justify-between group"
               >
                 <div>
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-blue to-brand-cyan text-white font-display font-black text-xl flex items-center justify-center mb-6 shadow-md shadow-brand-blue/20 group-hover:scale-105 transition-transform">
+                  <div className="card-icon w-16 h-16 rounded-full bg-gradient-to-tr from-brand-blue to-brand-cyan text-white font-display font-black text-xl flex items-center justify-center mb-6 shadow-md shadow-brand-blue/20">
                     {member.initials}
                   </div>
 
-                  <h3 className="text-xl font-display font-bold text-slate-900 group-hover:text-brand-blue transition-colors">
+                  <h3 className="text-xl font-display font-bold text-slate-900">
                     {member.name}
                   </h3>
 

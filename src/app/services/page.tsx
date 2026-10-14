@@ -2,12 +2,11 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { servicesData, deliveryMethodology } from "@/content/services";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
-import { SectionBackground } from "@/components/ui/SectionBackground";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "SAP® Services Portfolio | Nine Enterprise Practice Areas",
@@ -33,43 +32,20 @@ const serviceImageMap: Record<string, string> = {
 export default function ServicesPage() {
   return (
     <div>
-      {/* Hero Section (Dark navy mesh with cloud photo) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
-      >
-        <SectionBackground
-          variant="pageHero"
-          image="/images/backgrounds/bg-services-abstract.jpg"
-          imageAlt="SAP Cloud Infrastructure & Enterprise Services"
-          priority
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "Services" }]} theme="dark" className="mb-8" />
-
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <span>Full Lifecycle SAP® Services</span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
-              Nine service lines.{" "}
-              <span className="gradient-heading-accent">
-                One trusted partner.
-              </span>
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              Structured to deliver measurable outcomes across your entire SAP® lifecycle. From strategic architectural advisory and S/4HANA migrations to 24×7 AMS support and Centre of Excellence governance.
-            </p>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              A complete SAP® services business covers cloud, analytics, integration, compliance, enablement, migration, implementation, managed support, and strategic advisory. XpmindGlobal provides all nine — with clear paths from initial engagement to long-term partnership.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image="/images/backgrounds/bg-services-abstract.jpg"
+        imageAlt="SAP Cloud Infrastructure & Enterprise Services"
+        imageSize={[1920, 1278]}
+        pos="55% 45%"
+        crumbs={[{ label: "Services" }]}
+        badge="Full Lifecycle SAP® Services"
+        title="Nine service lines. One trusted partner."
+        highlight="One trusted partner."
+        intro={[
+          "Structured to deliver measurable outcomes across your entire SAP® lifecycle. From strategic architectural advisory and S/4HANA migrations to 24×7 AMS support and Centre of Excellence governance.",
+          "A complete SAP® services business covers cloud, analytics, integration, compliance, enablement, migration, implementation, managed support, and strategic advisory. XpmindGlobal provides all nine — with clear paths from initial engagement to long-term partnership.",
+        ]}
+      />
 
       {/* In-Page Navigation / Table of Contents */}
       <div className="bg-canvas-subtle py-4 hidden md:block">
@@ -80,7 +56,7 @@ export default function ServicesPage() {
               <a
                 key={svc.id}
                 href={`#${svc.slug}`}
-                className="px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-brand-blue hover:border-brand-blue/40 shadow-xs transition-colors"
+                className="chip-interactive px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 shadow-xs"
               >
                 {svc.number}. {svc.title.replace("SAP® ", "")}
               </a>
@@ -99,7 +75,7 @@ export default function ServicesPage() {
               <div
                 key={service.id}
                 id={service.slug}
-                className="p-8 sm:p-12 rounded-4xl bg-white border border-slate-200/90 shadow-xl scroll-mt-24 transition-all duration-300 hover:border-brand-blue/30"
+                className="card-interactive card-interactive--lg card-interactive--light card-interactive--passive p-8 sm:p-12 rounded-4xl bg-white border border-slate-200/90 shadow-xl scroll-mt-24"
               >
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-start ${isAlt ? "lg:flex-row-reverse" : ""}`}>
                   {/* Left Column: Details & Bullets (7 cols) */}
@@ -196,7 +172,7 @@ export default function ServicesPage() {
       {/* Delivery Methodology (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeading
+          <SectionHeader
             eyebrow="Delivery Methodology"
             title="From Assessment to Go-Live and Beyond"
             highlight="Go-Live"
@@ -209,9 +185,9 @@ export default function ServicesPage() {
             {deliveryMethodology.map((step, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 text-center space-y-3 relative group hover:border-brand-blue/40 transition-all duration-300"
+                className="card-interactive p-6 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 text-center space-y-3 relative"
               >
-                <div className="process-node w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-brand-blue font-display font-black text-base flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-sm">
+                <div className="card-icon w-12 h-12 rounded-full bg-blue-50 border border-blue-200 text-brand-blue font-display font-black text-base flex items-center justify-center mx-auto shadow-sm">
                   {step.step}
                 </div>
 
@@ -222,10 +198,6 @@ export default function ServicesPage() {
                 </p>
               </div>
             ))}
-            <div
-              className="process-line hidden md:block absolute left-[10%] right-[10%] top-[3rem] h-px bg-blue-200"
-              aria-hidden="true"
-            />
           </div>
         </div>
       </section>

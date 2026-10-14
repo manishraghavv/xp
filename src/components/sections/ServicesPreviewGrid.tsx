@@ -5,7 +5,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { TwoWaysCardPair } from "@/components/ui/TwoWaysCardPair";
 import { servicesData } from "@/content/services";
 
@@ -25,7 +25,7 @@ export function ServicesPreviewGrid() {
   return (
     <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
+        <SectionHeader
           eyebrow="Our Services"
           title="Enterprise SAP® Consulting & Technical Delivery"
           highlight="Technical Delivery"
@@ -39,7 +39,7 @@ export function ServicesPreviewGrid() {
           {servicesData.map((service) => (
             <div
               key={service.slug}
-              className="rounded-3xl bg-white border border-slate-200/80 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between hover:shadow-2xl hover:border-brand-blue/30 transition-all duration-300 hover:-translate-y-1 group"
+              className="card-interactive rounded-3xl bg-white border border-slate-200/80 shadow-lg shadow-blue-900/5 overflow-hidden flex flex-col justify-between group"
             >
               {/* Photo Cover with Subtle Scrim */}
               <div className="relative h-44 w-full overflow-hidden bg-navy-950">
@@ -48,7 +48,7 @@ export function ServicesPreviewGrid() {
                   alt={service.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/30 to-transparent" />
                 
@@ -64,7 +64,7 @@ export function ServicesPreviewGrid() {
               {/* Body Content */}
               <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-3 leading-snug">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug">
                     {service.title}
                   </h3>
 
@@ -85,7 +85,7 @@ export function ServicesPreviewGrid() {
                 <div className="pt-4 border-t border-slate-100">
                   <Link
                     href={`/services/${service.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-blue-700 transition-colors group/link"
+                    className="card-link inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:text-blue-700 transition-colors group/link"
                   >
                     <span>Explore practice & scope</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" />
@@ -109,7 +109,7 @@ export function ServicesPreviewGrid() {
 
         {/* Two Ways Engagement Model Comparison (Hostinger Pattern) */}
         <div className="pt-8 border-t border-slate-200">
-          <SectionHeading
+          <SectionHeader
             eyebrow="Flexible Engagement Models"
             title="Two Ways We Partner With Your Enterprise"
             highlight="Two Ways"

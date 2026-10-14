@@ -1,10 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { companyData } from "@/content/company";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Phone, Mail, MapPin, Clock, Globe } from "lucide-react";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Contact Us | Consult with Senior SAP® Specialists",
@@ -15,7 +14,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { SectionBackground } from "@/components/ui/SectionBackground";
 
 export default function ContactPage() {
   const whyReachOut = [
@@ -39,40 +37,20 @@ export default function ContactPage() {
 
   return (
     <div>
-      {/* Hero Section (Dark navy mesh with corporate office photo) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
-      >
-        <SectionBackground
-          variant="pageHero"
-          image="/images/backgrounds/bg-contact-skyline.jpg"
-          imageAlt="Corporate Headquarters Architecture"
-          priority
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "Contact Us" }]} theme="dark" className="mb-8" />
-
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <span>Start the Conversation</span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
-              Let&apos;s start your{" "}
-              <span className="gradient-heading-accent">
-                SAP® journey
-              </span>{" "}
-              together.
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              Whether you are preparing for an ECC to S/4HANA migration, seeking dedicated AMS support, or exploring cloud and analytics integrations, our senior team is ready to evaluate your requirements.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image="/images/backgrounds/bg-contact-skyline.jpg"
+        imageAlt="Corporate Headquarters Architecture"
+        imageSize={[1920, 1280]}
+        pos="60% 30%"
+        imageWidth="66%"
+        crumbs={[{ label: "Contact Us" }]}
+        badge="Start the Conversation"
+        title="Let's start your SAP® journey together."
+        highlight="SAP® journey"
+        intro={[
+          "Whether you are preparing for an ECC to S/4HANA migration, seeking dedicated AMS support, or exploring cloud and analytics integrations, our senior team is ready to evaluate your requirements.",
+        ]}
+      />
 
       {/* Main Content: Form + Coordinates (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
@@ -86,16 +64,16 @@ export default function ContactPage() {
             {/* Right Column: Coordinates & Why Reach Out (5 cols) */}
             <div className="lg:col-span-5 space-y-8">
               {/* Coordinates Card */}
-              <div className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-6">
+              <div className="card-interactive card-interactive--lg card-interactive--light p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-6">
                 <h3 className="text-xl font-display font-bold text-slate-900 border-b border-slate-100 pb-4">
                   Our Coordinates
                 </h3>
 
                 <div className="space-y-4 text-sm text-slate-700">
-                  <div className="flex items-start gap-3.5">
-                    <MapPin className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
+                  <div className="card-interactive card-interactive--sm card-interactive--light flex items-start gap-3.5 rounded-xl px-2 -mx-2">
+                    <MapPin className="card-icon w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                      <div className="card-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
                         Headquarters
                       </div>
                       <p className="font-medium text-slate-900 leading-relaxed">
@@ -104,64 +82,64 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5">
-                    <Phone className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
+                  <div className="card-interactive card-interactive--sm card-interactive--light flex items-start gap-3.5 rounded-xl px-2 -mx-2">
+                    <Phone className="card-icon w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                      <div className="card-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
                         Direct Phone
                       </div>
                       <p className="font-medium text-slate-900">
-                        <a href={companyData.phones[0].href} className="hover:text-brand-blue">
+                        <a href={companyData.phones[0].href} className="link-underline-anim hover:text-brand-blue">
                           {companyData.phones[0].number}
                         </a>
                         {" | "}
-                        <a href={companyData.phones[1].href} className="hover:text-brand-blue">
+                        <a href={companyData.phones[1].href} className="link-underline-anim hover:text-brand-blue">
                           {companyData.phones[1].number}
                         </a>
                       </p>
                       <p className="text-xs text-slate-500 mt-0.5">
                         Landline:{" "}
-                        <a href={companyData.phones[2].href} className="hover:text-brand-blue">
+                        <a href={companyData.phones[2].href} className="link-underline-anim hover:text-brand-blue">
                           {companyData.phones[2].number}
                         </a>
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5">
-                    <Mail className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
+                  <div className="card-interactive card-interactive--sm card-interactive--light flex items-start gap-3.5 rounded-xl px-2 -mx-2">
+                    <Mail className="card-icon w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                      <div className="card-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
                         Email
                       </div>
                       <a
                         href={`mailto:${companyData.email}`}
-                        className="font-medium text-brand-blue hover:underline"
+                        className="link-underline-anim font-medium text-brand-blue"
                       >
                         {companyData.email}
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5">
-                    <Globe className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
+                  <div className="card-interactive card-interactive--sm card-interactive--light flex items-start gap-3.5 rounded-xl px-2 -mx-2">
+                    <Globe className="card-icon w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                      <div className="card-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
                         Website
                       </div>
                       <a
                         href="https://www.xpmindglobal.com"
-                        className="font-medium text-brand-blue hover:underline"
+                        className="link-underline-anim font-medium text-brand-blue"
                       >
                         www.xpmindglobal.com
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5">
-                    <Clock className="w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
+                  <div className="card-interactive card-interactive--sm card-interactive--light flex items-start gap-3.5 rounded-xl px-2 -mx-2">
+                    <Clock className="card-icon w-5 h-5 text-brand-blue flex-shrink-0 mt-0.5" />
                     <div>
-                      <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                      <div className="card-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">
                         Response Time
                       </div>
                       <p className="font-medium text-emerald-700">
@@ -173,7 +151,7 @@ export default function ContactPage() {
               </div>
 
               {/* Why Reach Out Card */}
-              <div className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-4">
+              <div className="card-interactive card-interactive--lg card-interactive--light p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-4">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-3">
                   Why Reach Out To Us?
                 </h4>
@@ -194,7 +172,7 @@ export default function ContactPage() {
               </div>
 
               {/* Map Card */}
-              <div className="p-4 rounded-4xl bg-white border border-slate-200/90 shadow-xl overflow-hidden">
+              <div className="card-interactive card-interactive--lg card-interactive--light p-4 rounded-4xl bg-white border border-slate-200/90 shadow-xl overflow-hidden">
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-500 px-3 py-2">
                   Location Map: Greater Noida West
                 </div>

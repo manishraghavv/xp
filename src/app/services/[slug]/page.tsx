@@ -2,9 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { servicesData } from "@/content/services";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { CheckCircle2, ArrowRight, ChevronRight } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 import { D3_ConversionDiagram } from "@/components/visuals/D3_ConversionDiagram";
@@ -12,7 +10,7 @@ import { D5_IntegrationDiagram } from "@/components/visuals/D5_IntegrationDiagra
 import { D6_ModuleConstellation } from "@/components/visuals/D6_ModuleConstellation";
 import { D8_GrcShieldMatrix } from "@/components/visuals/D8_GrcShieldMatrix";
 import { D2_FioriTileGrid } from "@/components/visuals/D2_FioriTileGrid";
-import { SectionBackground } from "@/components/ui/SectionBackground";
+import { PageHero } from "@/components/layout/PageHero";
 
 interface ServiceDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -84,7 +82,7 @@ export default async function ServiceDetailPage({
       case "sap-analytics-reporting":
       case "application-management-services-ams":
       case "sap-training-enablement":
-        return <D2_FioriTileGrid />;
+        return <D2_FioriTileGrid size="sm" />;
       default:
         return <D6_ModuleConstellation />;
     }
@@ -92,48 +90,29 @@ export default async function ServiceDetailPage({
 
   return (
     <div>
-      {/* Hero Section (Dark navy mesh with photo) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
-      >
-        <SectionBackground
-          variant="pageHero"
-          image={serviceImageMap[slug] || "/images/backgrounds/bg-services-abstract.jpg"}
-          imageAlt={service.title}
-          priority
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs
-            items={[
-              { label: "Services", href: "/services" },
-              { label: service.title },
-            ]}
-            theme="dark"
-            className="mb-8"
-          />
-
-          <div className="max-w-4xl space-y-6">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-display font-black text-brand-cyan px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25">
-                Practice {service.number}
-              </span>
-              <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">
-                {service.tag}
-              </span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1]">
-              {service.title}
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              {service.overview}
-            </p>
+      <PageHero
+        image={serviceImageMap[slug] || "/images/backgrounds/bg-services-abstract.jpg"}
+        imageAlt={service.title}
+        imageSize={serviceImageMap[slug] ? [1000, 667] : [1920, 1278]}
+        pos="50% 50%"
+        textWidth="4xl"
+        crumbs={[
+          { label: "Services", href: "/services" },
+          { label: service.title },
+        ]}
+        badge={
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-display font-black text-brand-cyan px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25">
+              Practice {service.number}
+            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">
+              {service.tag}
+            </span>
           </div>
-        </div>
-      </section>
+        }
+        title={service.title}
+        intro={[service.overview]}
+      />
 
       {/* Main Content Details (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
@@ -141,18 +120,18 @@ export default async function ServiceDetailPage({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Column: Scope & Deliverables (7 cols) */}
             <div className="lg:col-span-7 space-y-8">
-              <div className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-6">
+              <div className="card-interactive card-interactive--lg card-interactive--light card-interactive--passive p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-6">
                 <h2 className="text-2xl font-display font-bold text-slate-900 border-b border-slate-100 pb-4">
                   Core Scope & Capabilities
                 </h2>
 
-                <div className="space-y-4">
+                <div>
                   {service.bullets.map((bullet, idx) => (
-                    <div key={idx} className="flex items-start gap-3.5 text-slate-700">
-                      <div className="w-5 h-5 rounded-full bg-blue-100 text-brand-blue flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div key={idx} className="bullet-row flex items-start gap-3.5 text-slate-700">
+                      <div className="bullet-icon w-5 h-5 rounded-full bg-blue-100 text-brand-blue flex items-center justify-center flex-shrink-0 mt-0.5">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                       </div>
-                      <span className="text-sm sm:text-base leading-relaxed">{bullet}</span>
+                      <span className="bullet-text text-sm sm:text-base leading-relaxed">{bullet}</span>
                     </div>
                   ))}
                 </div>
@@ -169,7 +148,7 @@ export default async function ServiceDetailPage({
               {service.sideCards.map((side, idx) => (
                 <div
                   key={idx}
-                  className="p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-4"
+                  className="card-interactive card-interactive--md card-interactive--light card-interactive--passive card-lift-6 card-heading-blue p-8 sm:p-10 rounded-4xl bg-white border border-slate-200/90 shadow-xl space-y-4"
                 >
                   <div className="flex items-center gap-2">
                     <h3 className="text-xs font-bold uppercase tracking-wider text-brand-blue">
@@ -182,7 +161,7 @@ export default async function ServiceDetailPage({
                       {side.chips.map((chip, cIdx) => (
                         <span
                           key={cIdx}
-                          className="px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700"
+                          className="chip-interactive px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700"
                         >
                           {chip}
                         </span>
@@ -199,7 +178,7 @@ export default async function ServiceDetailPage({
               ))}
 
               {/* Quick Scoping Box */}
-              <div className="p-8 sm:p-10 rounded-4xl bg-navy-950 text-white shadow-2xl border border-slate-800 space-y-4">
+              <div className="card-interactive card-interactive--md card-interactive--dark card-interactive--bright card-interactive--passive card-lift-6 p-8 sm:p-10 rounded-4xl bg-navy-950 text-white shadow-2xl border border-slate-800 space-y-4">
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-cyan">
                   Need a Scoping Call?
                 </span>
@@ -212,10 +191,10 @@ export default async function ServiceDetailPage({
                 <div className="pt-2">
                   <Link
                     href="/contact"
-                    className="btn-pill-gradient text-xs px-6 py-3 rounded-full inline-flex items-center gap-2 font-semibold"
+                    className="btn-pill-gradient btn-shine text-xs px-6 py-3 rounded-full inline-flex items-center gap-2 font-semibold"
                   >
                     <span>Request Practice Consultation</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="btn-arrow w-4 h-4" />
                   </Link>
                 </div>
               </div>
@@ -250,14 +229,14 @@ export default async function ServiceDetailPage({
               <Link
                 key={rel.slug}
                 href={`/services/${rel.slug}`}
-                className="p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-brand-blue/30 transition-all flex flex-col justify-between group"
+                className="card-interactive card-interactive--md card-interactive--light p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between text-xs mb-3">
                     <span className="font-mono font-bold text-slate-400">{rel.number}</span>
                     <span className="font-semibold text-brand-blue">{rel.tag}</span>
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-2">
+                  <h4 className="text-lg font-bold text-slate-900 mb-2">
                     {rel.title}
                   </h4>
                   <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
@@ -267,7 +246,7 @@ export default async function ServiceDetailPage({
 
                 <div className="pt-4 border-t border-slate-200/80 mt-6 flex items-center justify-between text-xs font-bold text-brand-blue">
                   <span>Explore practice</span>
-                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <ChevronRight className="card-arrow w-4 h-4" />
                 </div>
               </Link>
             ))}

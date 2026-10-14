@@ -2,11 +2,10 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { projectsData } from "@/content/projects";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
-import { SectionBackground } from "@/components/ui/SectionBackground";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+import { PageHero } from "@/components/layout/PageHero";
 
 export const metadata: Metadata = {
   title: "Case Studies & Client Impact | Proven SAP® Results",
@@ -28,39 +27,20 @@ const caseStudyPhotos: Record<string, string> = {
 export default function ProjectsPage() {
   return (
     <div>
-      {/* Hero Section (Dark navy mesh with photo) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
-      >
-        <SectionBackground
-          variant="pageHero"
-          image="/images/backgrounds/bg-projects-analytics.jpg"
-          imageAlt="Client Success Stories & Enterprise SAP Implementations"
-          priority
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs items={[{ label: "Projects" }]} theme="dark" className="mb-8" />
-
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider mb-6">
-              <span>Client Success Stories</span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1] mb-6">
-              SAP® projects that{" "}
-              <span className="gradient-heading-accent">
-                transformed operations.
-              </span>
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              Real-world implementations, custom automations, and strategic integrations delivered for enterprise leaders across Manufacturing, FMCG, and Power & Energy.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image="/images/backgrounds/bg-projects-analytics.jpg"
+        imageAlt="Client Success Stories & Enterprise SAP Implementations"
+        imageSize={[1920, 1280]}
+        pos="75% 40%"
+        imageWidth="54%"
+        crumbs={[{ label: "Projects" }]}
+        badge="Client Success Stories"
+        title="SAP® projects that transformed operations."
+        highlight="transformed operations."
+        intro={[
+          "Real-world implementations, custom automations, and strategic integrations delivered for enterprise leaders across Manufacturing, FMCG, and Power & Energy.",
+        ]}
+      />
 
       {/* Case Studies Detailed Cards (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
@@ -69,12 +49,12 @@ export default function ProjectsPage() {
             <div
               key={project.id}
               id={project.slug}
-              className="p-8 sm:p-12 rounded-4xl bg-white border border-slate-200/90 shadow-xl transition-all duration-300 hover:border-brand-blue/30"
+              className="card-interactive card-interactive--lg card-interactive--light card-interactive--passive p-8 sm:p-12 rounded-4xl bg-white border border-slate-200/90 shadow-xl"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                 {/* Left Column: Title, Narrative & Results (7 cols) */}
                 <div className="lg:col-span-7 space-y-6">
-                  <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-brand-blue bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+                  <span className="case-tag inline-block text-[11px] font-bold uppercase tracking-wider text-brand-blue bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
                     {project.tag}
                   </span>
 
@@ -91,7 +71,7 @@ export default function ProjectsPage() {
                       Results Achieved
                     </div>
                     {project.results.map((result, rIdx) => (
-                      <div key={rIdx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-700">
+                      <div key={rIdx} className="result-row flex items-start gap-3 text-xs sm:text-sm text-slate-700">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
                         <span>{result}</span>
                       </div>
@@ -101,17 +81,17 @@ export default function ProjectsPage() {
                   <div className="pt-4">
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="btn-pill-gradient text-xs px-6 py-3 rounded-full inline-flex items-center gap-2 font-semibold"
+                      className="btn-pill-gradient btn-shine text-xs px-6 py-3 rounded-full inline-flex items-center gap-2 font-semibold"
                     >
                       <span>Read Detailed Case Study</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="btn-arrow w-4 h-4" />
                     </Link>
                   </div>
                 </div>
 
                 {/* Right Column: Photo Cover + Technical Details (5 cols) */}
                 <div className="lg:col-span-5 space-y-6">
-                  <div className="relative h-52 w-full rounded-3xl overflow-hidden bg-navy-950 border border-slate-200 shadow-sm">
+                  <div className="case-media relative h-52 w-full rounded-3xl overflow-hidden bg-navy-950 border border-slate-200 shadow-sm">
                     <Image
                       src={caseStudyPhotos[project.slug] || "/images/case-fund-management.jpg"}
                       alt={project.title}
@@ -120,9 +100,10 @@ export default function ProjectsPage() {
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 to-transparent" />
+                    <div className="case-media-tint absolute inset-0 bg-gradient-to-tr from-brand-blue/25 via-transparent to-brand-cyan/15" aria-hidden="true" />
                   </div>
 
-                  <div className="bg-[#F6F7FB] p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-5">
+                  <div className="case-panel bg-[#F6F7FB] p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-sm space-y-5">
                     <div className="text-xs font-bold uppercase tracking-wider text-brand-blue border-b border-slate-200 pb-3">
                       Technical Scope & Approach
                     </div>
@@ -130,7 +111,7 @@ export default function ProjectsPage() {
                     <div className="space-y-4">
                       {project.details.map((detail, dIdx) => (
                         <div key={dIdx} className="space-y-1">
-                          <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                          <div className="case-label text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                             {detail.label}
                           </div>
                           <p className="text-xs sm:text-sm font-medium text-slate-900 leading-relaxed">

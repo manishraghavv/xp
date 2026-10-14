@@ -2,9 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { projectsData } from "@/content/projects";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { CheckCircle2, ArrowRight, ChevronRight } from "lucide-react";
 import { ContactCtaBand } from "@/components/sections/ContactCtaBand";
 import { D7_ReconMockTable } from "@/components/visuals/D7_ReconMockTable";
@@ -12,7 +10,7 @@ import { D5_IntegrationDiagram } from "@/components/visuals/D5_IntegrationDiagra
 import { D8_GrcShieldMatrix } from "@/components/visuals/D8_GrcShieldMatrix";
 import { D6_ModuleConstellation } from "@/components/visuals/D6_ModuleConstellation";
 import { D1_HeroDashboard } from "@/components/visuals/D1_HeroDashboard";
-import { SectionBackground } from "@/components/ui/SectionBackground";
+import { PageHero } from "@/components/layout/PageHero";
 
 interface ProjectDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -83,43 +81,20 @@ export default async function ProjectDetailPage({
 
   return (
     <div>
-      {/* Hero Section (Dark navy mesh with photo) */}
-      <section
-        data-theme="dark"
-        className="relative text-white pt-28 sm:pt-36 md:pt-44 pb-16 sm:pb-24 overflow-hidden"
-      >
-        <SectionBackground
-          variant="pageHero"
-          image={caseStudyPhotos[slug] || "/images/backgrounds/bg-projects-analytics.jpg"}
-          imageAlt={project.title}
-          priority
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Breadcrumbs
-            items={[
-              { label: "Projects", href: "/projects" },
-              { label: project.title },
-            ]}
-            theme="dark"
-            className="mb-8"
-          />
-
-          <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-bold uppercase tracking-wider">
-              <span>{project.tag}</span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2rem,8.5vw,3rem)] md:text-6xl font-black tracking-tight leading-[1.1]">
-              {project.title}
-            </h1>
-
-            <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
-              {project.overview}
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        image={caseStudyPhotos[slug] || "/images/backgrounds/bg-projects-analytics.jpg"}
+        imageAlt={project.title}
+        imageSize={caseStudyPhotos[slug] ? [1000, 667] : [1920, 1280]}
+        pos="50% 45%"
+        textWidth="4xl"
+        crumbs={[
+          { label: "Projects", href: "/projects" },
+          { label: project.title },
+        ]}
+        badge={project.tag}
+        title={project.title}
+        intro={[project.overview]}
+      />
 
       {/* Main Details Section (Light Section) */}
       <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-[#F6F7FB] border-b border-slate-200">
@@ -223,13 +198,13 @@ export default async function ProjectDetailPage({
               <Link
                 key={rel.slug}
                 href={`/projects/${rel.slug}`}
-                className="p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-brand-blue/30 transition-all flex flex-col justify-between group"
+                className="card-interactive p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/90 shadow-md flex flex-col justify-between"
               >
                 <div>
                   <span className="text-xs font-bold uppercase text-brand-blue block mb-2">
                     {rel.tag}
                   </span>
-                  <h4 className="text-xl font-bold text-slate-900 group-hover:text-brand-blue transition-colors mb-3 leading-snug">
+                  <h4 className="text-xl font-bold text-slate-900 mb-3 leading-snug">
                     {rel.title}
                   </h4>
                   <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
@@ -239,7 +214,7 @@ export default async function ProjectDetailPage({
 
                 <div className="pt-4 border-t border-slate-200/80 mt-6 flex items-center justify-between text-xs font-bold text-brand-blue">
                   <span>View Case Study</span>
-                  <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  <ChevronRight className="card-arrow w-4 h-4" />
                 </div>
               </Link>
             ))}

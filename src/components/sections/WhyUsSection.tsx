@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { D2_FioriTileGrid } from "@/components/visuals/D2_FioriTileGrid";
 import { D6_ModuleConstellation } from "@/components/visuals/D6_ModuleConstellation";
 import { homeData, type WhyUsPoint } from "@/content/home";
@@ -12,7 +12,7 @@ export function WhyUsSection() {
   return (
     <section data-theme="light" className="py-16 sm:py-24 lg:py-32 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
+        <SectionHeader
           eyebrow="Why Choose Us"
           title="Why Leading Enterprises Choose XpmindGlobal"
           highlight="Why Leading Enterprises"
@@ -49,7 +49,7 @@ export function WhyUsSection() {
           {points.map((card: WhyUsPoint, idx: number) => (
             <div
               key={idx}
-              className="p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/80 shadow-md hover:shadow-xl hover:border-brand-blue/30 transition-all duration-300 flex flex-col justify-between group"
+              className="card-interactive p-8 rounded-3xl bg-[#F6F7FB] border border-slate-200/80 shadow-md transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 <div className="mb-6">
@@ -58,7 +58,7 @@ export function WhyUsSection() {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition-colors">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">
                   {card.title}
                 </h3>
 
