@@ -3,7 +3,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export interface SectionBackgroundProps {
-  variant?: "hero" | "pageHero" | "dark" | "light" | "cta" | "footer";
+  variant?: "hero" | "dark" | "light" | "cta" | "footer";
   image?: string;
   imageAlt?: string;
   className?: string;
@@ -28,8 +28,8 @@ export function SectionBackground({
         )}
       >
         {/* Soft atmospheric ambient light glows */}
-        <div className="parallax-y absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-500/[0.07] rounded-full blur-[110px]" />
-        <div className="parallax-y absolute top-1/3 -right-32 w-[600px] h-[600px] bg-purple-500/[0.06] rounded-full blur-[130px]" />
+        <div className="absolute -top-32 left-1/4 w-[500px] h-[500px] bg-blue-500/[0.07] rounded-full blur-[110px]" />
+        <div className="absolute top-1/3 -right-32 w-[600px] h-[600px] bg-purple-500/[0.06] rounded-full blur-[130px]" />
         <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-cyan-500/[0.06] rounded-full blur-[120px]" />
       </div>
     );
@@ -110,12 +110,7 @@ export function SectionBackground({
     );
   }
 
-  // 5. HERO & PAGE HERO VARIANTS (Multi-layered rich background)
-  const isHomeHero = variant === "hero";
-  const defaultPhoto = isHomeHero
-    ? "/images/backgrounds/sap-hero.webp"
-    : "/images/backgrounds/bg-about-collaboration.jpg";
-  const bgPhoto = image || defaultPhoto;
+  // 5. HOME HERO VARIANT (inner pages use <PageHero> instead)
 
   const homeBlurDataURL =
     "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAADQAwCdASoUAAsAPzmGuVOvKSWisAgB4CcJbAC06CFxroQKDZ1pEgAA/iWUA6eBNqBj0kobAyMS0scTa9D+dxU5BTPFyFo2dndtwwdR139Hx7+cA7rQEkdLo1aOTyqhJrnn0E49rLkaXmjiY8zWxHbVRX75HMZmoBAgAA==";
@@ -132,8 +127,7 @@ export function SectionBackground({
       <div className="absolute inset-0 bg-gradient-to-br from-[#0A1030] via-[#101B4D] to-[#1B2E7A]" />
 
       {/* Layer 2: Photo layer (Art-directed for Desktop and Mobile) */}
-      {isHomeHero ? (
-        <div className="absolute inset-0 opacity-[0.82]">
+      <div className="absolute inset-0 opacity-[0.82]">
           {/* Desktop WebP with subtle cinematic slow-zoom */}
           <div className="hidden md:block absolute inset-0">
             <Image
@@ -141,6 +135,7 @@ export function SectionBackground({
               alt={imageAlt}
               fill
               priority
+              fetchPriority="high"
               sizes="100vw"
               placeholder="blur"
               blurDataURL={homeBlurDataURL}
@@ -163,42 +158,15 @@ export function SectionBackground({
           {/* Subtle blue tint overlay */}
           <div className="absolute inset-0 bg-[#1B2E7A]/22 mix-blend-soft-light" />
         </div>
-      ) : (
-        <>
-          <div className="absolute inset-0 mix-blend-luminosity opacity-55">
-            <Image
-              src={bgPhoto}
-              alt={imageAlt}
-              fill
-              priority={priority}
-              sizes="100vw"
-              className="object-cover object-center scale-105"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A1030]/65 via-[#101B4D]/60 to-[#0A1030]/90" />
-        </>
-      )}
 
       {/* Layer 3: Readability overlay */}
-      {isHomeHero ? (
-        // Centered Hero Vignette tuned to sap-hero image: >= 7:1 text contrast in center, brighter edges
-        <div
+      <div
           className="absolute inset-0"
           style={{
             background:
               "radial-gradient(ellipse at center, rgba(10,16,48,0.58) 0%, rgba(10,16,48,0.86) 100%)",
           }}
         />
-      ) : (
-        // Left-aligned Hero Scrim (Text readable on left, photo visible on right)
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(10,16,48,0.94) 0%, rgba(10,16,48,0.72) 48%, rgba(10,16,48,0.22) 100%)",
-          }}
-        />
-      )}
 
       {/* Layer 4: Soft ambient glow orbs with slow drift animations */}
       {/* Orb 1: Royal Blue Top-Left */}
