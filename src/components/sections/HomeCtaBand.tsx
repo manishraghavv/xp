@@ -20,7 +20,7 @@ export function HomeCtaBand() {
     >
       <SectionBackground variant="cta" />
 
-      <div className="reveal-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="p-10 sm:p-16 rounded-[36px] bg-gradient-to-b from-white/[0.09] to-white/[0.03] border border-white/20 backdrop-blur-2xl text-center max-w-5xl mx-auto shadow-2xl relative overflow-hidden">
           {/* Subtle decorative ring */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-brand-cyan/20 to-transparent rounded-bl-full pointer-events-none" />

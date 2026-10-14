@@ -100,7 +100,7 @@ export function GetInTouchModal({
     <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
       {/* Backdrop */}
       <div
-        className="modal-backdrop fixed inset-0 bg-navy-950/80 backdrop-blur-md"
+        className="fixed inset-0 bg-navy-950/80 backdrop-blur-md transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -111,7 +111,7 @@ export function GetInTouchModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="get-in-touch-title"
-        className="modal-panel relative w-full sm:max-w-2xl max-h-[100dvh] sm:max-h-[90svh] overflow-y-auto overscroll-contain bg-white dark:bg-navy-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 z-10"
+        className="relative w-full sm:max-w-2xl max-h-[100dvh] sm:max-h-[90svh] overflow-y-auto overscroll-contain bg-white dark:bg-navy-900 rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 z-10"
       >
         <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
           <div>

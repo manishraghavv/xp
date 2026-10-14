@@ -72,7 +72,7 @@ export function TrainingForm({
   };
 
   return (
-    <div id="register-interest" className="glass-form p-5 sm:p-12 rounded-3xl glass-card-light shadow-xl border border-slate-200/90 scroll-mt-28 sm:scroll-mt-32">
+    <div id="register-interest" className="p-5 sm:p-12 rounded-3xl glass-card-light shadow-xl border border-slate-200/90 scroll-mt-28 sm:scroll-mt-32">
       <div className="mb-6 space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wider">
           <span>Coming Soon</span>
