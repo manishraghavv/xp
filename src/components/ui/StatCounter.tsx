@@ -20,7 +20,7 @@ export function StatCounter({
     <div className={cn("flex flex-col", className)}>
       <div
         className={cn(
-          "font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none mb-2 w-fit",
+          "reveal-1 font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none mb-2 w-fit",
           theme === "dark"
             ? "text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-cyan-400"
             : "text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-600"
@@ -30,7 +30,7 @@ export function StatCounter({
       </div>
       <div
         className={cn(
-          "text-xs sm:text-sm font-semibold tracking-wider uppercase",
+          "reveal-3 text-xs sm:text-sm font-semibold tracking-wider uppercase",
           theme === "dark" ? "text-slate-400" : "text-slate-500"
         )}
       >

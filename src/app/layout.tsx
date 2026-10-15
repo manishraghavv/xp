@@ -126,6 +126,16 @@ const jsonLd = {
   ],
 };
 
+const REVEAL_FALLBACK = `(function(){try{
+if(!('IntersectionObserver' in window)||(window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()'))||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var SKIP='.no-reveal,[data-no-reveal],.page-hero,form,[role=alert],[role=status]';
+var SEL=[['.wi-scroll','word'],['.wi-scroll-fast','fast'],['.reveal-1,main h2:not(:has(.wi)),main h3:not(:has(.wi)),main h4:not(:has(.wi)),footer h4','head'],['.reveal-2,.reveal-3,.reveal-group>*,main p:not(:has(.wi)),main li,main dd,main td,main figcaption,main blockquote,footer li,footer p','block']];
+function go(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px'});
+var seen=new Set();SEL.forEach(function(s){document.querySelectorAll(s[0]).forEach(function(el){if(seen.has(el)||el.closest(SKIP)||(s[1]!=='word'&&s[1]!=='fast'&&el.closest('li p,td p')&&el.tagName==='P'))return;seen.add(el);var i=Array.prototype.indexOf.call(el.parentNode.children,el)%6;el.style.setProperty('--rd',(s[1]==='word'||s[1]==='fast'?(+getComputedStyle(el).getPropertyValue('--i')||0)*0.04:i*0.06)+'s');el.setAttribute('data-reveal',s[1]);io.observe(el)})});
+document.documentElement.classList.add('js-reveal')}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go()
+}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -138,6 +148,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* Scroll-reveal fallback. Does nothing where CSS scroll-driven animation works
+            (Chrome, Edge) or with reduced motion; elsewhere it tags text, hides it and
+            reveals it once with an IntersectionObserver. If it throws, text stays visible. */}
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_FALLBACK }} />
       </head>
       <body className="min-h-[100svh] flex flex-col bg-[#0A1030] text-slate-900 antialiased selection:bg-brand-cyan/20 selection:text-brand-blue">
         {/* Skip to main content link for accessibility */}

@@ -106,6 +106,7 @@ export function D6_ModuleConstellation() {
           in the same grid cell, so the card is always as tall as the tallest one) */}
       <div
         id="module-panel"
+        data-no-reveal
         role="tabpanel"
         aria-labelledby={`module-tab-${committed}`}
         className="card-interactive card-interactive--md card-heading-blue card-interactive--light card-interactive--passive p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm grid"

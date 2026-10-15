@@ -16,7 +16,14 @@ interface AnimatedTextProps {
   startIndex?: number;
   /** Trigger on scroll (CSS view timeline) instead of on load. */
   scroll?: boolean;
+  /**
+   * Scroll tier: 1 = word drop (blur, 2% cascade), 2 = fast word drop (no blur, 1%
+   * cascade). Tier 2 text over MAX_FAST_WORDS is not split: it drops in as one block.
+   */
+  tier?: 1 | 2;
 }
+
+export const MAX_FAST_WORDS = 60;
 
 interface Token {
   word: string;
@@ -62,9 +69,17 @@ export function AnimatedText({
   stagger = 0.07,
   startIndex = 0,
   scroll = false,
+  tier = 1,
 }: AnimatedTextProps) {
   const Component = as;
   const tokens = tokenize(text, highlight);
+
+  // Long tier 2 text is too many spans: fall back to one cheap block drop.
+  if (scroll && tier === 2 && tokens.length > MAX_FAST_WORDS) {
+    return (
+      <Component className={[className, "reveal-3"].filter(Boolean).join(" ")}>{text}</Component>
+    );
+  }
 
   return (
     <Component className={className}>
@@ -76,7 +91,7 @@ export function AnimatedText({
           "--base": `${base}s`,
           "--stagger": `${stagger}s`,
         } as React.CSSProperties;
-        const cls = ["wi", t.gradient ? "wi-gradient" : "", scroll ? "wi-scroll" : ""]
+        const cls = ["wi", t.gradient ? "wi-gradient" : "", scroll ? (tier === 2 ? "wi-scroll-fast" : "wi-scroll") : ""]
           .filter(Boolean)
           .join(" ");
 

@@ -22,7 +22,7 @@ export function HeroSection() {
       />
 
       {/* 1. Above-The-Fold Viewport (100svh framing for 1366x768 & 1440x900) */}
-      <div className="min-h-[100svh] flex flex-col justify-center pt-24 sm:pt-36 md:pt-44 pb-10 sm:pb-14 relative z-10 overflow-hidden">
+      <div data-no-reveal className="min-h-[100svh] flex flex-col justify-center pt-24 sm:pt-36 md:pt-44 pb-10 sm:pb-14 relative z-10 overflow-hidden">
         {/* Looping background video, confined to the first viewport so it is not over-zoomed.
             The poster layer stays visible until the correct tier is picked, so there is no
             empty flash while the source is being selected. */}

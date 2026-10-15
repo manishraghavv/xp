@@ -1865,52 +1865,227 @@ html.menu-open {
   animation: hero-slide-down 0.5s var(--ease-out) both;
 }
 
-/* Scroll-triggered text. Without scroll-driven animation support (or with reduced
-   motion) none of this applies and the text is simply visible. */
-.wi-scroll {
+/* ---------------------------------------------------------------------------
+   Scroll reveal: three tiers, always dropping in from above like the hero.
+     Tier 1  word drop      eyebrows, headings, big numbers (AnimatedText tier 1,
+                            .reveal-1 for unsplit headings)
+     Tier 2  fast word drop short intros and card titles (AnimatedText tier 2)
+     Tier 3  block drop     paragraphs, list items, table cells (.reveal-3,
+                            <RevealGroup>, and the auto rules below)
+   Primary path: CSS view() timelines inside @supports. Nothing is hidden outside
+   that block, so unsupported browsers, no-JS and reduced motion show the text.
+   Only the individual translate/opacity/filter properties are animated, never
+   transform, so the hover system's transforms are not fought.
+   Opt out with .no-reveal or data-no-reveal.
+--------------------------------------------------------------------------- */
+@keyframes drop-word {
+  from {
+    translate: 0 -110%;
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@keyframes drop-word-fast {
+  from {
+    translate: 0 -80%;
+    opacity: 0;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+@keyframes drop-block {
+  from {
+    translate: 0 -18px;
+    opacity: 0;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+@keyframes drop-heading {
+  from {
+    translate: 0 -22px;
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+    filter: none;
+  }
+}
+
+/* Baseline: split words are plain visible text until an animation applies. */
+.wi-scroll,
+.wi-scroll-fast {
   animation: none;
 }
 
 /* overflow:hidden would make the word wrapper a scroll container and the view()
-   timeline would then measure against it. clip keeps the same visual crop. */
-.w:has(> .wi-scroll) {
+   timeline would measure against it. clip keeps the same visual crop. */
+.w:has(> .wi-scroll),
+.w:has(> .wi-scroll-fast) {
   overflow: clip;
 }
 
-@keyframes reveal-up-in {
-  from {
-    opacity: 0;
-    translate: 0 18px;
+@supports (animation-timeline: view()) {
+  /* Cards and sections that clip with overflow:hidden are scroll containers, which
+     would make view() timelines inside them inactive. clip is visually the same. */
+  :is(main, footer) .overflow-hidden,
+  footer.overflow-hidden {
+    overflow: clip;
   }
-  to {
-    opacity: 1;
-    translate: 0 0;
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Tier 1: words cascade as the heading enters. */
+    .wi-scroll {
+      animation: drop-word linear both;
+      animation-timeline: view();
+      animation-range:
+        entry calc(min(var(--i, 0), 20) * 2%) entry calc(50% + min(var(--i, 0), 20) * 2%);
+    }
+
+    .wi-scroll.wi-gradient {
+      animation:
+        drop-word linear both,
+        gradient-flow 8s ease-in-out infinite;
+      animation-timeline: view(), auto;
+      animation-range:
+        entry calc(min(var(--i, 0), 20) * 2%) entry calc(50% + min(var(--i, 0), 20) * 2%),
+        normal;
+      animation-delay: 0s, 1.8s;
+    }
+
+    /* Tier 2: smaller travel, no blur, tighter cascade. */
+    .wi-scroll-fast {
+      animation: drop-word-fast linear both;
+      animation-timeline: view();
+      animation-range:
+        entry calc(min(var(--i, 0), 40) * 1%) entry calc(40% + min(var(--i, 0), 40) * 1%);
+    }
+
+    /* Tier 3: one block, siblings staggered by position (0%, 4% ... 20%, repeat). */
+    .reveal-3,
+    .reveal-group > * {
+      animation: drop-block linear both;
+      animation-timeline: view();
+      animation-range: entry var(--rs, 0%) entry calc(35% + var(--rs, 0%));
+    }
+
+    .reveal-1 {
+      animation: drop-heading linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+
+    .reveal-2 {
+      animation: drop-block linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+
+    /* Auto-apply to text that has not been migrated to a shared component.
+       Skips hero text, anything already split into words, text inside opt-out
+       containers, and list/table paragraphs (their parent animates already). */
+    :is(main, footer)
+      :is(h2, h3, h4):not(:has(.wi)):not(
+        :where(.no-reveal, [data-no-reveal], .page-hero, .no-reveal *, [data-no-reveal] *, .page-hero *, .reveal-1, .reveal-1 *)
+      ) {
+      animation: drop-heading linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+
+    :is(main, footer)
+      :is(p, li, dd, figcaption, blockquote, td, label):not(:has(.wi)):not(
+        :where(.no-reveal, [data-no-reveal], .page-hero, .no-reveal *, [data-no-reveal] *, .page-hero *, .reveal-3, .reveal-3 *, .reveal-group > *, .reveal-group > * *, li p, td p, li li, form p, [role="alert"], [role="status"], .tab-row *)
+      ) {
+      animation: drop-block linear both;
+      animation-timeline: view();
+      animation-range: entry var(--rs, 0%) entry calc(35% + var(--rs, 0%));
+    }
+
+    /* Sibling stagger for every Tier 3 element. */
+    :is(.reveal-3, .reveal-group > *, main li, main p, main dd, main td, main label, footer li, footer p):nth-child(6n + 2) {
+      --rs: 4%;
+    }
+    :is(.reveal-3, .reveal-group > *, main li, main p, main dd, main td, main label, footer li, footer p):nth-child(6n + 3) {
+      --rs: 8%;
+    }
+    :is(.reveal-3, .reveal-group > *, main li, main p, main dd, main td, main label, footer li, footer p):nth-child(6n + 4) {
+      --rs: 12%;
+    }
+    :is(.reveal-3, .reveal-group > *, main li, main p, main dd, main td, main label, footer li, footer p):nth-child(6n + 5) {
+      --rs: 16%;
+    }
+    :is(.reveal-3, .reveal-group > *, main li, main p, main dd, main td, main label, footer li, footer p):nth-child(6n + 6) {
+      --rs: 20%;
+    }
+  }
+
+  /* Opt-outs always win. */
+  .no-reveal,
+  [data-no-reveal],
+  .no-reveal :is(h1, h2, h3, h4, p, li, td, dd),
+  [data-no-reveal] :is(h1, h2, h3, h4, p, li, td, dd),
+  :is(.no-reveal, [data-no-reveal], .page-hero) :is(.reveal-1, .reveal-2, .reveal-3, .wi-scroll, .wi-scroll-fast) {
+    animation: none;
   }
 }
 
-@supports (animation-timeline: view()) {
-  .wi-scroll {
-    animation: wordDrop linear both;
-    animation-timeline: view();
-    animation-range: entry calc(var(--i, 0) * 1.2%) entry calc(34% + var(--i, 0) * 1.2%);
-  }
+/* Fallback for browsers without scroll-driven animations (for example Firefox):
+   a tiny script in the layout tags text with data-reveal, hides it, and adds
+   .is-visible when it enters the viewport, which plays the same keyframes once.
+   The class js-reveal is only ever added by that script, so without JS or support
+   everything stays visible. */
+html.js-reveal [data-reveal]:not(.is-visible) {
+  opacity: 0;
+}
 
-  .wi-scroll.wi-gradient {
-    animation:
-      wordDrop linear both,
-      gradient-flow 8s ease-in-out infinite;
-    animation-timeline: view(), auto;
-    animation-range:
-      entry calc(var(--i, 0) * 1.2%) entry calc(34% + var(--i, 0) * 1.2%),
-      normal;
-    animation-delay: 0s, 1.8s;
-  }
+html.js-reveal [data-reveal="word"]:not(.is-visible) {
+  translate: 0 -110%;
+}
 
-  .reveal-up {
-    animation: reveal-up-in linear backwards;
-    animation-timeline: view();
-    animation-range: entry 0% entry 38%;
-  }
+html.js-reveal [data-reveal="fast"]:not(.is-visible) {
+  translate: 0 -80%;
+}
+
+html.js-reveal [data-reveal="block"]:not(.is-visible) {
+  translate: 0 -18px;
+}
+
+html.js-reveal [data-reveal="head"]:not(.is-visible) {
+  translate: 0 -22px;
+}
+
+html.js-reveal [data-reveal].is-visible {
+  animation: drop-block 0.6s var(--ease-out) both;
+  animation-delay: var(--rd, 0s);
+}
+
+html.js-reveal [data-reveal="word"].is-visible {
+  animation-name: drop-word;
+  animation-duration: 0.7s;
+}
+
+html.js-reveal [data-reveal="fast"].is-visible {
+  animation-name: drop-word-fast;
+  animation-duration: 0.5s;
+}
+
+html.js-reveal [data-reveal="head"].is-visible {
+  animation-name: drop-heading;
 }
 
 /* ---------------------------------------------------------------------------
@@ -2193,7 +2368,12 @@ html.menu-open {
   .hero-fade,
   .hero-crumb,
   .wi-scroll,
-  .reveal-up {
+  .wi-scroll-fast,
+  [data-reveal],
+  .reveal-1,
+  .reveal-2,
+  .reveal-3,
+  .reveal-group > * {
     animation: none !important;
     transform: none !important;
     translate: none !important;

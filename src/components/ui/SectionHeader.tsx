@@ -45,7 +45,7 @@ export function SectionHeader({
       )}
     >
       {eyebrow && (
-        <div className="mb-4 reveal-up">
+        <div className="mb-4">
           <span
             className={cn(
               "inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border",
@@ -54,7 +54,7 @@ export function SectionHeader({
                 : "bg-blue-50 text-brand-blue border-blue-100"
             )}
           >
-            {eyebrow}
+            <AnimatedText text={eyebrow} scroll stagger={0.04} />
           </span>
         </div>
       )}
@@ -69,7 +69,7 @@ export function SectionHeader({
           className={h2Class}
         />
       ) : (
-        <h2 className={cn(h2Class, "reveal-up")}>{title}</h2>
+        <h2 className={cn(h2Class, "reveal-1")}>{title}</h2>
       )}
 
       {subtitle &&
@@ -78,12 +78,12 @@ export function SectionHeader({
             as="p"
             text={subtitle}
             scroll
-            startIndex={4}
-            stagger={0.02}
+            tier={2}
+            startIndex={0}
             className={pClass}
           />
         ) : (
-          <p className={cn(pClass, "reveal-up")}>{subtitle}</p>
+          <p className={cn(pClass, "reveal-3")}>{subtitle}</p>
         ))}
     </div>
   );

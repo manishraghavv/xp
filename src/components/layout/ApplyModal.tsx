@@ -142,7 +142,7 @@ export function ApplyModal({ isOpen, onClose, defaultApplyAs = "" }: ApplyModalP
     ) : null;
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
+    <div data-no-reveal className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center sm:p-6">
       <div
         className="fixed inset-0 bg-navy-950/80 backdrop-blur-md transition-opacity"
         onClick={onClose}
